@@ -1,4 +1,6 @@
+# UOFL OVERRIDE: Exclude local Bundler plugin state so Docker builds install plugins inside the image.
 *.rdb
+/.bundle
 ./artifacts
 ./chart
 ./coverage
