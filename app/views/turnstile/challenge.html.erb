@@ -1,0 +1,85 @@
+<%# UOFL OVERRIDE NEW FILE: Render the Cloudflare Turnstile challenge page. %>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Verify Your Request - <%= session[:turnstile_return_to].presence || request.fullpath %></title>
+    <link rel="preconnect" href="https://challenges.cloudflare.com">
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+    <style>
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        background: #ffffff;
+        color: #1f2933;
+        font-family: Georgia, serif;
+      }
+
+      main {
+        width: min(92vw, 34rem);
+        padding: 2rem;
+        border-radius: 1rem;
+        background: #ffffff;
+        box-shadow: 0 18px 50px rgba(31, 41, 51, 0.12);
+      }
+
+      h1 {
+        margin-top: 0;
+        margin-bottom: 0.75rem;
+        font-size: 1.9rem;
+      }
+
+      p {
+        margin-bottom: 1rem;
+        line-height: 1.5;
+      }
+
+      .alert {
+        margin-bottom: 1rem;
+        color: #8b1e3f;
+      }
+
+      .actions {
+        margin-top: 1.25rem;
+      }
+
+      button {
+        border: 0;
+        border-radius: 999px;
+        padding: 0.8rem 1.3rem;
+        background: #004963;
+        color: #ffffff;
+        font-size: 1rem;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Verify your request</h1>
+      <p>Please complete the Cloudflare challenge before continuing to the public site.</p>
+      <% if flash[:alert].present? %>
+        <p class="alert"><%= flash[:alert] %></p>
+      <% end %>
+
+      <%= form_with url: '/turnstile/verify', method: :post, local: true do %>
+        <input type="hidden" name="cf_turnstile_response" id="cf-turnstile-response">
+        <div class="cf-turnstile"
+             data-sitekey="<%= turnstile_site_key %>"
+             data-callback="onTurnstileSuccess"></div>
+        <div class="actions">
+          <button type="submit">Continue</button>
+        </div>
+      <% end %>
+    </main>
+
+    <script>
+      function onTurnstileSuccess(token) {
+        document.getElementById("cf-turnstile-response").value = token;
+      }
+    </script>
+  </body>
+</html>

@@ -1,3 +1,4 @@
+# UOFL OVERRIDE: Expose Turnstile configuration for deployed environments.
 replicaCount: 2
 
 resources:
@@ -161,6 +162,12 @@ extraEnvVars: &envVars
     value: REPLACE_ME.notch8.cloud
   - name: NEGATIVE_CAPTCHA_SECRET
     value: $NEGATIVE_CAPTCHA_SECRET
+  - name: TURNSTILE_ENABLED
+    value: "false"
+  - name: TURNSTILE_SITE_KEY
+    value: $TURNSTILE_SITE_KEY
+  - name: TURNSTILE_SECRET_KEY
+    value: $TURNSTILE_SECRET_KEY
   - name: PATH
     value: /app/samvera/hyrax-webapp/bin:/usr/local/bundle/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
   - name: SMTP_ADDRESS
