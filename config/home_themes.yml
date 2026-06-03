@@ -1,0 +1,45 @@
+# These settings provide information about home page themes.
+# Knapsack-owned copy: include upstream themes here because Hyku reads the first
+# config/home_themes.yml found via Hyku::Application.path_for.
+default_home:
+  banner_image: true
+  featured_researcher: true
+  home_page_text: false
+  marketing_text: true
+  name: Default home
+  notes: This theme is the default Hyku view
+cultural_repository:
+  banner_image: true
+  featured_researcher: false
+  home_page_text: true
+  marketing_text: true
+  name: Cultural Repository
+  notes: This theme is recommended for cultural repositories
+institutional_repository:
+  banner_image: true
+  featured_researcher: true
+  home_page_text: true
+  marketing_text: true
+  name: Institutional Repository
+  notes: This theme is recommended for institutional repositories
+neutral_repository:
+  banner_image: true
+  featured_researcher: true
+  home_page_text: true
+  marketing_text: true
+  name: Neutral Repository
+  notes: This theme is neutral and is recommended for all types of repositories
+community:
+  banner_image: true
+  featured_researcher: false
+  home_page_text: true
+  marketing_text: true
+  name: Community
+  notes: This theme is for demoing Hyku features
+uofl:
+  banner_image: true
+  featured_researcher: false
+  home_page_text: true
+  marketing_text: true
+  name: UofL
+  notes: University of Louisville branded repository theme.
