@@ -34,10 +34,34 @@ RSpec.describe TurnstileProtectedPublicPage, type: :controller do
     expect(controller.send(:turnstile_protected_public_request?)).to be(true)
   end
 
-  it 'matches direct download urls as public' do
+  it 'does not match direct download urls as public pages' do
     request.env['PATH_INFO'] = '/downloads/example-file-set'
 
-    expect(controller.send(:turnstile_protected_public_request?)).to be(true)
+    expect(controller.send(:turnstile_protected_public_request?)).to be(false)
+  end
+
+  it 'does not match riiif image urls as public pages' do
+    request.env['PATH_INFO'] = '/images/example-file-set/full/600,/0/default.jpg'
+
+    expect(controller.send(:turnstile_protected_public_request?)).to be(false)
+  end
+
+  it 'does not match pdf.js viewer assets as public pages' do
+    request.env['PATH_INFO'] = '/pdf.js/viewer.html'
+
+    expect(controller.send(:turnstile_protected_public_request?)).to be(false)
+  end
+
+  it 'does not match universal viewer assets as public pages' do
+    request.env['PATH_INFO'] = '/uv/uv.html'
+
+    expect(controller.send(:turnstile_protected_public_request?)).to be(false)
+  end
+
+  it 'does not match work manifest urls as public pages' do
+    request.env['PATH_INFO'] = '/concern/images/example-work/manifest'
+
+    expect(controller.send(:turnstile_protected_public_request?)).to be(false)
   end
 
   it 'matches oai endpoints as public' do
@@ -52,8 +76,14 @@ RSpec.describe TurnstileProtectedPublicPage, type: :controller do
     expect(controller.send(:turnstile_protected_public_request?)).to be(true)
   end
 
-  it 'does not match devise routes as public' do
+  it 'does not match devise sign in routes as public' do
     request.env['PATH_INFO'] = '/users/sign_in'
+
+    expect(controller.send(:turnstile_protected_public_request?)).to be(false)
+  end
+
+  it 'does not match devise sign out routes as public' do
+    request.env['PATH_INFO'] = '/users/sign_out'
 
     expect(controller.send(:turnstile_protected_public_request?)).to be(false)
   end

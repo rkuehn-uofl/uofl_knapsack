@@ -13,8 +13,11 @@ module TurnstileProtectedPublicPage
     /bookmarks
     /browse
     /dashboard
+    /downloads
+    /images
     /jobs
     /notifications
+    /pdf.js
     /proprietor
     /rails
     /site
@@ -23,7 +26,12 @@ module TurnstileProtectedPublicPage
     /turnstile
     /uploads
     /users
+    /uv
     /v2
+  ].freeze
+
+  TURNSTILE_EXEMPT_PATH_SUFFIXES = %w[
+    /manifest
   ].freeze
 
   included do
@@ -87,7 +95,8 @@ module TurnstileProtectedPublicPage
   end
 
   def turnstile_exempt_path?
-    TURNSTILE_EXEMPT_PATH_PREFIXES.any? { |prefix| request.path.start_with?(prefix) }
+    TURNSTILE_EXEMPT_PATH_PREFIXES.any? { |prefix| request.path.start_with?(prefix) } ||
+      TURNSTILE_EXEMPT_PATH_SUFFIXES.any? { |suffix| request.path.end_with?(suffix) }
   end
 
   def turnstile_exempt_signed_in_user?
