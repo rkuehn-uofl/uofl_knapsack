@@ -1,0 +1,99 @@
+/* HOMEPAGE uofl_home.scss  */
+
+.home-share-work { display:none; }
+
+#home-top { margin-bottom:2rem; }
+#home-top-left p { 
+  text-align:center; 
+  font-weight:bold; 
+  font-size:1.2rem; 
+  font-family: "Open Sans", "Helvetica Neue", Arial, sans-serif;
+}
+#home-top img { max-width:100%; }
+
+
+@media (min-width:768px) {
+  #home-top { display:grid; grid-template-columns: 1fr 180px; gap:1rem;}
+}
+
+
+
+/* HOMEPAGE - Louisville */
+ body.public-facing h2 span {
+	font-family: "Stack Sans Text", sans-serif;
+	font-weight: 700;
+	text-transform: uppercase;
+	font-size:40px;
+		}
+h2 i { font-size:40px;}
+
+#lou .menu {
+    padding: 20px;
+    background: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+  }
+  
+#lou .menu-item {
+    cursor: pointer;
+    color: #333;
+    transition: color 0.3s;
+    font-family: "Stack Sans Text", sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size:30px;
+    border-bottom:1px solid #dcdcdc;
+		}
+  #lou .menu-item a { 
+    text-decoration: none; 
+    display:block;
+    width:100%;
+  }
+ 
+
+@media screen and (max-width:991.9px) {
+  #lou .preview img,
+  #lou .preview { display:none; }
+}
+
+@media screen and (min-width:992px) {
+  #lou.container {
+    display: grid;
+    grid-template-columns: 350px 1fr;
+    padding:0;
+  }
+  #lou .menu {
+    padding:20px 0 20px 20px;
+  }
+  #lou .menu-item a:hover { 
+    color:#215480;
+  }
+
+  #lou .preview {
+    position: relative;
+    overflow: hidden;
+  }
+
+  #lou .preview img {
+    width: 100%;
+    height:440px;
+    object-fit: cover;
+    display: block;
+  }
+
+  #lou .caption {
+    position: absolute;
+    bottom: 30px;
+    left: 30px;
+    color: white;
+    background: rgba(0,0,0,0.5);
+    padding: 10px 16px;
+    border-radius: 6px;
+    font-size: 1.2rem;
+  }
+
+}
+
+

@@ -1,11 +1,128 @@
+<%# edited by TH %>
+
 <%# Override Hyrax 5.2.0
   - add privacy policy partial
   - add login & logout link
   - add Hyku version %>
 <% current_year = Time.now.year %>
 
-<footer class="navbar navbar-dark container-fluid">
-  <div class="row navbar-text text-center">
+
+<footer>
+  <div id="indLib_footer" class="our_footer">
+    <div class="container">
+      <div class="row">
+        <div id="indLib_footer_name">
+          <a href="https://library.louisville.edu/archives/di">Digital Initiatives</a>
+        </div>
+        <div id="di-inner">
+      
+
+            <div id="indLib_email">
+              <a href="mailto:digital@louisville.edu">Email Us</a>
+            </div>
+            <div id="indLib_phone"> 
+              <a href="tel:5028524476" aria-label="Call Us at 502.852.4476">Call Us at 502.852.4476</a>
+            </div>
+            <div id="accessibility"> 
+              <a href="https://library.louisville.edu/archives/digcoll/accessibility">Accessibility Statement</a>
+            </div>
+
+        </div>
+      </div>  
+    </div>
+  </div>
+
+  <div id="ulibs_footer" class="our_footer">
+    <div class="container">
+      <div class="row">
+        <div id="ulibs_footer_logo">
+          <a href="https://library.louisville.edu/"><img alt="University of Louisville Libraries logo" src="https://libapps.s3.amazonaws.com/customers/764/images/logo-libraries-ALT_white_120w.png" style="width:120px; height:24px;" /></a>
+        </div>
+        <div id="ulibs-inner">
+          <div>
+            <h2>CONTACTS</h2>
+            <ul class="ulibs_footer_menu">
+              <li><a href="https://library.louisville.edu/about/addresses">Addresses</a></li>
+              <li><a href="https://library.louisville.edu/forms/contact">Contact Form</a></li>
+              <li><a href="https://louisville.libanswers.com/">Frequently Asked Questions <span class="sr-only">for all University Libraries</span></a></li>
+              <li><a href="https://personnel.library.louisville.edu/">Personnel Directory</a></li>
+            </ul>
+          </div>
+          <div>
+            <h2>SITE</h2>
+            <ul class="ulibs_footer_menu">
+              <li><a href="https://library.louisville.edu/site">Site Index</a>  / <a href="https://library.louisville.edu/sitemap">Site Map</a></li>
+              <li><a href="https://library.louisville.edu/image-credits">Image Credits</a></li>
+              <li><a href="https://library.louisville.edu/policies/privacy">Privacy</a></li>
+              <li><a href="https://cardmaillouisville.sharepoint.com/sites/libs">Sharepoint <i class="glyphicon glyphicon-lock"></i></a></li>
+            </ul>
+          </div>
+          <div>
+            <h2>FOLLOW UofL LIBRARIES</h2>
+            <div class="sm">
+             <div class="sm-item">
+               <a class="icon-circle facebook" aria-label="Facebook" title="Facebook" href="https://www.facebook.com/UniversityOfLouisvilleLibraries">
+                <svg class="tz-fb" xmlns="https://www.w3.org/2000/svg" x="0px" y="0px"
+	 viewBox="0 0 112.196 112.196" style="width:2.2rem; height:2.2rem;" xml:space="preserve"><g>
+<title>Facebook</title>
+        <path style="fill:#FFFFFF;" d="M70.201,58.294h-10.01v36.672H45.025V58.294h-7.213V45.406h7.213v-8.34
+		c0-5.964,2.833-15.303,15.301-15.303L71.56,21.81v12.51h-8.151c-1.337,0-3.217,0.668-3.217,3.513v7.585h11.334L70.201,58.294z"/>
+        </g>
+       </svg>
+               </a>
+             </div>
+             <div class="sm-item">
+               <a class="icon-circle twitter" aria-label="Twitter" title="Twitter" href="https://twitter.com/UofLlibraries">
+                <svg xmlns="http://www.w3.org/2000/svg" version="1.0" preserveAspectRatio="xMidYMid meet" viewBox="1801.5 201.14 6896.36 6897.86" style="width:2.2rem; height:2.2rem;">
+<g>Twitter</g>
+<g transform="translate(0.000000,7316.000000) scale(0.100000,-0.100000)" fill="#000000" stroke="none">
+<path d="M51595 71139 c-4550 -120 -8973 -1115 -13095 -2947 -856 -380 -1773 -835 -2600 -1290 -2416 -1329 -4665 -2943 -6710 -4816 -743 -681 -1587 -1530 -2275 -2291 -2466 -2724 -4484 -5828 -5970 -9180 -1686 -3804 -2668 -7907 -2890 -12075 -36 -691 -40 -864 -40 -1880 0 -1016 4 -1189 40 -1880 277 -5201 1729 -10261 4253 -14815 1275 -2302 2835 -4482 4607 -6440 688 -761 1532 -1610 2275 -2291 2045 -1873 4293 -3487 6710 -4816 827 -455 1744 -910 2600 -1290 4398 -1955 9146 -2958 13995 -2958 3713 0 7390 592 10872 1749 1985 660 3895 1494 5723 2499 2416 1329 4666 2943 6710 4816 743 681 1587 1530 2275 2291 3674 4059 6333 8935 7739 14191 617 2305 995 4693 1121 7069 33 625 37 789 42 1635 5 882 -1 1279 -33 1920 -266 5482 -1802 10737 -4522 15475 -1315 2291 -2945 4494 -4737 6405 -563 600 -1306 1335 -1885 1866 -2044 1873 -4294 3487 -6710 4816 -827 455 -1744 910 -2600 1290 -3952 1756 -8184 2745 -12535 2928 -700 29 -1674 37 -2360 19z m-2239 -21719 c2970 -3970 5404 -7218 5409 -7216 6 1 3015 3249 6688 7217 l6678 7214 1872 3 1871 2 -55 -57 c-142 -146 -15371 -16605 -15375 -16618 -3 -8 3542 -4756 8688 -11636 4781 -6392 8697 -11628 8701 -11636 7 -11 -1058 -13 -6345 -13 l-6353 1 -5250 7020 c-2887 3862 -5527 7392 -5866 7844 l-615 823 -7260 -7843 -7259 -7844 -1869 0 -1869 -1 20 22 c1289 1384 16562 17896 16559 17904 -2 5 -3511 4699 -7797 10430 -4286 5730 -7992 10686 -8235 11012 l-443 592 6353 0 6354 0 5398 -7220z"/>
+<path d="M36752 53881 c2 -5 5799 -7758 12883 -17230 l12880 -17221 2919 0 c2779 0 2918 1 2904 18 -8 9 -5807 7763 -12887 17230 l-12873 17212 -2915 0 c-1655 0 -2913 -4 -2911 -9z"/>
+</g>
+</svg>               </a>
+             </div>            
+             <div class="sm-item">
+               <a class="icon-circle wp" aria-label="News on WordPress" title="News on Wordpress" href="https://uofllibraries.wordpress.com/feed/">
+                 <svg class="tz-wp" xmlns="https://www.w3.org/2000/svg"  style="width:1.3rem; height:1.3rem; margin:.4rem 0 1rem .6rem;" 
+	 viewBox="0 0 512 512" xml:space="preserve">
+         <g><title>News on WordPress</title>
+<g fill="#ff9f00"><path d="m128.101562 383.898438c-29.402343-29.097657-76.800781-29.097657-106.203124 0-29.097657 29.398437-29.097657 76.800781 0 106.199218 29.402343 29.101563 76.800781 29.101563 106.203124 0 29.097657-29.398437 29.097657-76.796875 0-106.199218zm0 0"/><path d="m330 497c0 5.097656-.601562 9.898438-.902344 15h-90c.601563-5.101562.902344-9.902344.902344-15 0-62.101562-25.199219-118.199219-66-159s-96.898438-66-159-66c-5.097656 0-9.902344.300781-15 .898438v-90c5.097656-.300782 9.902344-.898438 15-.898438 87 0 165.601562 35.398438 222.597656 92.398438 57.003906 57 92.402344 135.601562 92.402344 222.601562zm0 0"/><path d="m512 497c0 5.097656-.601562 9.898438-.902344 15h-92c.300782-5.101562.902344-9.902344.902344-15 0-111.601562-45.300781-213-118.800781-286.199219-73.199219-73.5-174.601563-118.800781-286.199219-118.800781-5.097656 0-9.902344.601562-15 .902344v-92c5.097656-.300782 9.902344-.902344 15-.902344 136.800781 0 260.398438 57.5 350.097656 146.898438 89.402344 89.703124 146.902344 213.300781 146.902344 350.101562zm0 0"/></g><path d="m128.101562 383.898438c29.097657 29.398437 29.097657 76.800781 0 106.199218-29.402343 29.101563-76.800781 29.101563-106.203124 0zm0 0" fill="#ff7816"/><path d="m237.597656 274.398438c57.003906 57 92.402344 135.601562 92.402344 222.601562 0 5.097656-.601562 9.898438-.902344 15h-90c.601563-5.101562.902344-9.902344.902344-15 0-62.101562-25.199219-118.199219-66-159zm0 0" fill="#ff7816"/><path d="m512 497c0 5.097656-.601562 9.898438-.902344 15h-92c.300782-5.101562.902344-9.902344.902344-15 0-111.601562-45.300781-213-118.800781-286.199219l63.898437-63.902343c89.402344 89.703124 146.902344 213.300781 146.902344 350.101562zm0 0" fill="#ff7816"/></g>
+       </svg>
+               </a>
+             </div>
+             <div class="sm-item">
+               <a class="icon-circle more-sm" aria-label="More University Libraries Social Media" title="More University Libraries Social Media" href="https://library.louisville.edu/follow">
+                <svg id="plus_1828926" class="tz-more" xmlns="https://www.w3.org/2000/svg" x="0px" y="0px"
+	 viewBox="0 0 512 512" style="width:2.2rem; height:2.2rem;" xml:space="preserve">
+  <g><title>More University Libraries Social Media</title>
+    <path d="m368 272h-224c-8.832031 0-16-7.167969-16-16s7.167969-16 16-16h224c8.832031 0 16 7.167969 16 16s-7.167969 16-16 16zm0 0"/><path d="m256 384c-8.832031 0-16-7.167969-16-16v-224c0-8.832031 7.167969-16 16-16s16 7.167969 16 16v224c0 8.832031-7.167969 16-16 16zm0 0"/></g>
+       </svg>
+               </a>
+             </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>    
+  </div>
+  
+  <div id="uofl_footer">
+    <div class="container">
+<div class="row">
+      <div id="uofl_logo">
+        <a href="https://louisville.edu/"><img alt="University of Louisville logo" src="https://libapps.s3.amazonaws.com/customers/764/images/uofl-logo.png" /></a>
+      </div>
+      <ul id="uofl_footer_menu">
+        <li><a href="https://louisville.edu/admissions/apply">Apply</a></li>
+        <li><a href="https://louisville.edu/about/campuses.html">Campus Maps</a> </li>
+        <li><a href="https://louisville.edu/its/get-help/its-helpdesk">IT HelpDesk</a></li>
+        <li><a href="https://louisville.edu/jobs/">Jobs</a></li>
+      </ul>
+    </div>
+</div>
+  </div>
+
+    <div class="row navbar-text text-center" id="system-footer">
 
     <div class="col-12 col-lg-6 text-lg-left">
       <div class="p-1 p-lg-2"><%= t('hyrax.footer.service_html') %> <%= ENV.fetch('HYKU_FOOTER_EXTRA', '').html_safe %></div>
@@ -28,4 +145,14 @@
     </div>
 
   </div>
+      <div class="wrap">
+      <div class="justify-content-end" id="footer-login">
+		  <% if admin_host? %>
+		  <%= render '/admin_util_links' %>
+		  <% else %>
+		  <%= render '/user_util_links' %>
+		  <% end %>
+	  </div>
+      </div>
+
 </footer>

@@ -1,1 +1,1 @@
-//= link_directory ../stylesheets/hyku/knapsack .css
+//= link_directory ../stylesheets/hyku_knapsack .css
