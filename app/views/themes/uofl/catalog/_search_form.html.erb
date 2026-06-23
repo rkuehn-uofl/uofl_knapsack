@@ -3,29 +3,18 @@
 <%# edited by TH %>
 <%# UOFL OVERRIDE: UofL Theme %>
 
-<div id="search-test">
-  <div class="search-form">
-    <input type="text" name="search2" placeholder="Search something"/>
-    <button class="search-submit-button"> 
-      <label for="search2">search</label>
-      <div class="search-icon"></div>
-    </button>
-  </div>
-</div>
-
-
-<%= form_tag search_form_action, method: :get, class: "search-form", id: "search-form-header", role: "search" do %>
+<%= form_tag search_form_action, method: :get, class: ["search-form", ("has-query" if current_search_parameters.present?)].compact.join(" "), id: "search-form-header", role: "search" do %>
   <%= render Blacklight::HiddenSearchStateComponent.new(params: search_state.params_for_search.except(:q, :search_field, :qt, :page, :utf8)) %>
   <%= hidden_field_tag :search_field, 'all_fields' %>
   
-    <%= text_field_tag :q, current_search_parameters , 'aria-label': 'Search', class: "q form-control", name: "search-input-header", id: "search-input-header", placeholder: t("hyrax.search.form.q.placeholder") %>
+    <%= text_field_tag :q, current_search_parameters , 'aria-label': 'Search', class: "q form-control", id: "search-input-header", placeholder: t("hyrax.search.form.q.placeholder"), oninput: "this.form.classList.toggle('has-query', this.value.length > 0)" %>
 
    <button type="submit" class="btn btn-primary search-submit-button" id="search-submit-header">
           <label for="search-input-header">search</label>
           <div class="search-icon"></div>
     </button>
 
-  <div class="form-group row pt-4 pt-sm-0" id="staff-search-dropdown-wrap">
+  <!-- div class="form-group row pt-4 pt-sm-0" id="staff-search-dropdown-wrap">
 
         
         <% if current_user %>
@@ -47,8 +36,7 @@
           </div>
         <% end %>
 
-  </div><!-- /.form-group -->
-</form>    
+  </div> -->   
 
   <% end %> 
 

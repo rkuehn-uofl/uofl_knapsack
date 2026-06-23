@@ -1,0 +1,13 @@
+<%# UOFL OVERRIDE: UofL Theme - Render facets on the UofL homepage. %>
+
+<% if has_facet_values? %>
+  <div id="facets" class="facets sidenav">
+    <div class="facets-header">
+      <h2 class="facets-heading">Browse Items</h2>
+    </div>
+
+    <div id="facet-panel-collapse" class="facets-collapse">
+      <%= render_facet_partials %>
+    </div>
+  </div>
+<% end %>

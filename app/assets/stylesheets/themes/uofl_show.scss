@@ -1,97 +1,113 @@
-.uofl_show {
-  --uofl-red: #ad0000;
-  --uofl-black: #000;
-  --uofl-soft-gray: #f5f5f5;
-  --uofl-border: #d8d8d8;
+.facets-heading  {
+  font-family:"Stack Sans Text", Helvetica Neue, Helvetica, Arial, sans-serif!important;
+}
 
-  a {
-    color: var(--uofl-red);
+
+
+/* RESULTS */
+.search-widgets .view-type,
+.search-result-wrapper .badge,
+.search-result-wrapper .collection-counts-wrapper,
+.search-result-wrapper #subject_tesim,
+.search-result-wrapper #depositor_tesim,
+.search-result-wrapper #publisher_tesim,
+.search-result-wrapper #date_uploaded_dtsi,
+.search-result-wrapper #date_modified_dtsi,
+.search-result-wrapper #rights_statement_tesim,
+.search-result-wrapper #city_tesim,
+.search-result-wrapper #county_tesim,
+.search-result-wrapper #neighborhood_tesim,
+.search-result-wrapper #decade_tesim,
+.search-result-wrapper #language_tesim,
+.search-result-wrapper #contributor_tesim,
+.search-result-wrapper #resource_type_tesim,
+.search-result-wrapper #object_type_tesim,
+.search-result-wrapper #format_tesim,
+.search-result-wrapper #bulkrax_identifier_tesim,
+.document.blacklight-collection .search-results-title-row,
+.document.blacklight-collection .col-md-3.col-lg-5, 
+#all_text_tsimv   
+  { display:none!important; }
+
+#search-results a { text-decoration:underline;}
+
+
+.metadata-field {
+  display:grid;
+  grid-template-columns: 8rem 1fr;
+}
+
+/* search results list collection listing */
+
+.document.blacklight-collection .col-md-9.col-lg-7 { 
+  max-width:unset;
+  flex:unset;
+  padding:1rem;
+}
+
+.document.blacklight-collection {
+  padding:0 1rem!important;
+  background:linear-gradient(165deg, #204694 0%, #214f87 50%, #215480 100%);
+  border-radius:20px;
+}
+
+.document.blacklight-collection .search-result-wrapper.row {
+  border-radius:20px;
+  box-shadow:rgba(5, 71, 17, 0) 40px 50px 25px -40px, rgb(86, 118, 171) 0 25px 25px -5px;
+  margin-bottom:3rem;
+}
+
+.document.blacklight-collection h4.search-result-title a p,
+.document.blacklight-collection .metadata-field {
+  color:white!important;
+}
+
+.document.blacklight-collection h4.search-result-title a:hover { color:white;}
+
+/* search results list text document listing */
+@media (min-width:992px) {
+  .document.blacklight-text img { max-width:200px;}
+}
+
+
+
+@media (max-width:767.9px) {
+  .search-result-wrapper .metadata { border-bottom:1px solid #dbdbdb;}
+}
+
+
+/* ADVANCED SEARCH PAGE */
+body.advanced h1 { margin-bottom:2rem;}
+.advanced-search-form > .row { flex-direction: column;}
+.advanced-search-form > .row > .col-md-8 { 
+  max-width: 100%;
+  flex:unset;
+}
+label.control-label { font-weight:bold;}
+
+
+
+@media (max-width:767.9px) {
+  body.advanced .container { 
+    margin-right:1rem; 
+    margin-left:1rem;
+    max-width:calc(100% - 2rem);
+  }
+}
+
+@media (min-width:768px) {
+  .advanced-search-field { display:flex;}
+}
+@media (min-width:1400px) {
+  body.advanced .container { 
+    margin-right:1rem; 
+    margin-left:1rem;
+    max-width:calc(100% - 2rem);
+  }
+  body.advanced .input-criteria { 
+    display:grid;
+    grid-template-columns: 50% 50%;
+    gap:2rem;
   }
 
-  a:hover,
-  a:focus {
-    color: #7d0000;
-  }
-
-  .work-type,
-  .work-title-wrapper,
-  .card-header {
-    border-color: var(--uofl-red);
-  }
-
-  .work-type {
-    margin-top: 1rem;
-  }
-
-  .work-title-wrapper,
-  h1 {
-    color: var(--uofl-black);
-    font-weight: 700;
-  }
-
-  .card-header {
-    border-top: 6px solid var(--uofl-red);
-  }
-
-  .card {
-    border-color: var(--uofl-border);
-    border-radius: 0;
-    box-shadow: none;
-    margin-bottom: 1.5rem;
-  }
-
-  .card-body {
-    padding: 1.5rem;
-  }
-
-  .metadata {
-    border-top: 4px solid var(--uofl-red);
-    margin-top: 1rem;
-    padding-top: 1rem;
-  }
-
-  dl.work-show {
-    margin-bottom: 0;
-  }
-
-  dl.work-show dt {
-    color: var(--uofl-black);
-    font-weight: 700;
-  }
-
-  dl.work-show dd {
-    border-bottom: 1px solid var(--uofl-border);
-    margin-bottom: .75rem;
-    padding-bottom: .75rem;
-  }
-
-  .btn-primary,
-  .btn-secondary {
-    background-color: var(--uofl-red);
-    border-color: var(--uofl-red);
-    color: #fff;
-  }
-
-  .btn-primary:hover,
-  .btn-primary:focus,
-  .btn-secondary:hover,
-  .btn-secondary:focus {
-    background-color: #7d0000;
-    border-color: #7d0000;
-    color: #fff;
-  }
-
-  #masthead,
-  .navbar,
-  .navbar-default {
-    background-color: var(--uofl-black);
-    border-color: var(--uofl-black);
-  }
-
-  #masthead a,
-  .navbar a,
-  .navbar-default a,
-  .navbar-brand {
-    color: #fff;
-  }
 }

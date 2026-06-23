@@ -18,7 +18,7 @@ $padding-xl: 40px;
 /* Z-INDEX -------------------------------------- */
 
 .dropdown-menu { z-index: 1000; }
-
+.navbar-collapse.show { z-index:900; }
 
 
 /* VISIBILITY */
@@ -33,24 +33,29 @@ $padding-xl: 40px;
 /* FONTS  */
 
 body.public-facing {
-  font-family: "Open Sans", "Helvetica Neue", Arial, sans-serif;
+  font-family: "Open Sans", "Helvetica Neue", Arial, sans-serif!important;
 }
 
-.navbar-product-name {
+.navbar-product-name,
+body.public-facing h1, 
+body.public-facing h2, 
+body.public-facing h3, 
+body.public-facing h4  {
   font-family:"Stack Sans Text", Helvetica Neue, Helvetica, Arial, sans-serif!important;
 }
 
+/* LAYOUT */
 
 
 /* HEADER 2026 */
+
+.uofl_show #masthead, .uofl_show .navbar, .uofl_show .navbar-default { background-color:white!important; color:black!important;}
 
 #logo-col img{margin-right:1rem}
 #header-navbar{
   z-index:20;
   border-top:none;
   margin-bottom:0;
-  box-shadow:0 1px 1px #ccc;
-  font-family:"Open Sans", Arial, sans-serif;
   border-radius:0;
 }
 #header-navbar .navbar-product-name a{
@@ -92,9 +97,16 @@ body.public-facing #nav-masthead > .navbar.navbar-expand-sm { background-color: 
 
 }
 
+#header-nav-links {
+	font-size:1.2rem; 
+	text-transform:uppercase;
+}
+
+body.public-facing .nav.navbar-nav > li.nav-item > a.nav-link { font-weight:500; }
+
 @media (max-width: 767.99px){
   nav#masthead { 
-    padding-bottom:1rem;
+	padding:$padding-sm;
     justify-content: center!important;
   }
 
@@ -114,6 +126,9 @@ body.public-facing #nav-masthead > .navbar.navbar-expand-sm { background-color: 
 
 }
 
+@media (max-width:399px) {
+	#header-navbar .navbar-product-name a { white-space: normal;}
+}
 @media (min-width: 768px){
   #masthead { padding:$padding-lg;}
   #header-navbar #logo-col { align-items:center;}
@@ -129,12 +144,54 @@ body.public-facing #nav-masthead > .navbar.navbar-expand-sm { background-color: 
 
   #header-navbar .navbar-product-name { font-size:3.2rem;}
   #header-navbar .navbar-product-name a {display:flex;}
+  #header-nav-links { padding:$padding-md; }
+
+}
+@media (min-width: 992px){
+	#header-navbar { 
+		display:flex; 
+		flex-direction:column;
+	}
+	#navbarNav { justify-content: center;}
 
 }
 
-/* NAVBAR --------------------------------------------------------- */
+@media (max-width:1199px) {
+	#header-navbar {
+		display:grid;
+		grid-template-columns: 1fr 50px;
+		gap:1rem;
+	}
+	#header-nav-links {
+		display:flex;
+		justify-content: flex-end;
+		align-items: flex-start;;
+	}
+	#navbarNav {
+		width:85px;
+		padding:0 8px;
+		position:absolute;
+		top:50px;
+		background-color:white!important;
+		box-shadow: 0 0 3px #efefef;
+	}
+	#header-nav-links ul { align-items:flex-end;}
+}
 
-body.public-facing #nav-masthead > .navbar.navbar-expand-sm { padding:$padding-lg!important;}
+@media (min-width: 1200px){
+	#header-navbar { 
+		display:flex; 
+		justify-content:space-between;
+		flex-direction: row;
+	}
+	#navbarNav { justify-content: flex-end;}
+	#header-nav-links { padding:$padding-xl; }
+	#header-nav-links ul {
+		flex-direction:row;
+		gap:1rem;
+	}
+
+}
 
 
 /* SEARCH --------------------------------------------------------- */
@@ -143,10 +200,24 @@ body.public-facing #nav-masthead > .navbar.navbar-expand-sm { padding:$padding-l
 	display:flex;
 	flex-wrap:wrap;
 	justify-content: center;
+	align-items:center;
+	border-bottom:none!important;
+	padding-bottom:$padding-lg;
 }
 
-a#advanced-search-link { color:$blue!important;}
+
+a#advanced-search-link { 
+	color:$blue!important;
+	padding: 16px 32px;
+}
 a#advanced-search-link:hover { color: $blue-hover!important;}
+
+
+@media (max-width: 767.9px){	#search-form-header-wrap { padding:0 $padding-sm $padding-sm; } }
+@media (min-width: 768px){	#search-form-header-wrap { padding:0 $padding-md $padding-md; } }
+@media (min-width: 992px){	#search-form-header-wrap { padding:0 $padding-lg $padding-lg; } }
+
+
 
 
 /* FACETS */
@@ -163,7 +234,6 @@ a#advanced-search-link:hover { color: $blue-hover!important;}
   #facets .dropdown-menu {display:block;}
 
   #facets .dropdown-toggle, #facets .dropdown-menu { border:none;}
-  #facets button { pointer-events: none;}
   #facets button h2 { font-size:20px; font-weight:bold; text-transform: uppercase;}
 }
 
@@ -179,7 +249,8 @@ a#advanced-search-link:hover { color: $blue-hover!important;}
 	padding-left: 1.5rem;
 	border-radius: 1.5rem;
 	background: #ffffff;
-	box-shadow: 0 1.25rem 5rem -1rem rgba(0, 0, 30, 0.5);
+	box-shadow: 0 1.25rem 2rem -1rem rgba(0, 0, 30, 0.5);
+	border:1px solid #efefef;
 	transition: transform 200ms ease-in-out;
 
 	&::before {
@@ -198,6 +269,7 @@ a#advanced-search-link:hover { color: $blue-hover!important;}
 		all: unset;
 		height: 100%;
 		color: #333355;
+		width:300px;
 
 		&::placeholder {
 			color: inherit;
@@ -208,11 +280,12 @@ a#advanced-search-link:hover { color: $blue-hover!important;}
 	button.search-submit-button {
 		all: unset;
 		position: absolute;
-		right: 0;
+		top:-1px;
+		right: -1px;
 		height: 3rem;
 		padding-left: 3rem;
 		border-radius: 1.5rem;
-		background: #296ec7;
+		background: $blue;
 		cursor: pointer;
 
 		&::before {
@@ -261,7 +334,8 @@ a#advanced-search-link:hover { color: $blue-hover!important;}
 		}
 	}
 
-	&:has(input:not(:placeholder-shown)) {
+	// &:has(input:not(:placeholder-shown)) {
+	&.has-query {
 		button.search-submit-button {
 			label {
 				opacity: 1;
@@ -279,8 +353,8 @@ a#advanced-search-link:hover { color: $blue-hover!important;}
 		}
 	}
 }
-
-
+form#search-form-header:focus-within {border-color:#555!important;}
+#search-form-header input.form-control:focus { border-color:transparent!important; box-shadow:none;}
 
 
 

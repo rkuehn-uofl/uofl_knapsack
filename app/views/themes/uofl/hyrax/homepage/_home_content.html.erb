@@ -3,6 +3,9 @@
 <%# UOFL OVERRIDE: UofL Theme %>
 
 
+	  <div class="background-container" title="<%= block_for(name: 'banner_image_text') %>" style="background-image: url('<%= banner_image %>')"></div>
+
+
 <div id="home-top">
 <div class="col-xs-12" id="home-top-left">
 <p>Historic photographs, newspapers, books, and more from our rare collections.</p>
@@ -15,20 +18,8 @@
 		  <a class="sr-only" href="#content">Skip browsing facets navigation</a>
 	  </div>
 
-	  
-	  <div class="dropdown">
-		  <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
-			  <h2 class="facets-heading">Browse Items</h2>
-		  </button>
-		  <div class="dropdown-menu">
-			  <a class="dropdown-item" href="#">Collection</a>
-			  <a class="dropdown-item" href="#">Subject</a>
-			  <a class="dropdown-item" href="#">City</a>
-			  <a class="dropdown-item" href="#">Neighborhood</a>
-			  <a class="dropdown-item" href="#">Street</a>
-			  <a class="dropdown-item" href="#">Object Type</a>
-			  <a class="dropdown-item" href="#">Not Real</a>
-		  </div>
+	  <div id="sidebar" class="col-xs-12">
+		<%= render 'hyrax/homepage/facets' %>
 	  </div>
 	</div>
 </div>

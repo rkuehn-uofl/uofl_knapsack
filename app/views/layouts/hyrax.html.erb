@@ -1,16 +1,9 @@
-<!-- add body classes to make styling easier -->
+<%# OVERRIDE Hyrax v5.2.0 to use the UofL footer on every public page for tenants using the UofL home theme. %>
 <%# UOFL OVERRIDE: UofL Theme %>
-<%# edited by TH %>
-
 <!DOCTYPE html>
 <html lang="<%= I18n.locale.to_s %>" prefix="og:http://ogp.me/ns#">
   <head>
     <%= render partial: 'layouts/head_tag_content' %>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Stack+Sans+Text:wght@200..700&display=swap">
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" crossorigin="anonymous">
     <%= content_for(:head) %>
   </head>
   <% content_for(:extra_body_classes, 'public-facing') unless params[:controller].match(/^proprietor/) %>
@@ -39,11 +32,11 @@
       <%= render 'shared/read_only' if Flipflop.read_only? %>
       <%= content_for?(:content) ? yield(:content) : yield %>
     </div><!-- /#content-wrapper -->
-    <%= render 'shared/footer' %>
-    <% if content_for?(:footer) %>
-      <%= render 'shared/modal' %>
+    <% if home_page_theme == 'uofl' %>
+      <%= render 'themes/uofl/shared/footer' %>
+    <% elsif controller.controller_name == 'splash' || controller.controller_name == 'homepage' %>
+      <%= render 'shared/footer' %>
     <% end %>
-
-    
+    <%= render 'shared/modal' %>
   </body>
 </html>
