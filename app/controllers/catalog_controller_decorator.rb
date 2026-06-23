@@ -32,5 +32,8 @@ module CatalogControllerDecorator
   end
 end
 
+# Catalog pages need the active home theme in their view path so shared partials
+# such as /masthead and /controls resolve to the tenant's themed versions.
+CatalogController.include(Hyku::HomePageThemesBehavior) unless CatalogController < Hyku::HomePageThemesBehavior
 CatalogController.singleton_class.prepend(CatalogControllerDecorator)
 CatalogController.configure_uofl_facets
