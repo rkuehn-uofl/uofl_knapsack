@@ -242,7 +242,10 @@ a#advanced-search-link:hover { color: $blue-hover!important;}
 /* search test */
 
 
-.search-form {
+// Keep the custom UofL search treatment on UofL public pages. Hyrax also uses
+// `.search-form` for dashboard filters, and this stylesheet is compiled into
+// the application bundle for every tenant.
+body.uofl .search-form {
 	position: relative;
 	width: 40ch;
 	height: 3rem;
@@ -353,8 +356,8 @@ a#advanced-search-link:hover { color: $blue-hover!important;}
 		}
 	}
 }
-form#search-form-header:focus-within {border-color:#555!important;}
-#search-form-header input.form-control:focus { border-color:transparent!important; box-shadow:none;}
+body.uofl form#search-form-header:focus-within {border-color:#555!important;}
+body.uofl #search-form-header input.form-control:focus { border-color:transparent!important; box-shadow:none;}
 
 
 
