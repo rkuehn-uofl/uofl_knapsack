@@ -21,7 +21,6 @@ module TurnstileProtectedPublicPage
     /proprietor
     /rails
     /site
-    /single_signon
     /status
     /turnstile
     /uploads
