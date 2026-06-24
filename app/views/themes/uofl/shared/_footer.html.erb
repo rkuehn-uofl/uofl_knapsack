@@ -135,11 +135,6 @@
         <%= t('hyrax.background_attribution_html') %>
       </div>
       <div class="p-1 p-lg-2">
-        <% if user_signed_in? %>
-          <%= link_to t('hyrax.toolbar.profile.logout'), main_app.destroy_user_session_path, class: 'navbar-link' %>
-        <% else %>
-          <%= link_to t('hyku.footer.admin_login', default: [:'hyrax.toolbar.profile.login']), main_app.new_user_session_path, class: 'navbar-link' %>
-        <% end %>
         <span class="navbar-link"><%= render 'hyrax/base/privacy_policy' %></span>
       </div>
     </div>
