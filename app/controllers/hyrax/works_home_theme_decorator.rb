@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-# UOFL OVERRIDE: Resolve shared work-page views, including the masthead and
-# controls, from the active home theme before applying work-specific show views.
+# UOFL OVERRIDE: Resolve shared public-resource views, including the masthead
+# and controls, from the active home theme before applying show views.
 module Hyrax
   module WorksHomeThemeDecorator
     extend ActiveSupport::Concern
@@ -11,6 +11,7 @@ module Hyrax
 end
 
 [
+  Hyrax::CollectionsController,
   Hyrax::EtdsController,
   Hyrax::GenericWorksController,
   Hyrax::ImagesController,
