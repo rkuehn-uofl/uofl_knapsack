@@ -1,0 +1,29 @@
+<%# UOFL OVERRIDE NEW FILE: Display all viewable collections. %>
+<% provide :page_title, "Browse by Collection | #{application_name}" %>
+
+<div class="all-collections-page">
+  <header class="mb-4">
+    <h1>Browse by Collection</h1>
+    <p>Explore the collections available in <%= application_name %>.</p>
+  </header>
+
+  <% if @collections.present? %>
+    <ul class="list-unstyled all-collection-list">
+      <% @collections.each do |collection| %>
+        <li class="mb-4">
+          <article>
+            <h2 class="h3 mb-2">
+              <%= link_to markdown(collection.title_or_label), [hyrax, collection] %>
+            </h2>
+
+            <% Array(collection.description).compact_blank.each do |description| %>
+              <div class="collection-description"><%= markdown(description) %></div>
+            <% end %>
+          </article>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p>No collections are currently available.</p>
+  <% end %>
+</div>
