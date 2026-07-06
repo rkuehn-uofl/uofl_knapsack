@@ -13,6 +13,7 @@ end
 [
   Hyrax::CollectionsController,
   Hyrax::EtdsController,
+  Hyrax::FileSetsController,
   Hyrax::GenericWorksController,
   Hyrax::ImagesController,
   Hyrax::OersController,

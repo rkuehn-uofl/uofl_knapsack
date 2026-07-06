@@ -40,5 +40,26 @@
 
   <% end %> 
 
-        <%# OVERRIDE here to include the advanced search button in the search bar %>
-        <%= link_to "Advanced", "/advanced", class: '', id: 'advanced-search-link' %>
+  <div id="filters-adv">
+    <button class="openbtn2" onclick="openNav()"><i class="fa-solid fa-arrow-down-wide-short"></i> Browse / Filter</button>  
+
+    <a class="btn" id="advanced-search-link2" href="/advanced"><i class="fa-solid fa-up-right-from-square"></i> Advanced <span class="sr-only">search page</span></a>
+</div>
+
+<div id="mySidebar2" class="sidebar2">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"><i class="fa-solid fa-x"></i></a>
+  <%= render 'hyrax/homepage/facets' %>
+</div>
+
+
+<script>
+function openNav() {
+  document.getElementById("mySidebar2").style.width = "90%";
+  document.getElementById("main2").style.marginRight = "90%";
+}
+
+function closeNav() {
+  document.getElementById("mySidebar2").style.width = "0";
+  document.getElementById("main2").style.marginRight= "0";
+}
+</script>

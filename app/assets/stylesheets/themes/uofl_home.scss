@@ -2,18 +2,19 @@
 
 .home-share-work { display:none; }
 
-#home-top { margin-bottom:2rem; }
-#home-top-left p { 
+#home-top { 
+  margin:2rem; 
+  width:100%;
+}
+#blurb p { 
   text-align:center; 
   font-weight:bold; 
   font-size:1.2rem; 
   font-family: "Open Sans", "Helvetica Neue", Arial, sans-serif;
 }
-#home-top img { max-width:100%; }
 
 
 @media (min-width:768px) {
-  #home-top { display:grid; grid-template-columns: 1fr 180px; gap:1rem;}
 }
 
 section#section-home2 { padding-top:64px; }

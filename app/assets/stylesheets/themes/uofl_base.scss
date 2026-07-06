@@ -1,3 +1,5 @@
+/* TEST -------------------------- */
+
 /* COLORS ----------------------------------------- */
 $black: #111111; 
 $blue: #215480;
@@ -5,6 +7,11 @@ $blue-hover: #286090;
 $red: #ad0000;
 $red-hover: #7d0000;
 $soft-gray: #D3D3D3;
+$gray2: #555555;
+$gray2-hover: #444444;
+$greige: #cabdbd;
+$greige-dark: #494545;
+$greige-light: #DDD5D5;
 
 
 /* PADDING --------------------------------------- */
@@ -14,6 +21,8 @@ $padding-md: 24px;
 $padding-lg: 32px; 
 $padding-xl: 40px; 
 
+/* BORDER --------------------------------------- */
+$border-radius: 24px;
 
 /* Z-INDEX -------------------------------------- */
 
@@ -36,6 +45,9 @@ body.public-facing {
   font-family: "Open Sans", "Helvetica Neue", Arial, sans-serif!important;
 }
 
+.poppins { font-family: "Poppins", sans-serif; }
+
+
 .navbar-product-name,
 body.public-facing h1, 
 body.public-facing h2, 
@@ -44,157 +56,175 @@ body.public-facing h4  {
   font-family:"Stack Sans Text", Helvetica Neue, Helvetica, Arial, sans-serif!important;
 }
 
+body.public-facing .nav.navbar-nav > li.nav-item > a.nav-link { font-weight:500; }
+
+.dropdown-menu h2 { font-size:1rem; }
+
 /* LAYOUT */
+.btn,
+.card,
+.card-header,
+.card-header:first-child { border-radius:$border-radius;}
 
 
 /* HEADER 2026 */
-
-.uofl_show #masthead, .uofl_show .navbar, .uofl_show .navbar-default { background-color:white!important; color:black!important;}
-
-#logo-col img{margin-right:1rem}
-#header-navbar{
-  z-index:20;
-  border-top:none;
-  margin-bottom:0;
-  border-radius:0;
-}
-#header-navbar .navbar-product-name a{
-  text-transform:uppercase;
-  color: $black!important;
-}
-
-.glyphicon-log-in:before{display:none}
-#header-navbar a{text-decoration:none}
-#header-navbar #logo-col{
-  padding-right:0;
-  display:flex}
-#logo-col img{margin-right:1rem}
-#header-navbar .navbar-product-name{
-  display:block;
-  margin:0;
-  padding:0;
-  text-align:center;
-  font-weight:700;
-  font-size:1.9rem;
-  line-height:1;
-  color:white;
-  white-space:nowrap}
-
 
 .container.site-title-container { display:none;}
 
 body.public-facing #nav-masthead > .navbar.navbar-expand-sm { background-color: rgba(255,255,255,1)!important;}
 
-#nav-masthead li.nav-item { margin-right:2px; }
-#nav-masthead li.nav-item a{ 
-  background-color:white;
-  color:black!important;
-  font-weight:700;
-}
-#nav-masthead li.nav-item a:hover { 
-  background-color:#286090 !important;
-  color:white!important;
 
+
+div#logo-name {
+	display: grid;
+	grid-template-columns: 70px 1fr;
+}
+#logo-col img{
+	margin-right:1rem; 
+	margin-top:4px;
+	width:65px;
+	height:40px;
+	object-fit: cover;
+	object-position: 0% 0%;
+}
+#header-navbar {
+  z-index:20;
+  border-top:none;
+  margin-bottom:0;
+  position:relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-#header-nav-links {
-	font-size:1.2rem; 
-	text-transform:uppercase;
+#header-navbar .navbar-product-name a{
+  text-transform:uppercase;
+  color: $black!important;
+  white-space:normal;
 }
 
-body.public-facing .nav.navbar-nav > li.nav-item > a.nav-link { font-weight:500; }
+
+#header-navbar a {text-decoration:none}
+
+#header-navbar .navbar-product-name a {
+	display:flex;
+	font-weight:700;
+	line-height:1;
+	}
 
 @media (max-width: 767.99px){
   nav#masthead { 
 	padding:$padding-sm;
     justify-content: center!important;
   }
-
-	#header-navbar #logo-col{
-    display:flex;
-    flex-direction: column; 
-    align-items:center; 
-    gap:1rem; 
-    width:100%; 
-  }
-  #logo-col img {
-    margin-bottom:1rem;
-    width:200px;
-  }
-
-  #header-navbar .navbar-product-name{ font-size:2rem}
+  #header-navbar .navbar-product-name{ font-size:1.8rem;}
 
 }
 
-@media (max-width:399px) {
-	#header-navbar .navbar-product-name a { white-space: normal;}
-}
 @media (min-width: 768px){
-  #masthead { padding:$padding-lg;}
-  #header-navbar #logo-col { align-items:center;}
-  div#logo-name {
-    display: grid;
-    grid-template-columns: 200px 1fr;
-    gap:1.5rem;
+	#masthead { padding:$padding-lg;}
+	#header-navbar #logo-col { align-items:center;}
+	#logo-name {
+		display: grid;
+		grid-template-columns: 70px 1fr;
+		gap:1.5rem;
   }
-	#logo-col img{
-		margin-right:4rem;
-    width:200px;
-  }
-
   #header-navbar .navbar-product-name { font-size:3.2rem;}
   #header-navbar .navbar-product-name a {display:flex;}
-  #header-nav-links { padding:$padding-md; }
-
-}
-@media (min-width: 992px){
-	#header-navbar { 
-		display:flex; 
-		flex-direction:column;
-	}
-	#navbarNav { justify-content: center;}
-
 }
 
-@media (max-width:1199px) {
-	#header-navbar {
-		display:grid;
-		grid-template-columns: 1fr 50px;
-		gap:1rem;
-	}
+
+/*  HEADER NAV LINKS */
+
+#header-nav-links .dropdown-menu.show { 
+  border-top-right-radius:0;
+  border-top-left-radius:0;
+  width:100%;
+  margin-top:-2px;
+}
+#header-nav-links .dropdown-item { white-space: normal;}
+
+#header-navbar a.nav-link.dropdown-toggle {
+	font-weight: 700;
+	color:$black;
+}
+#header-nav-links {
+	font-size:1.2rem; 
+	text-transform:uppercase;
+}
+@media (max-width: 767.99px){
 	#header-nav-links {
-		display:flex;
+		width:100%;
+		display: flex;
 		justify-content: flex-end;
-		align-items: flex-start;;
+		margin-bottom:1rem;
 	}
-	#navbarNav {
-		width:85px;
-		padding:0 8px;
+	#header-nav-links .navbar-collapse { display:none;}
+	
+	#header-nav-links .navbar-collapse.show {
+		display: flex;
+		padding: 0 8px 1rem;
 		position:absolute;
 		top:50px;
+		left:0;		
+		right:0;
 		background-color:white!important;
-		box-shadow: 0 0 3px #efefef;
+		border-bottom: 1px solid gray;
 	}
-	#header-nav-links ul { align-items:flex-end;}
+	#header-nav-links .collapse.show ul.navbar-nav.mr-auto {
+		width:100%;
+		margin:0 1rem;
+		padding-right: 1rem;
+	}
+
+
+}
+@media (min-width: 768px) and (max-width:1199.9px) {
+	#nav-search { flex-direction:column;}
+  
+	#header-nav-links { 
+		padding:$padding-md; 
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+	}
+	#header-nav-links #navbarNav { justify-content: center;}
+	#header-nav-links #navbarNav ul { gap:1rem; }
+	#header-navbar a.nav-link.dropdown-toggle {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
 }
 
+
 @media (min-width: 1200px){
-	#header-navbar { 
-		display:flex; 
-		justify-content:space-between;
-		flex-direction: row;
-	}
-	#navbarNav { justify-content: flex-end;}
 	#header-nav-links { padding:$padding-xl; }
+
+	#nav-search { justify-content: space-between;}
+
+	#navbarNav { justify-content: flex-end;}
 	#header-nav-links ul {
 		flex-direction:row;
 		gap:1rem;
 	}
-
 }
 
 
 /* SEARCH --------------------------------------------------------- */
+#search-wrap { 
+	display: flex;
+	align-items:center;
+	justify-content: center;
+	flex-wrap:wrap;
+}
+@media (min-width:768px) and (max-width:1199.9px) {
+	#search-wrap { 
+		flex-direction:column;
+		gap:1rem;
+	}
+}
 
 #search-form-header-wrap {
 	display:flex;
@@ -204,6 +234,16 @@ body.public-facing .nav.navbar-nav > li.nav-item > a.nav-link { font-weight:500;
 	border-bottom:none!important;
 	padding-bottom:$padding-lg;
 }
+@media (max-width: 767.9px){	#search-form-header-wrap { padding:0 $padding-sm $padding-sm; } }
+@media (min-width: 768px){	#search-form-header-wrap { padding:0 $padding-md $padding-md; } }
+@media (min-width: 992px){	#search-form-header-wrap { padding:0 $padding-lg $padding-lg; } }
+
+
+
+@media (max-width: 767.9px){	
+	#filters-adv { margin-top:1rem;}
+ }
+
 
 
 a#advanced-search-link { 
@@ -213,23 +253,102 @@ a#advanced-search-link {
 a#advanced-search-link:hover { color: $blue-hover!important;}
 
 
-@media (max-width: 767.9px){	#search-form-header-wrap { padding:0 $padding-sm $padding-sm; } }
-@media (min-width: 768px){	#search-form-header-wrap { padding:0 $padding-md $padding-md; } }
-@media (min-width: 992px){	#search-form-header-wrap { padding:0 $padding-lg $padding-lg; } }
 
 
+
+/* FILTER SIDEBAR */
+#mySidebar2 { max-width:600px;} /* id so it overrides script added element style */
+.sidebar2 {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  right: 0;
+  background-color: rgb(250,250,250);
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+  border-left:1px solid #cabdbd;
+}
+
+
+#mySidebar2 a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight:700;
+  display: block;
+  transition: 0.3s;
+  min-width:250px;
+}
+
+
+#mySidebar2 .closebtn {
+  position: absolute;
+  top: 0;
+  right: 20px;
+  font-size: 36px;
+  min-width:unset;
+  color:$greige-dark;
+}
+#mySidebar2 .closebtn:hover { color:white;}
+#filters-adv {
+	display: flex;
+	gap:1rem;
+}
+
+#filters-adv button, 
+#filters-adv .btn {
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  background-color: $greige-light;
+  color: $black;
+  padding: 10px 15px;
+  border: none;
+  border-radius: $border-radius;
+}
+
+#filters-adv button:hover, 
+#filters-adv .btn:hover {
+  background-color: $gray2-hover;
+  color:white;
+}
+
+#main2 {
+  transition: margin-left .5s;
+  padding: 16px;
+}
+
+/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+  .sidebar2 {padding-top: 15px;}
+  .sidebar2 a {font-size: 18px;}
+}
 
 
 /* FACETS */
-#facets button h2 { margin-bottom:0;}
 
 
+h2.facets-heading { color:$greige-dark; }
+
+#facets { margin-left:1rem;}
+
+div#mySidebar2 #facet-panel-collapse { width:95%;}
+
+#mySidebar2 a.facet-select { padding:unset;}
 #facets button.dropdown-toggle {width:100%; display:flex; align-items:center; font-size:1.8rem;}
 
-#facets button.dropdown-toggle:hover { background-color:#efefef!important;}
+#mySidebar2 .card button { 
+	padding:8px 16px!important; 
+	background-color:unset!important;
+}
 
 
 @media (min-width:768px) {
+	#facets { margin:1rem; }
+
   #facets button.dropdown-toggle:after {display:none; }
   #facets .dropdown-menu {display:block;}
 
@@ -248,20 +367,18 @@ a#advanced-search-link:hover { color: $blue-hover!important;}
 body.uofl .search-form {
 	position: relative;
 	width: 40ch;
-	height: 3rem;
+	height: 60px;
 	padding-left: 1.5rem;
-	border-radius: 1.5rem;
+	border-radius: $border-radius;
 	background: #ffffff;
-	box-shadow: 0 1.25rem 2rem -1rem rgba(0, 0, 30, 0.5);
-	border:1px solid #efefef;
+	border:1px solid $greige;
 	transition: transform 200ms ease-in-out;
 
 	&::before {
 		content: "";
 		position: absolute;
 		inset: 0;
-		border-radius: 1.5rem;
-		box-shadow: 0 0.5rem 2rem -1rem rgba(0, 0, 100, 0.5);
+		border-radius: 24px;
 		opacity: 0;
 		pointer-events: none;
 
@@ -285,19 +402,18 @@ body.uofl .search-form {
 		position: absolute;
 		top:-1px;
 		right: -1px;
-		height: 3rem;
-		padding-left: 3rem;
-		border-radius: 1.5rem;
-		background: $blue;
+		height: 60px;
+		padding-left: 3.5rem;
+		border-radius: 24px;
+		background-color: transparent!important;
+		color:$greige-dark;
 		cursor: pointer;
 
 		&::before {
 			content: "";
 			position: absolute;
 			inset: 0;
-			border-radius: 1.5rem;
-			box-shadow: 0 0.5rem 2rem 0 rgba(41, 110, 199, 0.25),
-				0 0.5rem 1rem -0.75rem rgba(0, 0, 0, 0.5);
+			border-radius: 24px;
 			opacity: 0;
 			transition: opacity 300ms ease-in-out;
 		}
@@ -318,9 +434,9 @@ body.uofl .search-form {
 			position: absolute;
 			height: 0.875rem;
 			width: 0.875rem;
-			top: 1rem;
-			left: 0.875rem;
-			border: 0.125rem solid white;
+			top: 20px;
+			left: 1.2rem;
+			border: 0.125rem solid $greige-dark;
 			border-radius: 50%;
 			box-sizing: border-box;
 			transform: rotate(-45deg);
@@ -330,31 +446,14 @@ body.uofl .search-form {
 				position: absolute;
 				height: 0.5rem;
 				width: 0.125rem;
-				background: white;
+				background: $greige-dark;
 				left: calc(50% - (0.125rem / 2));
 				bottom: -0.6rem;
 			}
 		}
 	}
 
-	// &:has(input:not(:placeholder-shown)) {
-	&.has-query {
-		button.search-submit-button {
-			label {
-				opacity: 1;
-				width: 4.5rem;
-				margin-left: -0.5rem;
-				padding-right: 1rem;
-        margin-bottom:0;
-			}
-		}
-	}
-
-	&:has(input:focus) {
-		&::before {
-			opacity: 1;
-		}
-	}
+	
 }
 body.uofl form#search-form-header:focus-within {border-color:#555!important;}
 body.uofl #search-form-header input.form-control:focus { border-color:transparent!important; box-shadow:none;}
