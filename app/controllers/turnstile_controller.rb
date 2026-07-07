@@ -2,8 +2,6 @@
 
 # UOFL OVERRIDE NEW FILE: Verify Cloudflare Turnstile responses and resume public browsing.
 class TurnstileController < ApplicationController
-  include TurnstileProtectedPublicPage
-
   def verify
     token = params[:cf_turnstile_response].to_s
 

@@ -5,26 +5,13 @@ module TurnstileProtectedPublicPage
   extend ActiveSupport::Concern
 
   TURNSTILE_EXEMPT_PATH_PREFIXES = %w[
-    /account
-    /admin
     /api
     /assets
     /authorities
-    /bookmarks
-    /browse
-    /dashboard
-    /downloads
-    /images
-    /jobs
-    /notifications
     /pdf.js
-    /proprietor
     /rails
-    /site
     /status
     /turnstile
-    /uploads
-    /users
     /uv
     /v2
   ].freeze
