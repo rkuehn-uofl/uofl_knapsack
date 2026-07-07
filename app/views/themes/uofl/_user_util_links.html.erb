@@ -25,7 +25,7 @@
   <% else %>
     <% if Flipflop.show_login_link? %>
       <li class="nav-item">
-	<%= link_to main_app.new_user_session_path, class: 'nav-link' do %>
+	<%= link_to main_app.single_signon_index_path, class: 'nav-link' do %>
           <i class="fa fa-sign-in" aria-hidden="true"></i> <%= t("hyrax.toolbar.profile.login") %>
 	<% end %>
       </li>
