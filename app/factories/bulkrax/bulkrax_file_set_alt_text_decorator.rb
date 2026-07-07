@@ -78,7 +78,7 @@ module Bulkrax
 
     def original_file_name_for(file_set)
       self.class.filename_for(fileset: file_set)
-    rescue StandardError
+    rescue NoMethodError, Valkyrie::Persistence::ObjectNotFoundError
       nil
     end
 
