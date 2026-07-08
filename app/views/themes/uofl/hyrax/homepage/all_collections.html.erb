@@ -7,23 +7,69 @@
     <p>Explore the collections available in <%= application_name %>.</p>
   </header>
 
+  <div class="all-collections-filters mb-4">
+    <div class="all-collections-filter-group mb-3">
+      <h2 class="h4">Filter by Collection Name</h2>
+      <nav class="all-collections-az-filter" aria-label="Filter collections by first letter">
+        <%= link_to 'All',
+                    main_app.all_collections_path(collection_description_query: @collection_description_query.presence),
+                    class: ['btn', 'btn-sm', @selected_collection_letter.blank? ? 'btn-primary' : 'btn-outline-primary'] %>
+        <% ('A'..'Z').each do |letter| %>
+          <% disabled = !@collection_letters.include?(letter) %>
+          <% link_classes = ['btn', 'btn-sm', @selected_collection_letter == letter ? 'btn-primary' : 'btn-outline-primary'] %>
+          <% if disabled %>
+            <span class="btn btn-sm btn-outline-secondary disabled" aria-disabled="true"><%= letter %></span>
+          <% else %>
+            <%= link_to letter,
+                        main_app.all_collections_path(collection_letter: letter, collection_description_query: @collection_description_query.presence),
+                        class: link_classes %>
+          <% end %>
+        <% end %>
+      </nav>
+    </div>
+
+    <div class="all-collections-filter-group">
+      <h2 class="h4">Search Collection Descriptions</h2>
+      <%= form_with url: main_app.all_collections_path, method: :get, local: true, class: 'all-collections-description-search' do |form| %>
+        <%= hidden_field_tag :collection_letter, @selected_collection_letter if @selected_collection_letter.present? %>
+        <div class="input-group">
+          <%= form.search_field :collection_description_query,
+                                value: @collection_description_query,
+                                class: 'form-control',
+                                placeholder: 'Search collection descriptions',
+                                aria: { label: 'Search collection descriptions' } %>
+          <div class="input-group-append">
+            <%= form.submit 'Search', class: 'btn btn-primary' %>
+            <% if @collection_description_query.present? %>
+              <%= link_to 'Clear',
+                          main_app.all_collections_path(collection_letter: @selected_collection_letter.presence),
+                          class: 'btn btn-outline-secondary' %>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
   <% if @collections.present? %>
     <ul class="list-unstyled all-collection-list">
       <% @collections.each do |collection| %>
         <li class="mb-4">
-          <article>
-            <h2 class="h3 mb-2">
-              <%= link_to markdown(collection.title_or_label), [hyrax, collection] %>
-            </h2>
+          <article class="all-collection-item">
+            <div class="all-collection-summary">
+              <h2 class="h3 mb-2">
+                <%= link_to markdown(collection.title_or_label), [hyrax, collection] %>
+              </h2>
 
-            <% Array(collection.description).compact_blank.each do |description| %>
-              <div class="collection-description"><%= markdown(description) %></div>
-            <% end %>
+              <% Array(collection.description).compact_blank.each do |description| %>
+                <div class="collection-description"><%= markdown(description) %></div>
+              <% end %>
+            </div>
           </article>
         </li>
       <% end %>
     </ul>
   <% else %>
-    <p>No collections are currently available.</p>
+    <p>No collections match the current filters.</p>
   <% end %>
 </div>

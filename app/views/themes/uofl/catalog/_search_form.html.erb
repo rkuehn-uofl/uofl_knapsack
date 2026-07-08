@@ -2,6 +2,8 @@
 
 <%# edited by TH %>
 <%# UOFL OVERRIDE: UofL Theme %>
+<% show_header_facets = (controller_path == 'catalog' && action_name == 'index') ||
+                        (controller_path == 'hyrax/homepage' && action_name == 'index') %>
 
 <%= form_tag search_form_action, method: :get, class: ["search-form", ("has-query" if current_search_parameters.present?)].compact.join(" "), id: "search-form-header", role: "search" do %>
   <%= render Blacklight::HiddenSearchStateComponent.new(params: search_state.params_for_search.except(:q, :search_field, :qt, :page, :utf8)) %>
@@ -41,15 +43,19 @@
   <% end %> 
 
   <div id="filters-adv">
-    <button class="openbtn2" onclick="openNav()"><i class="fa-solid fa-arrow-down-wide-short"></i> Browse / Filter</button>  
+    <% if show_header_facets %>
+      <button class="openbtn2" onclick="openNav()"><i class="fa-solid fa-arrow-down-wide-short"></i> Browse / Filter</button>
+    <% end %>
 
     <a class="btn" id="advanced-search-link2" href="/advanced"><i class="fa-solid fa-up-right-from-square"></i> Advanced <span class="sr-only">search page</span></a>
 </div>
 
-<div id="mySidebar2" class="sidebar2">
-  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"><i class="fa-solid fa-x"></i></a>
-  <%= render 'hyrax/homepage/facets' %>
-</div>
+<% if show_header_facets %>
+  <div id="mySidebar2" class="sidebar2">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"><i class="fa-solid fa-x"></i></a>
+    <%= render 'hyrax/homepage/facets' %>
+  </div>
+<% end %>
 
 
 <script>
