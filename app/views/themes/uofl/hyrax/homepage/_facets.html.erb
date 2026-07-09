@@ -3,7 +3,9 @@
 <% if has_facet_values? %>
   <div id="facets" class="facets sidenav">
     <div class="facets-header">
-      <h2 class="facets-heading">Browse Items</h2>
+      <h2 class="facets-heading">
+        <%= controller_name == "homepage" ? "Browse" : "Filter Results" %>
+      </h2>
     </div>
 
     <div id="facet-panel-collapse" class="facets-collapse">

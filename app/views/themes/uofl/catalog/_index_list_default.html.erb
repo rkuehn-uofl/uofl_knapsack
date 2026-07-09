@@ -2,16 +2,23 @@
 <%# OVERRIDE Hyrax 5.0.1 to handle search only accounts %>
 <%# OVERRIDE Hyrax 5.0.1 display label only when a property has a value, to prevent blank metadata %>
 <%# UOFL OVERRIDE: UofL Theme %>
-<div class="ol-md-9 col-lg-6">
+<%# edited by TH %>
+
+<div class="col-md-9">
   <div class="metadata">
     <dl>
       <% doc_presenter = index_presenter(document) %>
+      <% uofl_index_fields = %w[source_identifier_tesim description_tesim date_original_tesim] %>
+      <% uofl_index_field_labels = { 'source_identifier_tesim' => 'Item Number:', 'date_original_tesim' => 'Date Original:' } %>
       <% index_fields(document).each do |field_name, field| -%>
+      <% next unless uofl_index_fields.include?(field_name) %>
       <% field_value = doc_presenter.field_value(field) %>
         <% if should_render_index_field?(document, field) && field_value.present? %>
           <div class="row">
-            <dt class="col-5 text-right" data-solr-field-name="<%= field_name %>"><%= render_index_field_label document, field: field_name %></dt>
-            <dd class="col-7"><%= markdown(field_value) %></dd>
+            <dt class="col-4 text-right" data-solr-field-name="<%= field_name %>">
+              <%= uofl_index_field_labels.fetch(field_name) { render_index_field_label document, field: field_name } %>
+            </dt>
+            <dd class="col-8"><%= markdown(field_value) %></dd>
           </div>
         <% end %>
       <% end %>

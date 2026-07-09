@@ -11,7 +11,7 @@ $gray2: #555555;
 $gray2-hover: #444444;
 $greige: #cabdbd;
 $greige-dark: #494545;
-$greige-light: #DDD5D5;
+$greige-light: #E7E1E1;
 
 
 /* PADDING --------------------------------------- */
@@ -23,11 +23,44 @@ $padding-xl: 40px;
 
 /* BORDER --------------------------------------- */
 $border-radius: 24px;
+$border-radius-tabs: 4px;
 
 /* Z-INDEX -------------------------------------- */
 
 .dropdown-menu { z-index: 1000; }
 .navbar-collapse.show { z-index:900; }
+
+/* FOCUS OUTLINE HOVER --------------------------*/
+
+body.public-facing #content-wrapper .btn-secondary > dd, 
+body.public-facing #content-wrapper .btn-secondary > li, 
+body.public-facing #content-wrapper .btn-secondary > a, 
+body.public-facing #content-wrapper .btn-secondary, 
+body.public-facing #content-wrapper .btn-outline-secondary, 
+body.public-facing #content-wrapper .btn-light,
+body.public-facing #content-wrapper .dropdown-menu a {
+	background-color:white;
+	border-color:$greige!important;
+	color:$black!important;
+}
+
+body.public-facing #content-wrapper .btn-secondary > dd.hover, 
+body.public-facing #content-wrapper .btn-secondary > li.hover, 
+body.public-facing #content-wrapper .btn-secondary > a.hover, 
+body.public-facing #content-wrapper .btn-secondary:hover, 
+body.public-facing #content-wrapper .btn-outline-secondary:hover, 
+body.public-facing #content-wrapper .btn-light:hover,
+body.public-facing #content-wrapper .dropdown-menu a:hover {
+	background-color:$greige-light!important;
+	border-color:$greige!important;
+	color:$black!important;
+}
+
+.btn-outline-secondary:not(:disabled):not(.disabled):active:focus, .btn-outline-secondary.active:not(:disabled):not(.disabled):focus, .show > .btn-outline-secondary.dropdown-toggle:focus, .no-js .btn-group:focus-within .dropdown-menu > .btn-outline-secondary.dropdown-toggle:focus, .no-js .btn-group:focus-within .twitter-typeahead .tt-menu > .btn-outline-secondary.dropdown-toggle:focus, .twitter-typeahead .no-js .btn-group:focus-within .tt-menu > .btn-outline-secondary.dropdown-toggle:focus {
+	box-shadow:none!important;
+	outline: 1px dashed $black;
+	outline-offset: 2px;
+}
 
 
 /* VISIBILITY */
@@ -39,22 +72,24 @@ $border-radius: 24px;
 .hide, .hidden { display:none!important;}
 
 
-/* FONTS  */
+/* FONTS  -------------------------------------------------------------                    */
 
-body.public-facing {
-  font-family: "Open Sans", "Helvetica Neue", Arial, sans-serif!important;
+body.public-facing, .poppins  {
+  font-family: "Poppins", "Helvetica Neue", Arial, sans-serif!important;
 }
 
-.poppins { font-family: "Poppins", sans-serif; }
 
 
 .navbar-product-name,
 body.public-facing h1, 
 body.public-facing h2, 
 body.public-facing h3, 
-body.public-facing h4  {
-  font-family:"Stack Sans Text", Helvetica Neue, Helvetica, Arial, sans-serif!important;
+body.public-facing h4,
+a.nav-link.dropdown-toggle { 
+	font-family:"Oxanium", "Helvetica Neue", Helvetica, Arial, sans-serif!important;
 }
+
+
 
 body.public-facing .nav.navbar-nav > li.nav-item > a.nav-link { font-weight:500; }
 
@@ -65,6 +100,7 @@ body.public-facing .nav.navbar-nav > li.nav-item > a.nav-link { font-weight:500;
 .card,
 .card-header,
 .card-header:first-child { border-radius:$border-radius;}
+
 
 
 /* HEADER 2026 */
@@ -136,22 +172,37 @@ div#logo-name {
 
 /*  HEADER NAV LINKS */
 
+a.nav-link.dropdown-toggle[aria-expanded="true"] { background-color:$greige-light;}
+
 #header-nav-links .dropdown-menu.show { 
   border-top-right-radius:0;
   border-top-left-radius:0;
   width:100%;
   margin-top:-2px;
+  background-color: $greige-light;
 }
 #header-nav-links .dropdown-item { white-space: normal;}
 
 #header-navbar a.nav-link.dropdown-toggle {
 	font-weight: 700;
-	color:$black;
-}
-#header-nav-links {
 	font-size:1.2rem; 
+	color:$black;
 	text-transform:uppercase;
 }
+
+.dropdown-menu-section { max-width:500px;}
+
+.dropdown-menu-section img {
+	max-width: 100%;
+	padding-right:1rem;
+}
+
+#header-nav-links .dropdown-menu-section:nth-of-type(3) {
+	text-align: center;
+	margin-top:2rem;
+}
+
+
 @media (max-width: 767.99px){
 	#header-nav-links {
 		width:100%;
@@ -159,6 +210,7 @@ div#logo-name {
 		justify-content: flex-end;
 		margin-bottom:1rem;
 	}
+	#header-navbar a.nav-link.dropdown-toggle { padding-left:1rem;}
 	#header-nav-links .navbar-collapse { display:none;}
 	
 	#header-nav-links .navbar-collapse.show {
@@ -176,6 +228,8 @@ div#logo-name {
 		margin:0 1rem;
 		padding-right: 1rem;
 	}
+	.dropdown-menu-section { padding:1rem;}
+	.dropdown-menu-section img { margin-bottom:1rem;}
 
 
 }
@@ -188,18 +242,42 @@ div#logo-name {
 		flex-direction: column;
 		justify-content: center;
 	}
+
+	#header-nav-links .dropdown { position:unset; }
+	
 	#header-nav-links #navbarNav { justify-content: center;}
 	#header-nav-links #navbarNav ul { gap:1rem; }
 	#header-navbar a.nav-link.dropdown-toggle {
 		display: flex;
 		justify-content: center;
 		align-items: center;
+		border-radius:$border-radius-tabs;
 	}
-
+	#header-nav-links .dropdown-menu.show {
+		top:4.5rem;
+		width:calc(100% - 4rem);
+		margin:0 2rem;
+		padding:1rem;
+	}
+	#drop-collections.dropdown-menu.show,
+	#drop-repositories.dropdown-menu.show,
+	#drop-help.dropdown-menu.show  { 
+		display:grid;
+		grid-template-columns: 250px 1fr 1fr;
+		gap:1rem;
+	}
+}
+@media (min-width:992) {
+	#drop-collections.dropdown-menu.show,
+	#drop-repositories.dropdown-menu.show,
+	#drop-help.dropdown-menu.show { gap:2rem!important;}
+	#drop-repositories.dropdown-menu.show  { grid-template-columns: 250px 350px 1fr;}
 }
 
-
 @media (min-width: 1200px){
+
+	#header-nav-links .dropdown { position:unset; }
+
 	#header-nav-links { padding:$padding-xl; }
 
 	#nav-search { justify-content: space-between;}
@@ -209,6 +287,18 @@ div#logo-name {
 		flex-direction:row;
 		gap:1rem;
 	}
+	#header-nav-links .dropdown-menu.show { 
+		display:grid;
+		grid-template-columns: 300px 1fr 1fr;
+		gap:3rem;
+		top:6rem;
+		padding:1rem 2rem;
+		margin:0 2rem;
+		width: calc(100% - 4rem);
+		border-radius:$border-radius;
+		font-size:larger;
+	}
+	#header-nav-links .dropdown-menu h2 { font-size:1.4rem;}
 }
 
 
@@ -292,10 +382,16 @@ a#advanced-search-link:hover { color: $blue-hover!important;}
   min-width:unset;
   color:$greige-dark;
 }
-#mySidebar2 .closebtn:hover { color:white;}
+#mySidebar2 .closebtn:hover { color:$red;}
 #filters-adv {
 	display: flex;
 	gap:1rem;
+}
+@media (min-width:1200px) {
+	#filters-adv { 
+		gap:.5rem; 
+		margin-left:1rem;
+	}
 }
 
 #filters-adv button, 
@@ -328,7 +424,7 @@ a#advanced-search-link:hover { color: $blue-hover!important;}
 }
 
 
-/* FACETS */
+/* FACETS  FILTERS */
 
 
 h2.facets-heading { color:$greige-dark; }
@@ -338,7 +434,21 @@ h2.facets-heading { color:$greige-dark; }
 div#mySidebar2 #facet-panel-collapse { width:95%;}
 
 #mySidebar2 a.facet-select { padding:unset;}
-#facets button.dropdown-toggle {width:100%; display:flex; align-items:center; font-size:1.8rem;}
+#facets button.dropdown-toggle {
+	width:100%; 
+	display:flex; 
+	align-items:center; 
+	font-size:1.8rem;
+}
+.facet-field-heading button::after {
+	font-family:'FontAwesome';
+	content:'\f078';
+	transform:none;
+}
+
+.facet-field-heading button[aria-expanded="true"]:after { transform: rotate(180deg);}
+
+#mySidebar2 .card.facet-limit {border:none!important;}
 
 #mySidebar2 .card button { 
 	padding:8px 16px!important; 
@@ -348,12 +458,12 @@ div#mySidebar2 #facet-panel-collapse { width:95%;}
 
 @media (min-width:768px) {
 	#facets { margin:1rem; }
-
-  #facets button.dropdown-toggle:after {display:none; }
-  #facets .dropdown-menu {display:block;}
-
-  #facets .dropdown-toggle, #facets .dropdown-menu { border:none;}
-  #facets button h2 { font-size:20px; font-weight:bold; text-transform: uppercase;}
+	#facets button.dropdown-toggle:after {display:none; }
+	#facets .dropdown-menu {display:block;}
+	
+	#facets .dropdown-toggle, 
+	#facets .dropdown-menu { border:none;}
+	#facets button h2 { font-size:20px; font-weight:bold; text-transform: uppercase;}
 }
 
 
@@ -467,92 +577,61 @@ body.uofl #search-form-header input.form-control:focus { border-color:transparen
 i.fa.fa-sign-in { display:none; }
 
 
-#indLib_footer{background-color:#444;color:#fff}
-#ulibs_footer{background-color:#222;color:#fff}
-#uofl_footer{background-color:black;color:white}
-
-#indLib_footer a, 
-#ulibs-inner a {color:white; text-decoration: none;}
-#indLib_footer a:hover, 
-#ulibs-inner a:hover {text-decoration:underline #ad0000;}
-#ulibs_footer a svg path,#ulibs_footer a svg circle{fill:#ffffff}
-#ulibs_footer a:hover svg path,#ulibs_footer a:hover svg circle{fill:#ad0000}
-
-#indLib_footer,#uofl_footer,#ulibs_footer{padding:1rem}
-#indLib_footer_name{font-size:1.125rem;}
-#indLib_footer_name a{text-transform:uppercase;font-weight:bold; font-family:"Stack Sans Text", Helvetica, Arial, sans-serif;}
-ul.ulibs_footer_menu{padding:0}
-#libs-headingThree a span span{text-transform:lowercase}
-#uofl_footer_menu,.ulibs_footer_menu{list-style-type:none}
-#uofl_footer_menu a{color:white;text-decoration:none;white-space:nowrap;letter-spacing:1px}footer .panel-title a i{margin-left:1rem}
-.our_footer #collapse3 a,.our_footer #collapseThree a{margin-right:1.4rem}
-#uofl_footer_menu a,footer .panel-title a{text-transform:uppercase}
-#s-lg-guide-footer-attributes{list-style-type:none}
-#meta-wrap{padding:0}
-#s-lib-footer-public{justify-content:flex-start}
-#web_menu li{font-size:1.2rem}footer h2,footer a{line-height:1.6}
-#ulibs-inner h2{font-size:1.125rem;margin:0}
-footer .sm{display:flex}
-footer .sm-item{margin-right:.5rem}
-.icon-circle{white-space:nowrap;overflow:hidden;position:relative;z-index:1;width:2.5rem;height:2.5rem;border-width:.2rem;border-style:solid;border-radius:50%;transition:background-color .1s ease;display:inline-block;font-size:0;vertical-align:middle}
-.icon-circle::before{
-	background-position:50% 50%;background-repeat:no-repeat;content:'';font-size:0;display:block;position:absolute;left:50%;top:50%;transform:translate(-50%, -50%);
-	width:2rem;height:2rem;
-	background-size:2rem 2rem
+#footer2026 { 
+	background-color:$black;
+	color:white;
+	margin:1rem;
+	border-radius:$border-radius;
+	padding:1rem;
 }
-.icon-circle.facebook{border-color:#3b5998;background-color:#ffffff}
-.icon-circle.twitter{border-color:#55acee}
-.icon-circle.instagram{border-color:#ff5d40;background-color:#ffffff}
-.icon-circle.flickr{border-color:#4A62A8;background-color:#ffffff}
-.icon-circle.wp{border-color:#ff5d40;background-color:#ffffff}
-.icon-circle.more-sm{border-color:#55acee;background-color:#ffffff}
-.icon-circle.facebook path{fill:#3b5998 !important}
-.icon-circle.facebook:hover{background-color:#3b5998}
-.icon-circle.facebook:hover path{fill:#fff !important}
-.icon-circle.twitter path{fill:#55acee}
-.icon-circle.twitter:hover path{fill:#ffffff !important}
-.icon-circle.instagram:hover{background-color:#FFF7D5}
-.icon-circle.flickr circle{fill:#ffffff !important}
-.icon-circle.flickr:hover circle{fill:#fff7d5 !important}
-#ulibs_footer a.wp svg path{fill:#ff5d40}
-.icon-circle.wp:hover{border-color:#ffffff;background-color:#ff5d40}
-#ulibs_footer a.wp:hover svg path{fill:#ffffff}
-#ulibs_footer a.more-sm svg path{fill:#55acee}
-.icon-circle.more-sm:hover{background-color:#ffffff}
-#ulibs_footer a.more-sm:hover svg path{fill:#ad0000}
-.icon-circle.plus{color:black;font-size:1.875rem;font-weight:bold;text-decoration:none;display:flex;justify-content:center;align-items:center}a.icon-circle.plus:hover{background-color:#000}a.icon-circle.plus:hover span{color:white}footer .panel-body .join-email a{text-decoration:underline}footer.navbar-inverse .navbar-link{color:#000000;text-decoration:underline #ad0000}footer.navbar-inverse .navbar-link:hover{color:#ad0000}footer.navbar.site-footer{margin-top:0;border:none;height:unset}footer.site-footer .row{margin-bottom:1rem}footer.site-footer .navbar-text{margin:0}footer.site-footer p{margin:0;text-align:left}footer.site-footer .navbar-right{margin:0}
-
-@media (max-width: 767.99px){
-  .our_footer .row { flex-direction:column;}
-	footer .panel-body{padding-top:0}
-	footer #collapse3 .panel-body{padding-top:1rem}
-	#uofl_footer_menu a,footer .panel-title a{display:flex}
-	footer .panel-title a:focus{background-color:#ad0000;color:white;outline:none}
-	#indLib_footer,#uofl_footer,#ulibs_footer{padding-bottom:1.875rem}
-	.indLib_address{width:20rem;margin:0 auto 1rem;text-align:center}
-	#indLib_footer_name{display:flex;justify-content:center;text-align:center;padding:1rem .5rem}
-	#ulibs-inner h2{margin-bottom:.5rem}
-	#ulibs-inner>div{margin:1.5rem 0}
-	#uofl_footer,.our_footer{display:flex;flex-direction:column;align-items:center}
-	#uofl_footer_menu{padding:1rem 0 2rem;column-count:2;column-gap:1.8rem}
-	footer #uofl_logo,footer #ulibs_footer_logo{padding:1rem 1rem .5rem;text-align:center}
-}
-@media (min-width: 768px){
-	#indLib_footer .row,#ulibs_footer .row,#uofl_footer .row{display:grid;grid-template-columns:12rem 1fr;width:100%}
-	.our_footer .container{display:flex;align-items:flex-start;justify-content:space-between}
-	#indLib_footer_name{line-height:1.15}
-	#ulibs-inner{display:flex;justify-content:space-between;width:100%}
-	#uofl_footer_menu{padding-left:0;display:flex;justify-content:space-between;margin-bottom:0}
-	ul#uofl_footer_menu li{padding:0}
-	footer .glyphicon-lock{font-size:12px}
-	footer.navbar.site-footer .navbar-text{display:flex}
-	footer.navbar.site-footer .navbar-text p:first-of-type{margin-right:1rem}
-  #system-footer { display:flex; margin:0;}
+@media (min-width:992px) {
+	#footer2026 { padding:2rem;}
 }
 
+#footer2026 a {
+	color:white;
+	text-decoration: none;
+}
+#foot1, #foot2 {
+	display: flex;
+	justify-content: space-between;
+}
+#foot1 { 
+	margin-bottom:1rem;
+	border-bottom:1px solid $greige-dark;
+	padding-bottom:1rem;
+}
+
+@media (max-width:767.9px) {
+	#foot1, #foot2 { display:block;}
+	#foot-contact { margin-bottom:1rem;}
+}
+
+#footer2026 p {
+	margin-bottom:0;
+	line-height:1.6;
+}
+
+#system-info strong {display:block; }
 
 
 /* LOGGED IN */
 
 div#user-util-links a.dropdown-item { color:#2e74b2; }
 div#user-util-links a.dropdown-item:hover { color:#ad0000;}
+
+
+/* CATALOG RESULTS */
+
+#sort-dropdown a.dropdown-item { color:$black!important;}
+#sort-dropdown .dropdown-menu a.dropdown-item.active { background-color:$greige-light!important;}
+
+.metadata dt { 
+	width:10rem;
+	flex:unset;
+}
+.metadata dd {
+	flex:unset;
+	max-width:unset;
+	width:calc(100% - 10rem);
+}
