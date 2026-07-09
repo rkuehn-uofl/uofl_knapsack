@@ -62,6 +62,17 @@ module HykuKnapsack
       HykuKnapsack::Engine.root.glob("lib/**/*_decorator*.rb").sort.each do |c|
         Rails.configuration.cache_classes ? require(c) : load(c)
       end
+
+      # UOFL OVERRIDE: this used to live in config.after_initialize, which only
+      # ever runs once at boot. In development, editing (or adding a method
+      # to) any file under app/helpers gets unloaded and reloaded by Zeitwerk
+      # on every request, but that fresh module was never being re-registered
+      # onto ApplicationController - so the app kept calling helper methods
+      # against a stale snapshot taken at boot, raising NoMethodError until
+      # the whole process was restarted. to_prepare re-runs on every reload
+      # (in addition to once at boot), which is what this actually needs;
+      # `helper` is idempotent so re-running it here is harmless.
+      ::ApplicationController.send :helper, HykuKnapsack::Engine.helpers
     end
 
     config.after_initialize do
@@ -85,7 +96,6 @@ module HykuKnapsack
         paths = [HykuKnapsack::Engine.root.join('app', 'views').to_s] + paths
         klass.view_paths = paths.uniq
       end
-      ::ApplicationController.send :helper, HykuKnapsack::Engine.helpers
 
       ##
       # Ensure that all knapsack locales are the "first choice" of keys.  We've already done this in
