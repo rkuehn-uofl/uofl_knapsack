@@ -104,10 +104,14 @@ body.public-facing .nav.navbar-nav > li.nav-item > a.nav-link { font-weight:500;
 
 
 /* HEADER 2026 */
+/* Scoped to body.public-facing: the base (non-themed) masthead rendered on
+   admin/dashboard pages reuses id="masthead", so these rules must not be
+   global or they distort the admin header and overlap the sidebar. */
+body.public-facing {
 
 .container.site-title-container { display:none;}
 
-body.public-facing #nav-masthead > .navbar.navbar-expand-sm { background-color: rgba(255,255,255,1)!important;}
+#nav-masthead > .navbar.navbar-expand-sm { background-color: rgba(255,255,255,1)!important;}
 
 
 
@@ -116,7 +120,7 @@ div#logo-name {
 	grid-template-columns: 70px 1fr;
 }
 #logo-col img{
-	margin-right:1rem; 
+	margin-right:1rem;
 	margin-top:4px;
 	width:65px;
 	height:40px;
@@ -149,7 +153,7 @@ div#logo-name {
 	}
 
 @media (max-width: 767.99px){
-  nav#masthead { 
+  nav#masthead {
 	padding:$padding-sm;
     justify-content: center!important;
   }
@@ -174,7 +178,7 @@ div#logo-name {
 
 a.nav-link.dropdown-toggle[aria-expanded="true"] { background-color:$greige-light;}
 
-#header-nav-links .dropdown-menu.show { 
+#header-nav-links .dropdown-menu.show {
   border-top-right-radius:0;
   border-top-left-radius:0;
   width:100%;
@@ -185,7 +189,7 @@ a.nav-link.dropdown-toggle[aria-expanded="true"] { background-color:$greige-ligh
 
 #header-navbar a.nav-link.dropdown-toggle {
 	font-weight: 700;
-	font-size:1.2rem; 
+	font-size:1.2rem;
 	color:$black;
 	text-transform:uppercase;
 }
@@ -212,13 +216,13 @@ a.nav-link.dropdown-toggle[aria-expanded="true"] { background-color:$greige-ligh
 	}
 	#header-navbar a.nav-link.dropdown-toggle { padding-left:1rem;}
 	#header-nav-links .navbar-collapse { display:none;}
-	
+
 	#header-nav-links .navbar-collapse.show {
 		display: flex;
 		padding: 0 8px 1rem;
 		position:absolute;
 		top:50px;
-		left:0;		
+		left:0;
 		right:0;
 		background-color:white!important;
 		border-bottom: 1px solid gray;
@@ -235,16 +239,16 @@ a.nav-link.dropdown-toggle[aria-expanded="true"] { background-color:$greige-ligh
 }
 @media (min-width: 768px) and (max-width:1199.9px) {
 	#nav-search { flex-direction:column;}
-  
-	#header-nav-links { 
-		padding:$padding-md; 
+
+	#header-nav-links {
+		padding:$padding-md;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
 	}
 
 	#header-nav-links .dropdown { position:unset; }
-	
+
 	#header-nav-links #navbarNav { justify-content: center;}
 	#header-nav-links #navbarNav ul { gap:1rem; }
 	#header-navbar a.nav-link.dropdown-toggle {
@@ -261,7 +265,7 @@ a.nav-link.dropdown-toggle[aria-expanded="true"] { background-color:$greige-ligh
 	}
 	#drop-collections.dropdown-menu.show,
 	#drop-repositories.dropdown-menu.show,
-	#drop-help.dropdown-menu.show  { 
+	#drop-help.dropdown-menu.show  {
 		display:grid;
 		grid-template-columns: 250px 1fr 1fr;
 		gap:1rem;
@@ -287,7 +291,7 @@ a.nav-link.dropdown-toggle[aria-expanded="true"] { background-color:$greige-ligh
 		flex-direction:row;
 		gap:1rem;
 	}
-	#header-nav-links .dropdown-menu.show { 
+	#header-nav-links .dropdown-menu.show {
 		display:grid;
 		grid-template-columns: 300px 1fr 1fr;
 		gap:3rem;
@@ -303,14 +307,14 @@ a.nav-link.dropdown-toggle[aria-expanded="true"] { background-color:$greige-ligh
 
 
 /* SEARCH --------------------------------------------------------- */
-#search-wrap { 
+#search-wrap {
 	display: flex;
 	align-items:center;
 	justify-content: center;
 	flex-wrap:wrap;
 }
 @media (min-width:768px) and (max-width:1199.9px) {
-	#search-wrap { 
+	#search-wrap {
 		flex-direction:column;
 		gap:1rem;
 	}
@@ -327,6 +331,8 @@ a.nav-link.dropdown-toggle[aria-expanded="true"] { background-color:$greige-ligh
 @media (max-width: 767.9px){	#search-form-header-wrap { padding:0 $padding-sm $padding-sm; } }
 @media (min-width: 768px){	#search-form-header-wrap { padding:0 $padding-md $padding-md; } }
 @media (min-width: 992px){	#search-form-header-wrap { padding:0 $padding-lg $padding-lg; } }
+
+} // end body.public-facing (HEADER 2026 / HEADER NAV LINKS / SEARCH)
 
 
 
