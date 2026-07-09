@@ -215,6 +215,7 @@ body.public-facing .hero-content h1 {
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
   overflow: hidden;
+  min-height: calc(1.15em * 2);
 }
 
 .carousel-copy [data-slide-description] {
