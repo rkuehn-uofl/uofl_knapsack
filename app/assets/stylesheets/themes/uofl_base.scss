@@ -139,6 +139,16 @@ body.public-facing {
 	color: white;
 }
 
+/* On the homepage/all_collections hero, the header should float
+   transparently over the image (matching the design mock) instead of
+   sitting on its own solid bar - the hero's own .hero-scrim gradient
+   (darkest at the top-left) is what keeps the white nav text legible
+   there, same as the mock relies on. Every other page keeps the solid
+   background above since they have no hero image behind the header. */
+&.has-hero .site-header {
+	background: transparent;
+}
+
 .brand {
 	display: flex;
 	align-items: center;
