@@ -3,19 +3,11 @@
 <%# edited by TH %>
 <%# UOFL OVERRIDE: UofL Theme %>
 <% content_for(:navbar) do %>
-<div class="image-masthead" id="nav-masthead">
-	  <!-- default repository homepage -->
-	  <!-- div class="background-container" title="<%= block_for(name: 'banner_image_text') %>" style="background-image: url('<%= banner_image %>')"></div -->
-	  
-	  <div class="container site-title-container">
-      <div class="site-title h1" style="text-align: center;">
-        <%= render "hyrax/homepage/marketing" if controller_name == 'homepage' %>
-      </div>
-    </div>
-<h1 class="sr-only">University of Louisville Libraries Digital Collections</h1>
-    <%= render '/controls' %>
-	  
-</div>
+  <% if params[:action] == 'all_collections' %>
+    <%= render 'hyrax/homepage/all_collections_hero' %>
+  <% else %>
+    <%= render 'hyrax/homepage/hero' %>
+  <% end %>
 <% end %>
 
 <% content_for(:precontainer_content) do %>

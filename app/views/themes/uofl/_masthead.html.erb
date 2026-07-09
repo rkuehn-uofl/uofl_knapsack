@@ -1,124 +1,185 @@
-<%# OVERRIDE Hyrax v5.2.0 to render either admin or user util links %>
+<%# UOFL OVERRIDE: UofL Theme - Header ported from the new hyku-home design
+    (mega-menu nav), rendered on every page. Real data: Popular Collections,
+    Repositories, Explore By Type/Places all link to real facet searches or
+    real collections.
 
-<%# edited by TH %>
-<%# UOFL OVERRIDE: UofL Theme %>
-<header id="header-navbar" aria-label="header" class="top-header">
-  <nav id="masthead" class="navbar navbar-expand-lg navbar-dark bg-dark justify-content-between <%= placement_class %>" role="navigation" aria-label="masthead">
-	  <div class="sr-only"><%= application_name %></div>
-	  <div id="logo-name" class="">
-		  <div id="logo-col">
-			  <a href="https://library.louisville.edu/home">
-				  <img alt="University of Louisville Libraries" src="<%= image_path('themes/uofl/logo-libraries-ALT_black-trimmed.png') %>" />
-			  </a>
-		  </div>
-		  <div class="navbar-product-name">
-			  <a href="/">
-			  			Digital Collections
-			  </a>
-		  </div>
-	  </div>
-	  
-	</nav>
+    catalog/_search_form always renders here (not just on non-hero pages):
+    it's what defines #mySidebar2 (the real facets drawer) and the openNav()/
+    closeNav() functions that the homepage hero's own "Browse Items" button
+    calls. On hero pages (body.has-hero) the visible compact search box/
+    buttons are hidden via CSS instead of skipping the render, so the drawer
+    and its JS stay available everywhere. %>
 
+<header class="site-header" id="header-navbar" aria-label="header" data-header>
+  <a class="brand" href="/" aria-label="<%= application_name %> home">
+    <img alt="University of Louisville Libraries" src="<%= image_path('themes/uofl/logo-libraries-ALT_black-trimmed.png') %>">
+    <span>Digital Collections</span>
+  </a>
 
+  <button class="mobile-menu-toggle" type="button" aria-expanded="false" aria-controls="primary-nav" data-mobile-toggle>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span class="sr-only">Toggle navigation</span>
+  </button>
 
-	<nav id="nav-search" role="navigation" aria-label="Navigation and Search" class="navbar navbar-expand-md">
-		<div id="header-nav-links">
-			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-			     <i class="fa-solid fa-bars"></i>
-			</button>
-			<div class="collapse navbar-collapse" id="navbarNav">
-				<ul class="navbar-nav mr-auto">
-					<li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
-							Collections
-						</a>
-						<div class="dropdown-menu" id="drop-collections">
-							
-								<div class="dropdown-menu-section">
-									<img alt="Julius Rowe reading" 
-									src="<%= image_path('themes/uofl/SONJ_02943_n_250.jpg') %>" />
+  <nav class="primary-nav" id="primary-nav" aria-label="Primary navigation">
+    <div class="nav-item">
+      <button class="nav-trigger" type="button" aria-expanded="false" data-menu="collections">Collections</button>
+    </div>
+    <div class="nav-item">
+      <button class="nav-trigger" type="button" aria-expanded="false" data-menu="repositories">Repositories</button>
+    </div>
+    <div class="nav-item">
+      <button class="nav-trigger" type="button" aria-expanded="false" data-menu="explore">Explore</button>
+    </div>
+    <div class="nav-item">
+      <button class="nav-trigger" type="button" aria-expanded="false" data-menu="help">Help</button>
+    </div>
+  </nav>
 
-								</div>
-								<div class="dropdown-menu-section">
-									<h2>Popular Collections</h2>
-									<ul>
-										<li><a href="fake.html">Caufield &amp; Shook</a></li>
-										<li><a href="fake.html">Standard Oil (New Jersey)</a></li>
-										<li><a href="fake.html">Louisville Leader</a></li>
-										<li><a href="fake.html">Royal Photo Company</a></li>
-									</ul>
-
-								</div>
-								<div class="dropdown-menu-section">
-									<p><strong>View all <a href="/all_collections">Collections A-Z</a> with descriptions.</strong></p>
-								</div>
-							
-						</div>
-					</li>
-					<li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
-							Repositories
-						</a>
-						<div class="dropdown-menu" id="drop-repositories">
-							
-								<div class="dropdown-menu-section">
-									<img alt="students reading in rotunda room of Grawemeyer Hall" 
-									src="<%= image_path('themes/uofl/ulua_001_0422_300x240.png') %>" />
-
-								</div>
-								<div class="dropdown-menu-section">
-									<h2>Repositories</h2>
-									<ul>
-		<li><a href="/catalog?f%5Bpublisher_sim%5D%5B%5D=University+of+Louisville+Photographic+Archives&locale=en">ASC Photographic Archives</a></li>
-		<li><a href="/catalog?f%5Bpublisher_sim%5D%5B%5D=University+of+Louisville+Rare+Books&locale=en">ASC Rare Books</a></li>
-		<li><a href="/catalog?f%5Bpublisher_sim%5D%5B%5D=University+of+Louisville+Archives+and+Records+Center&locale=en">ASC University Archives &amp; Records Center</a></li>
-		<li><a href="/catalog?f%5Bpublisher_sim%5D%5B%5D=University+of+Louisville+Margaret+M.+Bridwell+Art+Library&locale=en">Bridwell Art Library</a></li>
-		<li><a href="/catalog?f%5Bpublisher_sim%5D%5B%5D=University+of+Louisville+Dwight+Anderson+Music+Library&locale=en">Dwight Anderson Memorial Music Library</a></li>
-		<li><a href="/catalog?f%5Bpublisher_sim%5D%5B%5D=University+of+Louisville+Kornhauser+Health+Sciences+Library&locale=en">Kornhauser Health Sciences Library</a></li>
-		<li><a href="/catalog?f%5Bpublisher_sim%5D%5B%5D=Law+Library+of+the+Louis+D.+Brandeis+School+of+Law%2C+University+of+Louisville&locale=en">Law Library, Louis D. Brandeis School of Law</a></li>
-									</ul>
-
-								</div>
-								<div class="dropdown-menu-section">
-									<p><strong>Browse items by the archive or library to which they belong.</strong></p>
-								</div>
-							
-						</div>
-					</li>
-					<li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
-							Help
-						</a>
-						<div class="dropdown-menu" id="drop-help">
-							
-								<div class="dropdown-menu-section">
-									<img alt="librarian helping students in the University Library" 
-									src="<%= image_path('themes/uofl/001_0435_300x300.jpg') %>" />
-
-								</div>
-								<div class="dropdown-menu-section">
-									<h2>Help</h2>
-									<ul>
-										<li><a href="fake.html">Searching the Digital Collections</a></li>
-										<li><a href="fake.html">Navigating multi-page objects</a></li>
-										<li><a href="fake.html">Citing sources</a></li>
-										<li><a href="fake.html">Ordering reproductions</a></li>
-									</ul>
-
-								</div>
-								<div class="dropdown-menu-section">
-									<p><strong>Need more help?<br> <a href="mailto:digital@louisville.edu">Email us</a> or call us at 502.852.4476.</strong></p>
-								</div>
-							
-						</div>
-					</li>
-				</ul>
-
-			</div>
-		</div>
-		<div id="search-wrap">
-<%= render 'catalog/search_form' %>
-		</div>
-	</nav><!-- /.navbar -->
+  <div id="header-search-wrap">
+    <%= render 'catalog/search_form' %>
+  </div>
 </header>
+
+<div class="mega-menu" data-panel="collections" aria-hidden="true">
+  <img alt="Julius Rowe reading" src="<%= image_path('themes/uofl/SONJ_02943_n_250.jpg') %>">
+  <div>
+    <p class="eyebrow">Popular Collections</p>
+    <% uofl_navbar_collections = uofl_top_collections %>
+    <% uofl_navbar_collections.each do |collection| %>
+      <%= link_to markdown(collection.title_or_label), hyrax.collection_path(collection.id) %>
+    <% end %>
+  </div>
+  <div>
+    <p class="eyebrow">Browse</p>
+    <a href="/all_collections">View all Collections A-Z with descriptions</a>
+  </div>
+</div>
+
+<div class="mega-menu" data-panel="repositories" aria-hidden="true">
+  <img alt="students reading in rotunda room of Grawemeyer Hall" src="<%= image_path('themes/uofl/ulua_001_0422_300x240.png') %>">
+  <div>
+    <p class="eyebrow">Repositories</p>
+    <a href="/catalog?f%5Bpublisher_sim%5D%5B%5D=University+of+Louisville+Photographic+Archives&locale=en">ASC Photographic Archives</a>
+    <a href="/catalog?f%5Bpublisher_sim%5D%5B%5D=University+of+Louisville+Rare+Books&locale=en">ASC Rare Books</a>
+    <a href="/catalog?f%5Bpublisher_sim%5D%5B%5D=University+of+Louisville+Archives+and+Records+Center&locale=en">ASC University Archives &amp; Records Center</a>
+    <a href="/catalog?f%5Bpublisher_sim%5D%5B%5D=University+of+Louisville+Margaret+M.+Bridwell+Art+Library&locale=en">Bridwell Art Library</a>
+  </div>
+  <div>
+    <p class="eyebrow">&nbsp;</p>
+    <a href="/catalog?f%5Bpublisher_sim%5D%5B%5D=University+of+Louisville+Dwight+Anderson+Music+Library&locale=en">Dwight Anderson Memorial Music Library</a>
+    <a href="/catalog?f%5Bpublisher_sim%5D%5B%5D=University+of+Louisville+Kornhauser+Health+Sciences+Library&locale=en">Kornhauser Health Sciences Library</a>
+    <a href="/catalog?f%5Bpublisher_sim%5D%5B%5D=Law+Library+of+the+Louis+D.+Brandeis+School+of+Law%2C+University+of+Louisville&locale=en">Law Library, Louis D. Brandeis School of Law</a>
+  </div>
+</div>
+
+<div class="mega-menu" data-panel="explore" aria-hidden="true">
+  <img alt="Historic map detail" src="<%= image_path('themes/uofl/homepage/placeholder-maps.jpg') %>">
+  <div>
+    <p class="eyebrow">Explore By Type</p>
+    <a href="<%= main_app.search_catalog_path(f_inclusive: { resource_type_sim: ['Film negatives', 'Gelatin silver printing-out paper prints', 'Gelatin silver prints', 'Glass negatives', 'Halftone photomechanical prints', 'Nitrate negatives', 'Photographic postcards', 'Photographic prints', 'Photogravures', 'Photomechanical prints', 'Stereographs'] }) %>">Photographs</a>
+    <a href="<%= main_app.search_catalog_path(q: 'illuminated manuscripts') %>">Illuminated Manuscripts</a>
+    <a href="<%= main_app.search_catalog_path(q: 'maps') %>">Maps</a>
+    <a href="<%= main_app.search_catalog_path(q: 'newspapers') %>">Newspapers</a>
+  </div>
+  <div>
+    <p class="eyebrow">Explore Places</p>
+    <a href="<%= main_app.search_catalog_path(f: { city_sim: ['Louisville (Ky.)'] }) %>">Louisville</a>
+    <a href="<%= main_app.search_catalog_path(q: 'Kentucky') %>">Kentucky</a>
+    <a href="<%= main_app.search_catalog_path(q: 'Ohio River Valley') %>">Ohio River Valley</a>
+    <a href="<%= main_app.search_catalog_path(q: 'University of Louisville') %>">University of Louisville</a>
+  </div>
+</div>
+
+<div class="mega-menu" data-panel="help" aria-hidden="true">
+  <img alt="librarian helping students in the University Library" src="<%= image_path('themes/uofl/001_0435_300x300.jpg') %>">
+  <div>
+    <p class="eyebrow">Help</p>
+    <a href="fake.html">Searching the Digital Collections</a>
+    <a href="fake.html">Navigating multi-page objects</a>
+    <a href="fake.html">Citing sources</a>
+    <a href="fake.html">Ordering reproductions</a>
+  </div>
+  <div>
+    <p class="eyebrow">Need more help?</p>
+    <a href="mailto:digital@louisville.edu">Email us</a>
+    <a href="tel:5028524476">Call 502.852.4476</a>
+  </div>
+</div>
+
+<script>
+  (function () {
+    const navTriggers = document.querySelectorAll('.nav-trigger');
+    const megaMenus = document.querySelectorAll('.mega-menu');
+    const mobileToggle = document.querySelector('[data-mobile-toggle]');
+    const primaryNav = document.querySelector('.primary-nav');
+
+    function closeMenus() {
+      navTriggers.forEach((trigger) => trigger.setAttribute('aria-expanded', 'false'));
+      megaMenus.forEach((menu) => {
+        menu.classList.remove('is-open');
+        menu.setAttribute('aria-hidden', 'true');
+      });
+    }
+
+    const header = document.querySelector('.site-header');
+
+    navTriggers.forEach((trigger) => {
+      trigger.addEventListener('click', () => {
+        const panel = document.querySelector(`[data-panel="${trigger.dataset.menu}"]`);
+        const wasOpen = panel.classList.contains('is-open');
+        closeMenus();
+
+        if (!wasOpen) {
+          // .mega-menu panels are siblings of .site-header (not children), so a
+          // CSS `top: 100%` would resolve against the document, not the header.
+          // Position it against the header's actual rendered height instead.
+          if (header) panel.style.top = `${header.getBoundingClientRect().bottom}px`;
+          trigger.setAttribute('aria-expanded', 'true');
+          panel.classList.add('is-open');
+          panel.setAttribute('aria-hidden', 'false');
+        }
+      });
+    });
+
+    document.addEventListener('click', (event) => {
+      const clickedMenu = event.target.closest('.mega-menu');
+      const clickedTrigger = event.target.closest('.nav-trigger');
+
+      if (!clickedMenu && !clickedTrigger) {
+        closeMenus();
+      }
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') closeMenus();
+    });
+
+    if (mobileToggle && primaryNav) {
+      mobileToggle.addEventListener('click', () => {
+        const isOpen = primaryNav.classList.toggle('is-open');
+        mobileToggle.setAttribute('aria-expanded', String(isOpen));
+      });
+    }
+
+    // The header is position:absolute (so it can float over the homepage/
+    // all_collections hero), which takes it out of normal flow - on every
+    // other page #content-wrapper needs real padding-top to compensate, or
+    // the header covers the page title/breadcrumbs. A fixed CSS value can't
+    // work here because the header's actual height varies (it wraps to a
+    // second row once the search box + Browse/Filter + Advanced buttons
+    // don't fit on one line), so measure it for real instead.
+    const contentWrapper = document.getElementById('content-wrapper');
+
+    function syncContentPadding() {
+      if (!header || !contentWrapper || document.body.classList.contains('has-hero')) return;
+      contentWrapper.style.paddingTop = `${header.offsetHeight}px`;
+    }
+
+    syncContentPadding();
+    window.addEventListener('resize', syncContentPadding);
+    window.addEventListener('load', syncContentPadding);
+  })();
+</script>

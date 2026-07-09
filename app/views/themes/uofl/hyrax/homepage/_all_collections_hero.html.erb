@@ -1,0 +1,11 @@
+<%# UOFL OVERRIDE: UofL Theme - Full-bleed hero for the All Collections page. %>
+<% content_for(:extra_body_classes, ' has-hero ') %>
+<% hero_image = UoflCuratedImages.hero %>
+<section class="hero collections-hero">
+  <img class="hero-image" src="<%= image_path(hero_image[:image]) %>" alt="<%= hero_image[:alt] %>">
+  <div class="hero-scrim"></div>
+  <div class="hero-content">
+    <h1>All Collections</h1>
+    <p>Explore collections of photographs, newspapers, books, maps, and more from our rare collections.</p>
+  </div>
+</section>

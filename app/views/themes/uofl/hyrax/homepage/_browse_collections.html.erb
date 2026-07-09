@@ -1,0 +1,39 @@
+<%# UOFL OVERRIDE: UofL Theme - "Browse Collections" grid (real collections,
+    curated images) plus an Explore-by-type quick filter row and the
+    all-collections quick-list drawer. %>
+<% cards = uofl_homepage_collection_slides(limit: 4) %>
+<section class="browse-section">
+  <% if cards.present? %>
+    <div class="section-heading">
+      <h2>Browse Collections</h2>
+      <button class="plain-link" type="button" data-open-browse>View all collections</button>
+    </div>
+
+    <div class="collection-grid">
+      <% cards.each do |card| %>
+        <article class="collection-card">
+          <img src="<%= card[:image_src] %>" alt="<%= card[:image_alt] %>">
+          <div>
+            <h3><%= link_to card[:title], card[:url] %></h3>
+            <p><%= card[:description] %></p>
+            <span class="item-count"><i class="fa-solid fa-images" aria-hidden="true"></i> <%= uofl_item_count_label(card[:count]) %></span>
+          </div>
+        </article>
+      <% end %>
+    </div>
+  <% end %>
+
+  <div class="type-filter" aria-label="Explore by type">
+    <h2>Explore By Type</h2>
+    <%= link_to 'Photographs', main_app.search_catalog_path(f_inclusive: { resource_type_sim: ['Film negatives', 'Gelatin silver printing-out paper prints', 'Gelatin silver prints', 'Glass negatives', 'Halftone photomechanical prints', 'Nitrate negatives', 'Photographic postcards', 'Photographic prints', 'Photogravures', 'Photomechanical prints', 'Stereographs'] }) %>
+    <%= link_to 'Maps', main_app.search_catalog_path(q: 'maps') %>
+    <%= link_to 'Newspapers', main_app.search_catalog_path(q: 'newspapers') %>
+    <%= link_to 'Books', main_app.search_catalog_path(q: 'books') %>
+    <%= link_to 'Manuscripts', main_app.search_catalog_path(q: 'manuscripts') %>
+    <%= link_to 'Yearbooks', main_app.search_catalog_path(q: 'yearbooks') %>
+    <%= link_to 'Audio & Video', main_app.search_catalog_path(f: { resource_type_sim: ['Audio', 'Video'] }) %>
+    <%= link_to 'Artifacts', main_app.search_catalog_path(q: 'artifacts') %>
+  </div>
+</section>
+
+<%= render 'hyrax/homepage/browse_drawer' %>

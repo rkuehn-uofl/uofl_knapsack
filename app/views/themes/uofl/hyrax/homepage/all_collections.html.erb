@@ -1,75 +1,89 @@
-<%# UOFL OVERRIDE NEW FILE: Display all viewable collections. %>
+<%# UOFL OVERRIDE: UofL Theme - Display all viewable collections. %>
 <% provide :page_title, "Browse by Collection | #{application_name}" %>
 
-<div class="all-collections-page">
-  <header class="mb-4">
-    <h1>Browse by Collection</h1>
-    <p>Explore the collections available in <%= application_name %>.</p>
-  </header>
+<div class="collections-list">
+  <section>
+    <div class="collection-search-and-filter">
+      <%= form_with url: main_app.all_collections_path, method: :get, local: true, class: 'search' do |form| %>
+        <%= hidden_field_tag :collection_letter, @selected_collection_letter if @selected_collection_letter.present? %>
+        <%= hidden_field_tag :collection_sort, @selected_sort if @selected_sort.present? %>
+        <h2 class="sr-only"><%= form.label :collection_description_query, 'Search collection titles and descriptions' %></h2>
+        <%= form.search_field :collection_description_query,
+                              value: @collection_description_query,
+                              placeholder: 'Search collection titles and descriptions',
+                              aria: { label: 'Search collection titles and descriptions' } %>
+        <button type="submit" aria-label="Search"><i class="fa-solid fa-magnifying-glass"></i></button>
+      <% end %>
+      <% if @collection_description_query.present? %>
+        <%= link_to 'Clear search', main_app.all_collections_path(collection_letter: @selected_collection_letter.presence, collection_sort: @selected_sort), class: 'plain-link' %>
+      <% end %>
+    </div>
+  </section>
 
-  <div class="all-collections-filters mb-4">
-    <div class="all-collections-filter-group mb-3">
-      <h2 class="h4">Filter by Collection Name</h2>
-      <nav class="all-collections-az-filter" aria-label="Filter collections by first letter">
+  <section>
+    <div class="browse-by-collection-name">
+      <div><strong>Browse by name</strong></div>
+      <nav class="alpha-nav" aria-label="Filter collections by first letter">
         <%= link_to 'All',
-                    main_app.all_collections_path(collection_description_query: @collection_description_query.presence),
-                    class: ['btn', 'btn-sm', @selected_collection_letter.blank? ? 'btn-primary' : 'btn-outline-primary'] %>
+                    main_app.all_collections_path(collection_description_query: @collection_description_query.presence, collection_sort: @selected_sort),
+                    class: @selected_collection_letter.blank? ? 'active' : nil %>
         <% ('A'..'Z').each do |letter| %>
-          <% disabled = !@collection_letters.include?(letter) %>
-          <% link_classes = ['btn', 'btn-sm', @selected_collection_letter == letter ? 'btn-primary' : 'btn-outline-primary'] %>
-          <% if disabled %>
-            <span class="btn btn-sm btn-outline-secondary disabled" aria-disabled="true"><%= letter %></span>
-          <% else %>
+          <% if @collection_letters.include?(letter) %>
             <%= link_to letter,
-                        main_app.all_collections_path(collection_letter: letter, collection_description_query: @collection_description_query.presence),
-                        class: link_classes %>
+                        main_app.all_collections_path(collection_letter: letter, collection_description_query: @collection_description_query.presence, collection_sort: @selected_sort),
+                        class: @selected_collection_letter == letter ? 'active' : nil %>
+          <% else %>
+            <span class="disabled" aria-disabled="true"><%= letter %></span>
           <% end %>
         <% end %>
       </nav>
     </div>
+  </section>
 
-    <div class="all-collections-filter-group">
-      <h2 class="h4">Search Collection Descriptions</h2>
-      <%= form_with url: main_app.all_collections_path, method: :get, local: true, class: 'all-collections-description-search' do |form| %>
+  <section class="number-and-sort">
+    <div class="number-of-collections"><%= pluralize(@collections.size, 'collection') %></div>
+    <div class="sort-collections">
+      <strong>Sort by</strong>
+      <%= form_with url: main_app.all_collections_path, method: :get, local: true do |form| %>
         <%= hidden_field_tag :collection_letter, @selected_collection_letter if @selected_collection_letter.present? %>
-        <div class="input-group">
-          <%= form.search_field :collection_description_query,
-                                value: @collection_description_query,
-                                class: 'form-control',
-                                placeholder: 'Search collection descriptions',
-                                aria: { label: 'Search collection descriptions' } %>
-          <div class="input-group-append">
-            <%= form.submit 'Search', class: 'btn btn-primary' %>
-            <% if @collection_description_query.present? %>
-              <%= link_to 'Clear',
-                          main_app.all_collections_path(collection_letter: @selected_collection_letter.presence),
-                          class: 'btn btn-outline-secondary' %>
-            <% end %>
-          </div>
-        </div>
+        <%= hidden_field_tag :collection_description_query, @collection_description_query if @collection_description_query.present? %>
+        <%= form.select :collection_sort,
+                        Hyrax::HomepageControllerDecorator::SORT_OPTIONS.map { |value, opts| [opts[:label], value] },
+                        { selected: @selected_sort },
+                        { onchange: 'this.form.requestSubmit()' } %>
+        <noscript><%= form.submit 'Sort' %></noscript>
       <% end %>
     </div>
-  </div>
+  </section>
 
-  <% if @collections.present? %>
-    <ul class="list-unstyled all-collection-list">
-      <% @collections.each do |collection| %>
-        <li class="mb-4">
-          <article class="all-collection-item">
-            <div class="all-collection-summary">
-              <h2 class="h3 mb-2">
-                <%= link_to markdown(collection.title_or_label), [hyrax, collection] %>
-              </h2>
+  <section class="collections-list">
+    <div class="section-heading">
+      <h2 class="sr-only">Collections List</h2>
+    </div>
 
+    <% if @collections.present? %>
+      <div class="collection-grid">
+        <% @collections.each do |collection| %>
+          <article class="collection-card">
+            <%= render_thumbnail_tag collection, { alt: thumbnail_alt_text_for(collection, block_name: 'default_collection_image_text') }, { suppress_link: true } %>
+            <div>
+              <h3><%= link_to markdown(collection.title_or_label), [hyrax, collection] %></h3>
               <% Array(collection.description).compact_blank.each do |description| %>
-                <div class="collection-description"><%= markdown(description) %></div>
+                <p><%= markdown(description) %></p>
               <% end %>
+              <span class="item-count"><i class="fa-solid fa-images" aria-hidden="true"></i> <%= uofl_item_count_label(uofl_collection_item_count(collection.id)) %></span>
+              <div class="coll-link">
+                <%= link_to [hyrax, collection], class: 'btn btn-right-arrow' do %>
+                  View Collection <span class="sr-only">[<%= collection.title_or_label %>]</span>
+                  <i class="fa-solid fa-arrow-right"></i>
+                <% end %>
+              </div>
             </div>
           </article>
-        </li>
-      <% end %>
-    </ul>
-  <% else %>
-    <p>No collections match the current filters.</p>
-  <% end %>
+        <% end %>
+      </div>
+    <% else %>
+      <p>No collections match the current filters.</p>
+    <% end %>
+  </section>
 </div>

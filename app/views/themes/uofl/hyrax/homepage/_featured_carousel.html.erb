@@ -1,0 +1,74 @@
+<%# UOFL OVERRIDE: UofL Theme - Featured-collection carousel driven by the real,
+    admin-curated Featured Collections list (falls back to top collections by
+    title when none are featured yet). Images are hand-picked, see
+    UoflCuratedImages; text/link/count are real. %>
+<% slides = uofl_homepage_collection_slides(limit: 4) %>
+<% if slides.present? %>
+  <section class="feature-carousel" aria-label="Featured collections" id="featured-carousel">
+    <div class="carousel-copy">
+      <p class="eyebrow">Featured Collection</p>
+      <h2 data-slide-title><%= slides.first[:title] %></h2>
+      <p data-slide-description><%= slides.first[:description] %></p>
+      <a class="button-link" data-slide-link href="<%= slides.first[:url] %>">Explore this collection</a>
+
+      <% if slides.size > 1 %>
+        <div class="carousel-controls" aria-label="Carousel controls">
+          <button type="button" data-carousel-prev aria-label="Previous featured collection"></button>
+          <div class="carousel-dots" data-carousel-dots>
+            <% slides.each_with_index do |slide, index| %>
+              <button type="button" class="<%= 'is-active' if index.zero? %>" data-slide-index="<%= index %>" aria-label="Show <%= slide[:title] %>"></button>
+            <% end %>
+          </div>
+          <button type="button" data-carousel-next aria-label="Next featured collection"></button>
+        </div>
+      <% end %>
+    </div>
+    <div class="carousel-image-wrap">
+      <span class="item-pill" data-slide-count><%= uofl_item_count_label(slides.first[:count]) %></span>
+      <img src="<%= slides.first[:image_src] %>" alt="<%= slides.first[:image_alt] %>" data-slide-image>
+    </div>
+  </section>
+
+  <% if slides.size > 1 %>
+    <script type="application/json" id="featured-carousel-data"><%== slides.to_json %></script>
+    <script>
+      (function () {
+        const dataEl = document.getElementById('featured-carousel-data');
+        if (!dataEl) return;
+        const slides = JSON.parse(dataEl.textContent);
+        let current = 0;
+
+        const title = document.querySelector('#featured-carousel [data-slide-title]');
+        const description = document.querySelector('#featured-carousel [data-slide-description]');
+        const link = document.querySelector('#featured-carousel [data-slide-link]');
+        const count = document.querySelector('#featured-carousel [data-slide-count]');
+        const image = document.querySelector('#featured-carousel [data-slide-image]');
+        const dots = document.querySelectorAll('#featured-carousel [data-carousel-dots] button');
+
+        function itemLabel(n) {
+          return n.toLocaleString() + (n === 1 ? ' item' : ' items');
+        }
+
+        function setSlide(index) {
+          current = (index + slides.length) % slides.length;
+          const slide = slides[current];
+
+          title.textContent = slide.title;
+          description.textContent = slide.description || '';
+          link.href = slide.url;
+          count.textContent = itemLabel(slide.count);
+          image.src = slide.image_src;
+          image.alt = slide.image_alt;
+
+          dots.forEach((dot, dotIndex) => dot.classList.toggle('is-active', dotIndex === current));
+        }
+
+        document.querySelector('#featured-carousel [data-carousel-prev]')
+          .addEventListener('click', () => setSlide(current - 1));
+        document.querySelector('#featured-carousel [data-carousel-next]')
+          .addEventListener('click', () => setSlide(current + 1));
+        dots.forEach((dot, index) => dot.addEventListener('click', () => setSlide(index)));
+      })();
+    </script>
+  <% end %>
+<% end %>

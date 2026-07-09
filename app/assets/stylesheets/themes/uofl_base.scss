@@ -80,13 +80,24 @@ body.public-facing, .poppins  {
 
 
 
+/* Headings default to the same Poppins used for body text; specific
+   "display" headings (hero, featured-collection, collection cards, the
+   filter drawer) set their own Libre Baskerville serif via rules in
+   uofl_home.scss - those are !important too and win the cascade tiebreak
+   by loading later (uofl_home.scss is require'd after this file).
+   !important is required here: hyrax-webapp ships its own
+   "body.public-facing h1...h6 { font-family: Helvetica Neue... }" default
+   at identical specificity, so a plain (non-important) rule loses to it.
+   This used to force "Oxanium" (a blocky, gaming/tech display face) onto
+   every heading site-wide for the same reason, which didn't fit the
+   redesign at all. */
 .navbar-product-name,
-body.public-facing h1, 
-body.public-facing h2, 
-body.public-facing h3, 
+body.public-facing h1,
+body.public-facing h2,
+body.public-facing h3,
 body.public-facing h4,
-a.nav-link.dropdown-toggle { 
-	font-family:"Oxanium", "Helvetica Neue", Helvetica, Arial, sans-serif!important;
+a.nav-link.dropdown-toggle {
+	font-family: "Poppins", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
 }
 
 
@@ -103,236 +114,221 @@ body.public-facing .nav.navbar-nav > li.nav-item > a.nav-link { font-weight:500;
 
 
 
-/* HEADER 2026 */
-/* Scoped to body.public-facing: the base (non-themed) masthead rendered on
-   admin/dashboard pages reuses id="masthead", so these rules must not be
-   global or they distort the admin header and overlap the sidebar. */
+/* HEADER 2026 - ported from the new hyku-home design (mega-menu nav).
+   Scoped to body.public-facing so it never touches the base (non-themed)
+   admin/dashboard masthead. Given how many non-hero pages this header has
+   to work on (catalog, show, dashboard...), it keeps a solid dark
+   background everywhere rather than the design mock's fully transparent
+   overlay-on-hero treatment - it still sits on top of the hero via
+   position:absolute, just without depending on the hero's scrim for
+   legibility. */
 body.public-facing {
 
-.container.site-title-container { display:none;}
-
-#nav-masthead > .navbar.navbar-expand-sm { background-color: rgba(255,255,255,1)!important;}
-
-
-
-div#logo-name {
-	display: grid;
-	grid-template-columns: 70px 1fr;
-}
-#logo-col img{
-	margin-right:1rem;
-	margin-top:4px;
-	width:65px;
-	height:40px;
-	object-fit: cover;
-	object-position: 0% 0%;
-}
-#header-navbar {
-  z-index:20;
-  border-top:none;
-  margin-bottom:0;
-  position:relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-#header-navbar .navbar-product-name a{
-  text-transform:uppercase;
-  color: $black!important;
-  white-space:normal;
-}
-
-
-#header-navbar a {text-decoration:none}
-
-#header-navbar .navbar-product-name a {
-	display:flex;
-	font-weight:700;
-	line-height:1;
-	}
-
-@media (max-width: 767.99px){
-  nav#masthead {
-	padding:$padding-sm;
-    justify-content: center!important;
-  }
-  #header-navbar .navbar-product-name{ font-size:1.8rem;}
-
-}
-
-@media (min-width: 768px){
-	#masthead { padding:$padding-lg;}
-	#header-navbar #logo-col { align-items:center;}
-	#logo-name {
-		display: grid;
-		grid-template-columns: 70px 1fr;
-		gap:1.5rem;
-  }
-  #header-navbar .navbar-product-name { font-size:3.2rem;}
-  #header-navbar .navbar-product-name a {display:flex;}
-}
-
-
-/*  HEADER NAV LINKS */
-
-a.nav-link.dropdown-toggle[aria-expanded="true"] { background-color:$greige-light;}
-
-#header-nav-links .dropdown-menu.show {
-  border-top-right-radius:0;
-  border-top-left-radius:0;
-  width:100%;
-  margin-top:-2px;
-  background-color: $greige-light;
-}
-#header-nav-links .dropdown-item { white-space: normal;}
-
-#header-navbar a.nav-link.dropdown-toggle {
-	font-weight: 700;
-	font-size:1.2rem;
-	color:$black;
-	text-transform:uppercase;
-}
-
-.dropdown-menu-section { max-width:500px;}
-
-.dropdown-menu-section img {
-	max-width: 100%;
-	padding-right:1rem;
-}
-
-#header-nav-links .dropdown-menu-section:nth-of-type(3) {
-	text-align: center;
-	margin-top:2rem;
-}
-
-
-@media (max-width: 767.99px){
-	#header-nav-links {
-		width:100%;
-		display: flex;
-		justify-content: flex-end;
-		margin-bottom:1rem;
-	}
-	#header-navbar a.nav-link.dropdown-toggle { padding-left:1rem;}
-	#header-nav-links .navbar-collapse { display:none;}
-
-	#header-nav-links .navbar-collapse.show {
-		display: flex;
-		padding: 0 8px 1rem;
-		position:absolute;
-		top:50px;
-		left:0;
-		right:0;
-		background-color:white!important;
-		border-bottom: 1px solid gray;
-	}
-	#header-nav-links .collapse.show ul.navbar-nav.mr-auto {
-		width:100%;
-		margin:0 1rem;
-		padding-right: 1rem;
-	}
-	.dropdown-menu-section { padding:1rem;}
-	.dropdown-menu-section img { margin-bottom:1rem;}
-
-
-}
-@media (min-width: 768px) and (max-width:1199.9px) {
-	#nav-search { flex-direction:column;}
-
-	#header-nav-links {
-		padding:$padding-md;
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-	}
-
-	#header-nav-links .dropdown { position:unset; }
-
-	#header-nav-links #navbarNav { justify-content: center;}
-	#header-nav-links #navbarNav ul { gap:1rem; }
-	#header-navbar a.nav-link.dropdown-toggle {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		border-radius:$border-radius-tabs;
-	}
-	#header-nav-links .dropdown-menu.show {
-		top:4.5rem;
-		width:calc(100% - 4rem);
-		margin:0 2rem;
-		padding:1rem;
-	}
-	#drop-collections.dropdown-menu.show,
-	#drop-repositories.dropdown-menu.show,
-	#drop-help.dropdown-menu.show  {
-		display:grid;
-		grid-template-columns: 250px 1fr 1fr;
-		gap:1rem;
-	}
-}
-@media (min-width:992) {
-	#drop-collections.dropdown-menu.show,
-	#drop-repositories.dropdown-menu.show,
-	#drop-help.dropdown-menu.show { gap:2rem!important;}
-	#drop-repositories.dropdown-menu.show  { grid-template-columns: 250px 350px 1fr;}
-}
-
-@media (min-width: 1200px){
-
-	#header-nav-links .dropdown { position:unset; }
-
-	#header-nav-links { padding:$padding-xl; }
-
-	#nav-search { justify-content: space-between;}
-
-	#navbarNav { justify-content: flex-end;}
-	#header-nav-links ul {
-		flex-direction:row;
-		gap:1rem;
-	}
-	#header-nav-links .dropdown-menu.show {
-		display:grid;
-		grid-template-columns: 300px 1fr 1fr;
-		gap:3rem;
-		top:6rem;
-		padding:1rem 2rem;
-		margin:0 2rem;
-		width: calc(100% - 4rem);
-		border-radius:$border-radius;
-		font-size:larger;
-	}
-	#header-nav-links .dropdown-menu h2 { font-size:1.4rem;}
-}
-
-
-/* SEARCH --------------------------------------------------------- */
-#search-wrap {
+.site-header {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: 30;
 	display: flex;
-	align-items:center;
-	justify-content: center;
-	flex-wrap:wrap;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 20px;
+	padding: 18px 24px;
+	background: rgba(17, 17, 17, 0.92);
+	color: white;
 }
-@media (min-width:768px) and (max-width:1199.9px) {
-	#search-wrap {
-		flex-direction:column;
-		gap:1rem;
+
+.brand {
+	display: flex;
+	align-items: center;
+	gap: 16px;
+	font-weight: 800;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+	font-size: 1.3rem;
+	line-height: 1;
+	color: white;
+	text-decoration: none;
+	margin-right: auto;
+}
+
+@media (min-width: 768px) {
+	.brand { font-size: 1.6rem; }
+}
+
+.brand img {
+	width: 46px;
+	height: 26px;
+	object-fit: cover;
+	object-position: left center;
+	filter: invert(1) brightness(2.2);
+}
+
+.mobile-menu-toggle {
+	display: grid;
+	gap: 5px;
+	width: 40px;
+	padding: 9px;
+	border: 1px solid rgba(255, 255, 255, 0.3);
+	border-radius: 6px;
+	background: rgba(255, 255, 255, 0.08);
+	margin-left: auto;
+}
+.mobile-menu-toggle span:not(.sr-only) {
+	height: 2px;
+	background: white;
+}
+
+.primary-nav {
+	display: none;
+	gap: 8px;
+}
+.primary-nav.is-open {
+	display: grid;
+	width: 100%;
+	gap: 4px;
+	padding-top: 12px;
+}
+
+.nav-trigger {
+	width: 100%;
+	text-align: left;
+	padding: 10px 8px;
+	border: 0;
+	background: transparent;
+	color: white;
+	font-weight: 700;
+	font-size: 0.95rem;
+	text-transform: uppercase;
+	cursor: pointer;
+}
+.nav-trigger::after {
+	content: "";
+	display: inline-block;
+	width: 6px;
+	height: 6px;
+	margin-left: 8px;
+	border-right: 1.5px solid currentColor;
+	border-bottom: 1.5px solid currentColor;
+	transform: translateY(-2px) rotate(45deg);
+}
+
+#header-search-wrap {
+	width: 100%;
+	order: 3;
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	padding-top: 12px;
+}
+
+#header-search-wrap #search-form-header {
+	/* flex-basis:0 (not auto) so this is sized purely by flex-grow, not by
+	   its own content/percentage-width, which was computing much narrower
+	   than the available space for reasons that weren't worth chasing
+	   further (percentage widths on flex items resolving unpredictably
+	   against the item's own box rather than the container once padding/
+	   box-sizing entered the picture). */
+	flex: 1 1 0%;
+	min-width: 0;
+	width: auto !important;
+}
+
+#filters-adv { flex: 0 0 auto; }
+
+.mega-menu {
+	position: absolute;
+	top: 100%;
+	left: 16px;
+	right: 16px;
+	z-index: 35;
+	display: none;
+	grid-template-columns: 1fr;
+	gap: 20px;
+	padding: 20px;
+	background: rgba(255, 255, 255, 0.98);
+	border-radius: $border-radius-tabs;
+	box-shadow: 0 18px 60px rgba(17, 17, 17, 0.24);
+	color: $black;
+}
+.mega-menu.is-open { display: grid; }
+.mega-menu img { display: none; }
+.mega-menu .eyebrow {
+	margin: 0 0 12px;
+	color: $gray2;
+	font-size: 0.8rem;
+	font-weight: 800;
+	text-transform: uppercase;
+	letter-spacing: 0.08em;
+}
+.mega-menu a {
+	display: block;
+	padding: 8px 0;
+	font-weight: 700;
+	color: $black;
+}
+
+@media (min-width: 768px) {
+	.site-header { padding: 20px 32px; }
+
+	.mobile-menu-toggle { display: none; }
+
+	.primary-nav {
+		display: flex;
+		width: auto;
+		margin-right: 24px;
 	}
+
+	.nav-trigger { width: auto; padding: 8px 4px; }
+
+	#header-search-wrap {
+		/* Needs its own flex-grow here at the .site-header level - the
+		   flex-grow given to its children (the search form) only
+		   redistributes space *within* this box, which otherwise sizes to
+		   fit its content regardless of what's set on those children. */
+		flex: 1 1 auto;
+		min-width: 0;
+		width: auto;
+		order: 0;
+		padding-top: 0;
+	}
+
+	.mega-menu {
+		top: 100%;
+		left: 50%;
+		right: auto;
+		width: calc(100vw - 48px);
+		max-width: 960px;
+		grid-template-columns: 240px 1fr 1fr;
+		transform: translateX(-50%);
+	}
+	.mega-menu img { display: block; height: 160px; width: 100%; object-fit: cover; border-radius: 6px; filter: grayscale(0.5); }
 }
 
-#search-form-header-wrap {
-	display:flex;
-	flex-wrap:wrap;
-	justify-content: center;
-	align-items:center;
-	border-bottom:none!important;
-	padding-bottom:$padding-lg;
+/* The homepage/all_collections hero already has its own prominent search
+   (and, on the homepage, its own Browse Items button) matching the design,
+   so the header's compact copies would be redundant there. #mySidebar2 (the
+   real facets drawer) and its openNav()/closeNav() JS still need to render
+   unconditionally though - the hero's "Browse Items" button calls openNav()
+   directly - so this only hides the visible box/buttons, not the drawer. */
+&.has-hero #header-search-wrap #search-form-header,
+&.has-hero #header-search-wrap #filters-adv {
+	display: none;
 }
-@media (max-width: 767.9px){	#search-form-header-wrap { padding:0 $padding-sm $padding-sm; } }
-@media (min-width: 768px){	#search-form-header-wrap { padding:0 $padding-md $padding-md; } }
-@media (min-width: 992px){	#search-form-header-wrap { padding:0 $padding-lg $padding-lg; } }
 
-} // end body.public-facing (HEADER 2026 / HEADER NAV LINKS / SEARCH)
+/* Pages without a full-bleed hero need #content-wrapper pushed down below
+   the absolutely-positioned header so it doesn't cover the page title/
+   breadcrumbs; hero pages (body.has-hero) handle their own spacing via
+   .hero-content's own padding-top, so they get none of this. */
+#content-wrapper { padding-top: 84px; }
+&.has-hero #content-wrapper { padding-top: 0; }
+
+@media (min-width: 768px) {
+	#content-wrapper { padding-top: 92px; }
+}
+
+} // end body.public-facing (HEADER 2026)
 
 
 
@@ -352,55 +348,19 @@ a#advanced-search-link:hover { color: $blue-hover!important;}
 
 
 
-/* FILTER SIDEBAR */
-#mySidebar2 { max-width:600px;} /* id so it overrides script added element style */
-.sidebar2 {
-  height: 100%;
-  width: 0;
-  position: fixed;
-  z-index: 1000;
-  top: 0;
-  right: 0;
-  background-color: rgb(250,250,250);
-  overflow-x: hidden;
-  transition: 0.5s;
-  padding-top: 60px;
-  border-left:1px solid #cabdbd;
-}
-
-
-#mySidebar2 a {
-  padding: 8px 8px 8px 32px;
-  text-decoration: none;
-  font-size: 1rem;
-  font-weight:700;
-  display: block;
-  transition: 0.3s;
-  min-width:250px;
-}
-
-
-#mySidebar2 .closebtn {
-  position: absolute;
-  top: 0;
-  right: 20px;
-  font-size: 36px;
-  min-width:unset;
-  color:$greige-dark;
-}
-#mySidebar2 .closebtn:hover { color:$red;}
+/* FILTER SIDEBAR (real facets, styled as a .filter-drawer - see uofl_home.scss) */
 #filters-adv {
 	display: flex;
 	gap:1rem;
 }
 @media (min-width:1200px) {
-	#filters-adv { 
-		gap:.5rem; 
+	#filters-adv {
+		gap:.5rem;
 		margin-left:1rem;
 	}
 }
 
-#filters-adv button, 
+#filters-adv button,
 #filters-adv .btn {
   font-size: 1rem;
   font-weight: 700;
@@ -412,23 +372,30 @@ a#advanced-search-link:hover { color: $blue-hover!important;}
   border-radius: $border-radius;
 }
 
-#filters-adv button:hover, 
+#filters-adv button:hover,
 #filters-adv .btn:hover {
   background-color: $gray2-hover;
   color:white;
 }
 
-#main2 {
-  transition: margin-left .5s;
-  padding: 16px;
+/* In the header (dark bg, see .site-header) these should read like the
+   homepage hero's own Advanced Search/Browse Items buttons - not the grey
+   pill above, which is for the OTHER place #filters-adv renders: inline in
+   the (light-background) collection show page body. */
+#header-search-wrap #filters-adv button,
+#header-search-wrap #filters-adv .btn {
+  background-color: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.36);
+  color: white;
+  border-radius: 999px;
+  white-space: nowrap;
 }
 
-/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
-@media screen and (max-height: 450px) {
-  .sidebar2 {padding-top: 15px;}
-  .sidebar2 a {font-size: 18px;}
+#header-search-wrap #filters-adv button:hover,
+#header-search-wrap #filters-adv .btn:hover {
+  background-color: rgba(255, 255, 255, 0.12);
+  color: white;
 }
-
 
 /* FACETS  FILTERS */
 
@@ -480,6 +447,17 @@ div#mySidebar2 #facet-panel-collapse { width:95%;}
 // Keep the custom UofL search treatment on UofL public pages. Hyrax also uses
 // `.search-form` for dashboard filters, and this stylesheet is compiled into
 // the application bundle for every tenant.
+/* #header-search-wrap's copy should fill the available header width instead
+   of the fixed 40ch this class uses elsewhere (e.g. dashboard filters, which
+   should keep their original compact size - hence scoping the override to
+   the header instead of changing .search-form itself). */
+#header-search-wrap .search-form {
+	width: 100%;
+}
+#header-search-wrap .search-form input {
+	width: 100%;
+}
+
 body.uofl .search-form {
 	position: relative;
 	width: 40ch;
@@ -583,42 +561,54 @@ body.uofl #search-form-header input.form-control:focus { border-color:transparen
 i.fa.fa-sign-in { display:none; }
 
 
-#footer2026 { 
-	background-color:$black;
-	color:white;
-	margin:1rem;
-	border-radius:$border-radius;
-	padding:1rem;
-}
-@media (min-width:992px) {
-	#footer2026 { padding:2rem;}
+/* Ported from the new hyku-home design: a plain, bordered grid footer
+   rather than a dark rounded box. */
+.site-footer {
+	display: grid;
+	grid-template-columns: 80px 1fr;
+	gap: 1.5rem 2rem;
+	align-items: start;
+	padding: 2rem 1.5rem;
+	border-top: 1px solid $soft-gray;
+	color: $gray2;
+	font-size: 0.9rem;
+	line-height: 1.6;
 }
 
-#footer2026 a {
-	color:white;
-	text-decoration: none;
+.site-footer img {
+	width: 80px;
+	height: 50px;
+	object-fit: cover;
+	object-position: left center;
 }
-#foot1, #foot2 {
+
+.site-footer a { color: $gray2; text-decoration: none; }
+.site-footer a:hover { color: $black; }
+
+.site-footer nav {
+	display: grid;
+	gap: 6px;
+	grid-column: 2;
+}
+
+.site-footer .footer-meta { grid-column: 1 / -1; }
+
+.site-footer .footer-meta p { margin: 0; }
+
+.site-footer .utility-nav {
 	display: flex;
-	justify-content: space-between;
-}
-#foot1 { 
-	margin-bottom:1rem;
-	border-bottom:1px solid $greige-dark;
-	padding-bottom:1rem;
+	align-items: center;
+	margin-top: 10px;
 }
 
-@media (max-width:767.9px) {
-	#foot1, #foot2 { display:block;}
-	#foot-contact { margin-bottom:1rem;}
+@media (min-width: 768px) {
+	.site-footer {
+		grid-template-columns: 92px 1fr 1fr 1.5fr;
+		gap: 2.5rem;
+	}
+	.site-footer nav { grid-column: auto; }
+	.site-footer .footer-meta { grid-column: auto; }
 }
-
-#footer2026 p {
-	margin-bottom:0;
-	line-height:1.6;
-}
-
-#system-info strong {display:block; }
 
 
 /* LOGGED IN */

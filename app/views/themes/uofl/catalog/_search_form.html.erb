@@ -44,28 +44,39 @@
 
   <div id="filters-adv">
     <% if show_header_facets %>
-      <button class="openbtn2" onclick="openNav()"><i class="fa-solid fa-arrow-down-wide-short"></i> Browse / Filter</button>
+      <button class="openbtn2" type="button" onclick="openNav()"><i class="fa-solid fa-arrow-down-wide-short"></i> Browse / Filter</button>
     <% end %>
 
     <a class="btn" id="advanced-search-link2" href="/advanced"><i class="fa-solid fa-up-right-from-square"></i> Advanced <span class="sr-only">search page</span></a>
 </div>
 
 <% if show_header_facets %>
-  <div id="mySidebar2" class="sidebar2">
-    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"><i class="fa-solid fa-x"></i></a>
-    <%= render 'hyrax/homepage/facets' %>
+  <div id="mySidebar2" class="filter-drawer" aria-hidden="true" aria-labelledby="filter-title">
+    <div class="drawer-panel filter-panel" role="dialog" aria-modal="true">
+      <button class="drawer-close" type="button" onclick="closeNav()" aria-label="Close filters"></button>
+      <p class="eyebrow">Refine Results</p>
+      <h2 id="filter-title">Filter Search</h2>
+      <p>Browse or filter your results.</p>
+      <%= render 'hyrax/homepage/facets' %>
+    </div>
   </div>
 <% end %>
 
 
 <script>
 function openNav() {
-  document.getElementById("mySidebar2").style.width = "90%";
-  document.getElementById("main2").style.marginRight = "90%";
+  document.getElementById("mySidebar2").classList.add("is-open");
+  document.getElementById("mySidebar2").setAttribute("aria-hidden", "false");
+  document.body.style.overflow = "hidden";
 }
 
 function closeNav() {
-  document.getElementById("mySidebar2").style.width = "0";
-  document.getElementById("main2").style.marginRight= "0";
+  document.getElementById("mySidebar2").classList.remove("is-open");
+  document.getElementById("mySidebar2").setAttribute("aria-hidden", "true");
+  document.body.style.overflow = "";
 }
+
+document.addEventListener("click", function (event) {
+  if (event.target.id === "mySidebar2") closeNav();
+});
 </script>

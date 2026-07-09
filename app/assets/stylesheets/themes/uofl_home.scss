@@ -15,148 +15,753 @@ $greige-light: #E7E1E1;
 
 /* colors copied from uofl_base.scss */
 
-
-#carouselHome1-wrap { 
-  display:grid;
-  grid-template-columns: 300px 1fr;
-  gap:2rem;
-}
-#carouselHome1-side { 
-  padding:1rem;
-}
-
-.feature-category { color:$greige-dark;}
-
-#carousel-nav-wrap {
-  display: flex;
-  align-items:center;
-  justify-content: center;
-}
-
-ol.carousel-indicators,
-.carousel-control-prev, 
-.carousel-control-next {position:unset;}
-span.carousel-control-prev-icon,
-span.carousel-control-next-icon { background-image:none;}
-
-.carousel-control-prev, .carousel-control-next { color:$black;}
-.carousel-control-prev:hover, .carousel-control-next:hover,
-.carousel-control-prev:focus, .carousel-control-next:focus { color:$red!important;}
-
-
-.carousel-indicators { margin:unset;}
-.carousel-indicators li { background-color:$black;}
-
-.carousel-control-prev:hover, 
-.carousel-control-prev:focus, 
-.carousel-control-next:hover, 
-.carousel-control-next:focus { color:$red; }
-
-#carouselHome1 {position:unset;}
-
-
-
 img { max-width:100%; }
-
 
 .home-share-work { display:none; }
 
-#home-top { 
-  margin:2rem; 
-  width:100%;
-}
-#blurb p { 
-  text-align:center; 
-  font-weight:bold; 
-  font-size:1.2rem; 
-  font-family: "Open Sans", "Helvetica Neue", Arial, sans-serif;
-}
 
+/* HERO (homepage + all_collections) --------------------------------- */
 
-@media (min-width:768px) {
+.hero {
+  position: relative;
+  min-height: 620px;
+  color: white;
+  overflow: hidden;
 }
 
-section#section-home2 { padding-top:64px; }
+.collections-hero.hero { min-height: 360px; }
 
-
-
-
-/* HOMEPAGE - Louisville */
- body.public-facing h2 span {
-	font-family: "Stack Sans Text", sans-serif;
-	font-weight: 700;
-	text-transform: uppercase;
-	font-size:40px;
-		}
-h2 i { font-size:40px;}
-
-#lou .menu {
-    padding: 20px;
-    background: white;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 20px;
-  }
-  
-#lou .menu-item {
-    cursor: pointer;
-    color: #333;
-    transition: color 0.3s;
-    font-family: "Stack Sans Text", sans-serif;
-    font-weight: 700;
-    text-transform: uppercase;
-    font-size:30px;
-    border-bottom:1px solid #dcdcdc;
-		}
-  #lou .menu-item a { 
-    text-decoration: none; 
-    display:block;
-    width:100%;
-  }
- 
-
-@media screen and (max-width:991.9px) {
-  #lou .preview img,
-  #lou .preview { display:none; }
+.hero-image, .hero-scrim {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
 }
 
-@media screen and (min-width:992px) {
-  #lou.container {
-    display: grid;
-    grid-template-columns: 350px 1fr;
-    padding:0;
-  }
-  #lou .menu {
-    padding:20px 0 20px 20px;
-  }
-  #lou .menu-item a:hover { 
-    color:#215480;
-  }
-
-  #lou .preview {
-    position: relative;
-    overflow: hidden;
-  }
-
-  #lou .preview img {
-    width: 100%;
-    height:440px;
-    object-fit: cover;
-    display: block;
-  }
-
-  #lou .caption {
-    position: absolute;
-    bottom: 30px;
-    left: 30px;
-    color: white;
-    background: rgba(0,0,0,0.5);
-    padding: 10px 16px;
-    border-radius: 6px;
-    font-size: 1.2rem;
-  }
-
+.hero-image {
+  object-fit: cover;
+  filter: grayscale(0.18);
 }
 
+.hero-scrim {
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.72), rgba(0, 0, 0, 0.34) 48%, rgba(0, 0, 0, 0.2)),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.12) 40%, rgba(0, 0, 0, 0.48));
+}
 
+.hero-content {
+  position: relative;
+  width: calc(100% - 56px);
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 168px 0 64px;
+}
+
+.collections-hero .hero-content { padding: 120px 0 48px; }
+
+/* body.public-facing prefix (not just .hero-content) so this beats the
+   base "body.public-facing h1" heading rule on specificity: both are
+   !important, and the base rule's 2 type-selectors (body + h1) actually
+   out-specify a plain ".hero-content h1" (1 class + 1 type), so it would
+   otherwise win the tie despite being declared first. */
+body.public-facing .hero-content h1 {
+  margin: 0;
+  font-family: "Libre Baskerville", Georgia, serif !important;
+  font-weight: 700;
+  font-size: 2.6rem;
+  line-height: 1.06;
+  max-width: 700px;
+}
+
+@media (min-width: 900px) {
+  .hero-content h1 { font-size: 5.5rem; }
+}
+
+.hero-content p {
+  width: 100%;
+  max-width: 560px;
+  margin: 24px 0 26px;
+  font-size: 1.15rem;
+  line-height: 1.6;
+}
+
+.hero-content .search {
+  width: 100%;
+  max-width: 970px;
+  height: 62px;
+  display: grid;
+  grid-template-columns: 1fr 40px;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px 8px 28px;
+  background: white;
+  color: $black;
+  border-radius: 999px;
+}
+
+.hero-content .hero-search {
+  height: 82px;
+  grid-template-columns: 1fr 66px;
+  box-shadow: 0 18px 60px rgba(17, 17, 17, 0.16);
+}
+
+.hero-content .search input {
+  width: 100%;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  font-size: 1.15rem;
+  color: $black;
+}
+
+.hero-content .search button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 58px;
+  height: 58px;
+  border: 0;
+  border-radius: 50%;
+  background: $black;
+  color: white;
+  cursor: pointer;
+}
+
+.hero-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.hero-buttons .filter-launch,
+.hero-buttons .adv-search {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 20px;
+  border: 1px solid rgba(255, 255, 255, 0.36);
+  border-radius: 999px;
+  background: rgba(17, 17, 17, 0.8);
+  color: white;
+  cursor: pointer;
+  font-weight: 800;
+  font-size: 1.05rem;
+  text-transform: uppercase;
+}
+
+.hero-buttons .filter-icon {
+  position: relative;
+  width: 22px;
+  height: 18px;
+  border-top: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+}
+
+.hero-buttons .filter-icon::before,
+.hero-buttons .filter-icon::after {
+  content: "";
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  background: $black;
+}
+
+.hero-buttons .filter-icon::before {
+  top: -5px;
+  left: 4px;
+}
+
+.hero-buttons .filter-icon::after {
+  right: 3px;
+  bottom: -5px;
+}
+
+@media (max-width: 640px) {
+  .hero { min-height: 720px; }
+  .hero-content { width: calc(100% - 36px); padding-top: 140px; }
+}
+
+/* FEATURED-COLLECTION CAROUSEL (real data) --------------------------- */
+
+.feature-carousel {
+  width: calc(100% - 56px);
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(280px, 430px) 1fr;
+  gap: 40px;
+  align-items: center;
+  padding: 56px 0 38px;
+}
+
+/* Slides have different title/description lengths, so without reserved
+   space the whole page would shift up or down every time setSlide() swaps
+   the text in place. min-height matches the (fixed-height) image column;
+   line-clamp caps title/description to a consistent number of lines; the
+   controls are pinned to the bottom of the column via margin-top: auto so
+   they don't move even when the text above is shorter. */
+.carousel-copy {
+  display: flex;
+  flex-direction: column;
+  min-height: 390px;
+}
+
+.carousel-copy [data-slide-title] {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+.carousel-copy [data-slide-description] {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  min-height: calc(1.55em * 3);
+}
+
+.carousel-controls { margin-top: auto; }
+
+@media (min-width: 900px) {
+  .feature-carousel { gap: 92px; }
+}
+
+.feature-carousel .eyebrow {
+  margin: 0 0 16px;
+  color: $gray2;
+  font-size: 0.82rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+/* body.public-facing prefix for the same specificity reason as
+   .hero-content h1 above. */
+body.public-facing .feature-carousel h2 {
+  margin: 0 0 22px;
+  font-family: "Libre Baskerville", Georgia, serif !important;
+  font-weight: 700;
+  font-size: 2rem;
+  line-height: 1.15;
+}
+
+@media (min-width: 900px) {
+  .feature-carousel h2 { font-size: 3.4rem; }
+}
+
+.feature-carousel p:not(.eyebrow) {
+  font-size: 1.08rem;
+  line-height: 1.55;
+  color: #3c3c3c;
+}
+
+.button-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 18px;
+  padding: 16px 20px;
+  background: $black;
+  color: white;
+  border-radius: 7px;
+  font-weight: 700;
+}
+
+.button-link::after { content: "\2192"; font-size: 1.4rem; }
+
+.carousel-controls {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-top: 40px;
+}
+
+.carousel-controls button {
+  width: 38px;
+  height: 38px;
+  border: 1px solid $soft-gray;
+  border-radius: 50%;
+  background: white;
+  cursor: pointer;
+}
+
+[data-carousel-prev]::before, [data-carousel-next]::before {
+  display: block;
+  content: "";
+  width: 9px;
+  height: 9px;
+  margin: 0 auto;
+  border-top: 2px solid $black;
+  border-left: 2px solid $black;
+}
+
+[data-carousel-prev]::before { transform: rotate(-45deg); }
+[data-carousel-next]::before { transform: rotate(135deg); }
+
+.carousel-dots { display: flex; gap: 15px; align-items: center; }
+.carousel-dots button { width: 7px; height: 7px; padding: 0; border: 1px solid $black; background: transparent; }
+.carousel-dots button.is-active { background: $black; }
+
+.carousel-image-wrap { position: relative; }
+.carousel-image-wrap img {
+  width: 100%;
+  height: 390px;
+  object-fit: cover;
+  border-radius: 8px;
+  filter: grayscale(0.6);
+}
+
+.item-pill {
+  position: absolute;
+  z-index: 2;
+  top: 26px;
+  left: 26px;
+  padding: 10px 16px;
+  background: $black;
+  color: white;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.92rem;
+}
+
+@media (max-width: 980px) {
+  .feature-carousel { grid-template-columns: 1fr; }
+}
+
+/* BROWSE COLLECTIONS GRID + TYPE FILTER (real collections) ----------- */
+
+.browse-section {
+  border-top: 1px solid #eeeeee;
+  background: linear-gradient(180deg, #ffffff, #f7f6f4);
+  padding: 28px 0 0;
+}
+
+.browse-section .section-heading,
+.browse-section .collection-grid,
+.browse-section .type-filter {
+  width: calc(100% - 56px);
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.section-heading h2, .type-filter h2 {
+  margin: 0;
+  font-size: 0.92rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+}
+
+.plain-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  font-weight: 600;
+  border: 0;
+  background: transparent;
+  color: $black;
+  cursor: pointer;
+}
+
+.plain-link::after { content: "\2192"; font-size: 1.4rem; }
+
+.collection-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+.browse-section .collection-card {
+  position: relative;
+  overflow: hidden;
+  min-height: 285px;
+  background: white;
+  border: 1px solid $soft-gray;
+  border-radius: 8px;
+}
+
+.browse-section .collection-card img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  filter: grayscale(0.5);
+}
+
+.browse-section .collection-card div { padding: 20px; }
+
+.browse-section .collection-card h3 {
+  margin: 0 0 8px;
+  font-family: "Libre Baskerville", Georgia, serif !important;
+  font-size: 1.1rem;
+}
+
+.browse-section .collection-card p {
+  margin: 0 0 16px;
+  color: #4b4b4b;
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+.item-count {
+  display: block;
+  color: #5a5a5a;
+  font-size: 0.86rem;
+  font-weight: 700;
+}
+
+/* Icon is a real <i class="fa-solid fa-images"> in markup rather than a CSS
+   content-code hack: the app pins a specific Font Awesome CDN version, and a
+   hardcoded font-family/codepoint pair here would silently render as a blank
+   box the next time that version changes (as "Font Awesome 6 Free" already
+   did against the FA7 stylesheet actually loaded). */
+.item-count i { margin-right: 6px; font-size: 0.78rem; }
+
+.type-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  align-items: center;
+  padding: 28px 0 18px;
+}
+
+.type-filter h2 { flex-basis: 100%; }
+
+.type-filter a {
+  display: inline-block;
+  min-width: 132px;
+  text-align: center;
+  padding: 10px 18px;
+  border: 1px solid $soft-gray;
+  border-radius: 6px;
+  background: white;
+  color: $black;
+  cursor: pointer;
+}
+
+.type-filter a:hover { background: $greige-light; }
+
+@media (max-width: 980px) {
+  .collection-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 640px) {
+  .section-heading { align-items: flex-start; gap: 20px; flex-direction: column; }
+  .collection-grid { grid-template-columns: 1fr; }
+}
+
+/* BROWSE DRAWER (quick collections list) ----------------------------- */
+
+.browse-drawer, .filter-drawer {
+  position: fixed;
+  inset: 0;
+  z-index: 1050;
+  background: rgba(0, 0, 0, 0.42);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 200ms ease;
+}
+
+.browse-drawer.is-open, .filter-drawer.is-open { opacity: 1; pointer-events: auto; }
+
+.browse-drawer .drawer-panel, .filter-drawer .drawer-panel {
+  width: calc(100% - 28px);
+  max-width: 520px;
+  height: 100%;
+  margin-left: auto;
+  padding: 38px;
+  background: white;
+  color: $black;
+  transform: translateX(100%);
+  transition: transform 220ms ease;
+  overflow-y: auto;
+}
+
+.browse-drawer.is-open .drawer-panel, .filter-drawer.is-open .drawer-panel { transform: translateX(0); }
+
+.browse-drawer .drawer-panel h2, .filter-drawer .drawer-panel h2 {
+  margin: 0 0 12px;
+  font-family: "Libre Baskerville", Georgia, serif !important;
+  font-size: 2.1rem;
+}
+
+.browse-drawer .drawer-panel p:not(.eyebrow), .filter-drawer .drawer-panel p:not(.eyebrow) { color: #4a4a4a; line-height: 1.55; }
+
+.browse-drawer .drawer-close, .filter-drawer .drawer-close {
+  float: right;
+  width: 42px;
+  height: 42px;
+  border: 1px solid $soft-gray;
+  border-radius: 50%;
+  background: white;
+  cursor: pointer;
+}
+
+.browse-drawer .drawer-close::before, .browse-drawer .drawer-close::after,
+.filter-drawer .drawer-close::before, .filter-drawer .drawer-close::after {
+  content: "";
+  display: block;
+  width: 18px;
+  height: 2px;
+  margin: -1px auto 0;
+  background: $black;
+}
+
+.browse-drawer .drawer-close::before, .filter-drawer .drawer-close::before { transform: rotate(45deg); }
+.browse-drawer .drawer-close::after, .filter-drawer .drawer-close::after { transform: rotate(-45deg); }
+
+/* The drawer panel supplies its own "Refine Results / Filter Search" heading
+   (matching the design mock's copy), so the real facets partial's own
+   generic "Browse"/"Filter Results" heading is redundant here. */
+.filter-drawer .facets-header { display: none; }
+
+.filter-drawer #facets {
+  margin: 26px 0 0;
+}
+
+.filter-drawer .card.facet-limit {
+  border: 0;
+  margin: 0 0 18px;
+  background: none;
+}
+
+/* Bootstrap's own .card-header default background, plus this app's
+   .card-header/.card-header:first-child { border-radius: $border-radius }
+   rule elsewhere in this file, both out-specificity a plain
+   ".filter-drawer .facet-field-heading" selector - !important is the
+   reliable way to guarantee the flat, underlined "legend" look the design
+   calls for actually wins regardless of load order. */
+.filter-drawer .facet-field-heading {
+  margin: 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+.filter-drawer .facet-field-heading button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 0 10px;
+  margin-bottom: 4px;
+  border: 0;
+  border-bottom: 1px solid $soft-gray;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  color: $black;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.8rem;
+  text-align: left;
+}
+
+.filter-drawer .facet-values {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.filter-drawer .facet-values li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 42px;
+  color: #222222;
+}
+
+.filter-drawer .facet-values li.more_facets_link,
+.filter-drawer .facet-values li.less_facets_link {
+  min-height: 0;
+  padding-top: 8px;
+}
+
+.filter-drawer .facet-label a {
+  color: #222222;
+  text-decoration: none;
+  font-weight: 500;
+}
+.filter-drawer .facet-label a:hover { color: $red; }
+
+.filter-drawer .facet-count {
+  margin-left: auto;
+  color: #777777;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+.filter-drawer .more_facets_link a,
+.filter-drawer .less_facets_link a {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: $blue;
+}
+
+.browse-drawer .drawer-search input {
+  width: 100%;
+  margin: 22px 0;
+  padding: 16px;
+  border: 1px solid $soft-gray;
+  border-radius: 6px;
+}
+
+.browse-drawer .drawer-list { display: grid; gap: 12px; }
+
+.browse-drawer .drawer-list a {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 18px;
+  border: 1px solid $soft-gray;
+  border-radius: 8px;
+  color: $black;
+}
+
+.browse-drawer .drawer-list span { color: #686868; white-space: nowrap; }
+
+/* ALL COLLECTIONS PAGE ------------------------------------------------ */
+
+.collections-list section {
+  width: calc(100% - 56px);
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-top: 2rem;
+}
+
+.collections-list .collection-search-and-filter .search {
+  width: 100%;
+  max-width: 970px;
+  height: 62px;
+  display: grid;
+  grid-template-columns: 1fr 40px;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px 8px 28px;
+  background: white;
+  border: 1px solid $soft-gray;
+  border-radius: 999px;
+}
+
+.collections-list .collection-search-and-filter .search input {
+  border: 0;
+  outline: 0;
+  font-size: 1.05rem;
+}
+
+.collections-list .collection-search-and-filter .search button {
+  width: 38px;
+  height: 38px;
+  border: 0;
+  border-radius: 50%;
+  background: $black;
+  color: white;
+  cursor: pointer;
+}
+
+.browse-by-collection-name {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+@media (min-width: 1200px) {
+  .browse-by-collection-name { align-items: center; }
+}
+
+.browse-by-collection-name strong { white-space: nowrap; }
+
+.alpha-nav { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+.alpha-nav a, .alpha-nav span.disabled {
+  border-radius: 24px;
+  padding: 0.2rem 0.5rem;
+  color: $black;
+}
+
+.alpha-nav span.disabled { color: $soft-gray; }
+
+.alpha-nav a.active { background-color: $black; color: white; }
+
+.number-and-sort {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.sort-collections { display: flex; align-items: center; gap: 1rem; }
+.sort-collections select { border-radius: 6px; padding: 0.4rem 0.6rem; border: 1px solid $soft-gray; }
+
+.collections-list .collection-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  margin: 0;
+  width: 100%;
+}
+
+@media (min-width: 1200px) {
+  .collections-list .collection-grid { grid-template-columns: 1fr 1fr; }
+}
+
+.collections-list .collection-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  gap: 1rem;
+  min-height: 250px;
+  border: 1px solid $soft-gray;
+  border-radius: 8px;
+}
+
+.collections-list .collection-card img {
+  width: 250px;
+  height: 250px;
+  object-fit: cover;
+  filter: none;
+}
+
+/* The "View Collection" link grows with the card instead of being absolutely
+   positioned over it - a long description would otherwise run underneath a
+   fixed-position button regardless of its own height. */
+.collections-list .collection-card > div {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+}
+
+.collections-list .coll-link { margin-top: auto; padding-top: 1rem; }
+
+.collections-list a.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 4px;
+  padding: 8px 16px;
+  background-color: $greige-light;
+  color: $black;
+}
+
+.collections-list a.btn:hover { background-color: $gray2-hover; color: white; }
+
+@media (max-width: 767.9px) {
+  .collections-list .collection-card { grid-template-columns: 1fr; }
+  .collections-list .collection-card img { width: 100%; height: 200px; }
+}

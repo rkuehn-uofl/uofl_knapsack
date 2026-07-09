@@ -1,0 +1,64 @@
+<%# UOFL OVERRIDE: UofL Theme - Quick "browse all collections" drawer, real
+    collections pulled from the same list already loaded for this page
+    (Hyrax::HomepageController#load_shared_info sets @collections). %>
+<aside class="browse-drawer" aria-hidden="true" aria-labelledby="browse-title" data-browse-drawer>
+  <div class="drawer-panel" role="dialog" aria-modal="true">
+    <button class="drawer-close" type="button" data-close-browse aria-label="Close browse collections"></button>
+    <p class="eyebrow">Browse</p>
+    <h2 id="browse-title">All Collections</h2>
+    <p>Jump straight into a collection, or <%= link_to 'see the full list with descriptions', main_app.all_collections_path %>.</p>
+
+    <% if @collections.present? %>
+      <div class="drawer-search">
+        <%= label_tag :browse_drawer_filter, 'Filter collections', class: 'sr-only' %>
+        <%= text_field_tag :browse_drawer_filter, nil, id: 'browse-drawer-filter', placeholder: 'Filter collections', data: { drawer_filter: true } %>
+      </div>
+      <div class="drawer-list" data-drawer-list>
+        <% @collections.sort_by { |c| c.title_or_label.to_s.downcase }.each do |collection| %>
+          <%= link_to [hyrax, collection], data: { drawer_item: true } do %>
+            <strong><%= markdown(collection.title_or_label) %></strong>
+            <span><%= uofl_item_count_label(uofl_collection_item_count(collection.id)) %></span>
+          <% end %>
+        <% end %>
+      </div>
+    <% else %>
+      <p>No collections are available yet.</p>
+    <% end %>
+  </div>
+</aside>
+
+<script>
+  (function () {
+    const drawer = document.querySelector('[data-browse-drawer]');
+    if (!drawer) return;
+    const openButtons = document.querySelectorAll('[data-open-browse]');
+    const closeButton = drawer.querySelector('[data-close-browse]');
+    const filterInput = drawer.querySelector('[data-drawer-filter]');
+    const items = drawer.querySelectorAll('[data-drawer-item]');
+
+    function setOpen(open) {
+      drawer.classList.toggle('is-open', open);
+      drawer.setAttribute('aria-hidden', String(!open));
+      document.body.style.overflow = open ? 'hidden' : '';
+    }
+
+    openButtons.forEach((button) => button.addEventListener('click', () => setOpen(true)));
+    closeButton.addEventListener('click', () => setOpen(false));
+    drawer.addEventListener('click', (event) => {
+      if (event.target === drawer) setOpen(false);
+    });
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') setOpen(false);
+    });
+
+    if (filterInput) {
+      filterInput.addEventListener('input', () => {
+        const query = filterInput.value.trim().toLowerCase();
+        items.forEach((item) => {
+          const text = item.textContent.trim().toLowerCase();
+          item.style.display = text.includes(query) ? '' : 'none';
+        });
+      });
+    }
+  })();
+</script>

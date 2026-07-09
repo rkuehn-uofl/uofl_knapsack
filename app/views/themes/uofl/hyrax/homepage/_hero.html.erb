@@ -1,0 +1,36 @@
+<%# UOFL OVERRIDE: UofL Theme - Full-bleed homepage hero, replaces the old blank image-masthead banner. %>
+<% content_for(:extra_body_classes, ' has-hero ') %>
+<% hero_image = UoflCuratedImages.hero %>
+<section class="hero">
+  <img class="hero-image" src="<%= image_path(hero_image[:image]) %>" alt="<%= hero_image[:alt] %>">
+  <div class="hero-scrim"></div>
+  <div class="hero-content">
+    <h1>Explore.<br>Discover.</h1>
+    <p class="hero-copy">
+      <% if display_content_block?(@marketing_text) %>
+        <%= displayable_content_block @marketing_text %>
+      <% else %>
+        Historic photographs, newspapers, books, maps, and more from our rare collections.
+      <% end %>
+    </p>
+
+    <%= form_tag search_action_url, method: :get, class: 'hero-search search', id: 'hero-search-form', role: 'search' do %>
+      <%= label_tag :hero_q, 'Search all digital collections', class: 'sr-only' %>
+      <%= text_field_tag :q, current_search_parameters, id: 'hero-search-q', name: 'q', placeholder: 'Search all digital collections' %>
+      <button type="submit" aria-label="Search"><i class="fa-solid fa-magnifying-glass"></i></button>
+    <% end %>
+
+    <div class="hero-buttons">
+      <a class="adv-search" href="/advanced">
+        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+        Advanced Search
+      </a>
+      <% if has_facet_values? %>
+        <button class="filter-launch" type="button" onclick="openNav()">
+          <span class="filter-icon" aria-hidden="true"></span>
+          Browse Items
+        </button>
+      <% end %>
+    </div>
+  </div>
+</section>
