@@ -44,7 +44,7 @@
 
   <div id="filters-adv">
     <% if show_header_facets %>
-      <button class="openbtn2" type="button" onclick="openNav()"><i class="fa-solid fa-arrow-down-wide-short"></i> Browse / Filter</button>
+      <button class="openbtn2" type="button" onclick="openNav()"><i class="fa-solid fa-arrow-down-wide-short"></i> Filter </button>
     <% end %>
 
     <a class="btn" id="advanced-search-link2" href="/advanced"><i class="fa-solid fa-up-right-from-square"></i> Advanced <span class="sr-only">search page</span></a>
@@ -55,7 +55,7 @@
     <div class="drawer-panel filter-panel" role="dialog" aria-modal="true">
       <button class="drawer-close" type="button" onclick="closeNav()" aria-label="Close filters"></button>
       <p class="eyebrow">Refine Results</p>
-      <h2 id="filter-title">Filter Search</h2>
+      <h2 id="filter-title"><%= controller_name == 'homepage' ? 'Browse' : 'Filter' %></h2>
       <p>Browse or filter your results.</p>
       <%= render 'hyrax/homepage/facets' %>
     </div>
