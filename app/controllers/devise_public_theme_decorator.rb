@@ -6,6 +6,9 @@
 # so they never prepend the tenant's home theme view path. That means
 # `render '/masthead'` on /users/sign_in, /users/sign_out, etc. resolves to
 # the generic Hyrax masthead instead of the themed one.
+module DevisePublicThemeDecorator
+end
+
 [
   Devise::SessionsController,
   Devise::PasswordsController,
