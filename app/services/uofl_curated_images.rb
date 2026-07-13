@@ -1,17 +1,18 @@
 # UOFL OVERRIDE: UofL Theme
 #
-# Hand-picked images for the homepage hero and featured-collection carousel.
-# These are chosen manually (not pulled from whatever thumbnail Solr returns
-# for a collection) so editors keep full control over what the public first
-# sees. To swap the current batch: replace/add files under
-# app/assets/images/themes/uofl/homepage/ and update the lists below. A
-# future scheduled job could rotate HERO/CAROUSEL on its own by editing this
-# same list on a cadence.
+# Hand-picked images for the homepage hero, plus a fallback bank for the
+# featured-collection carousel. The carousel itself shows each collection's
+# real branding thumbnail (see UoflHomepageHelper#uofl_homepage_collection_slides);
+# CAROUSEL here is only used when a featured collection has no branding
+# thumbnail set, so editors never see a broken image. To swap the current
+# batch: replace/add files under app/assets/images/themes/uofl/homepage/ and
+# update the lists below.
 module UoflCuratedImages
   HERO = { image: 'themes/uofl/homepage/placeholder-hero-1.jpg', alt: 'Historic Louisville street scene' }.freeze
 
   # Matched positionally to the ordered Featured Collections list on the
-  # homepage carousel. If there are more featured collections than curated
+  # homepage carousel, used only as a fallback when a collection has no
+  # branding thumbnail. If there are more featured collections than curated
   # images, the list repeats.
   CAROUSEL = [
     { image: 'themes/uofl/homepage/placeholder-photographs.jpg', alt: 'Historic photographic equipment' },
