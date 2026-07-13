@@ -19,6 +19,7 @@ ENV HOME=/app/samvera
 COPY --chown=1001:101 . /app/samvera
 ENV BUNDLE_LOCAL__HYKU_KNAPSACK=/app/samvera
 ENV BUNDLE_DISABLE_LOCAL_BRANCH_CHECK=true
+ENV BUNDLE_DISABLE_LOCAL_REVISION_CHECK=true
 RUN bundle install --jobs "$(nproc)"
 ############## END KNAPSACK SPECIFIC CODE ################
 
