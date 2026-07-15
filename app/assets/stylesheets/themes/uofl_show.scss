@@ -1,3 +1,6 @@
+/* uofl_show.scss showering every page but the homepage  */
+
+
 .facets-heading  {
   font-family:"Stack Sans Text", Helvetica Neue, Helvetica, Arial, sans-serif!important;
 }
@@ -110,4 +113,72 @@ label.control-label { font-weight:bold;}
     gap:2rem;
   }
 
+}
+
+
+/* INDIVIDUAL COLLECTION PAGE */
+
+body.public-facing .hyc-container {
+    .hyc-banner .badge { display:none;}
+    .hyc-banner .hyc-item-count {
+      background-color:#555;
+      color:white;
+      display: none;
+    }
+    #collections_show_search_row { justify-content: center;}
+
+    form.edit_collection,
+    input#collection_search { 
+      border-bottom-left-radius:24px;
+      border-top-left-radius:24px;
+    }
+    input#collection_search { padding-left:1rem;}
+
+    .hyc-last-updated,
+    #hyc-collection-metadata-total_items  { display:none;}
+
+    .hyc-metadata dl {
+      border-top:none;
+      margin-bottom:0;
+    }
+
+    .hyc-metadata div {
+      display:grid;
+      grid-template-columns: 120px 1fr;
+      gap:1rem;
+      border-bottom:none;
+   }
+
+    .public-last-update { margin-bottom:1rem;}
+
+    .hyc-bl-sort > .per_page.form-horizontal { border-bottom:none;}
+
+    @media (max-width:767.9px) {
+      .hyc-banner .hyc-item-count { display:none;}
+      .documents-gallery .document { min-width:300px;}
+    }
+
+    .documents-gallery .document .blacklight-description_tesim,
+    .documents-gallery .document .blacklight-subject_tesim,
+    .documents-gallery .document .blacklight-publisher_tesim,
+    .documents-gallery .document .blacklight-rights_statement_tesim,
+    .documents-gallery .document .blacklight-resource_type_tesim,
+    .documents-gallery .document .blacklight-format_tesim
+      { display:none;}
+
+    #uofl-hyrax-collections-show table th:nth-of-type(1),
+    #uofl-hyrax-collections-show table th:nth-of-type(4),
+    #uofl-hyrax-collections-show table td:nth-of-type(1),
+    #uofl-hyrax-collections-show table td:nth-of-type(4)    { display:none;}
+}
+
+
+/* ITEM RECORD */
+.viewer-wrapper iframe { 
+  border-radius:24px;
+  top:-16px;
+}
+.work-show.image {
+  display: grid;
+  grid-template-columns: 10rem 1fr;
 }

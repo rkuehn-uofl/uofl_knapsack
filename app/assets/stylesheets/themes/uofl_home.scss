@@ -1,4 +1,4 @@
-/* HOMEPAGE uofl_home.scss  */
+/* HOMEPAGE uofl_home.scss holistic  */
 
 /* COLORS ----------------------------------------- */
 $black: #111111; 
@@ -149,12 +149,13 @@ body.public-facing .hero-content h1 {
   font-weight: 800;
   font-size: 1.05rem;
   text-transform: uppercase;
+  text-decoration: none;
 }
 
 .hero-buttons .filter-icon {
   position: relative;
   width: 22px;
-  height: 18px;
+  height: 12px;
   border-top: 2px solid currentColor;
   border-bottom: 2px solid currentColor;
 }
@@ -214,6 +215,7 @@ body.public-facing .hero-content h1 {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
+  line-clamp:2;
   overflow: hidden;
   min-height: calc(1.15em * 2);
 }
@@ -222,6 +224,7 @@ body.public-facing .hero-content h1 {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
+  line-clamp:3;
   overflow: hidden;
   min-height: calc(1.55em * 3);
 }
@@ -268,12 +271,12 @@ body.public-facing .feature-carousel h2 {
   margin-top: 18px;
   padding: 16px 20px;
   background: $black;
-  color: white;
+  color: white!important;
   border-radius: 7px;
   font-weight: 700;
+  text-decoration: none;
 }
 
-.button-link::after { content: "\2192"; font-size: 1.4rem; }
 
 .carousel-controls {
   display: flex;
@@ -541,8 +544,34 @@ body.public-facing .feature-carousel h2 {
    .card-header/.card-header:first-child { border-radius: $border-radius }
    rule elsewhere in this file, both out-specificity a plain
    ".filter-drawer .facet-field-heading" selector - !important is the
-   reliable way to guarantee the flat, underlined "legend" look the design
+   reliable way to guarantee the flat "legend" look the design
    calls for actually wins regardless of load order. */
+
+body.public-facing #facets {
+	h3.card-header {
+		background-color:transparent!important;
+	}
+	.card-header button { 
+    border:1px solid transparent!important; 
+    border-bottom:none!important;
+  }
+  .card-header button[aria-expanded="true"] { 
+    border:1px solid #ccc!important; 
+    border-bottom:none!important;
+    margin-bottom:0;
+  }
+
+	.card-body { 
+    border:1px solid #ccc;
+    border-top:none;
+  }
+	.facet-select { color:$blue;}
+	.facet-select:hover { color:$red;}
+	.facet-count { color:$black;}
+
+}
+
+
 .filter-drawer .facet-field-heading {
   margin: 0 !important;
   padding: 0 !important;
@@ -681,9 +710,6 @@ body.public-facing .feature-carousel h2 {
   gap: 1rem;
 }
 
-@media (min-width: 1200px) {
-  .browse-by-collection-name { align-items: center; }
-}
 
 .browse-by-collection-name strong { white-space: nowrap; }
 
@@ -691,13 +717,22 @@ body.public-facing .feature-carousel h2 {
 
 .alpha-nav a, .alpha-nav span.disabled {
   border-radius: 24px;
-  padding: 0.2rem 0.5rem;
-  color: $black;
+  padding: 0.2rem 0.6rem;
 }
+
+.alpha-nav a { 
+  color:white!important;
+  background-color:$blue;
+  text-decoration: none;
+  font-weight:500;
+}
+.alpha-nav a:hover { background-color: $red;}
 
 .alpha-nav span.disabled { color: $soft-gray; }
 
-.alpha-nav a.active { background-color: $black; color: white; }
+.alpha-nav a.active { 
+  background-color: $black; 
+  color: white; }
 
 .number-and-sort {
   display: flex;
@@ -718,9 +753,6 @@ body.public-facing .feature-carousel h2 {
   width: 100%;
 }
 
-@media (min-width: 1200px) {
-  .collections-list .collection-grid { grid-template-columns: 1fr 1fr; }
-}
 
 .collections-list .collection-card {
   position: relative;
@@ -739,6 +771,13 @@ body.public-facing .feature-carousel h2 {
   filter: none;
 }
 
+.collection-card h3,
+.collection-card h3 p { 
+  margin-bottom:0;
+  font-size:1.1rem;
+  font-weight:700;
+}
+
 /* The "View Collection" link grows with the card instead of being absolutely
    positioned over it - a long description would otherwise run underneath a
    fixed-position button regardless of its own height. */
@@ -748,7 +787,13 @@ body.public-facing .feature-carousel h2 {
   padding: 1rem;
 }
 
-.collections-list .coll-link { margin-top: auto; padding-top: 1rem; }
+
+.collections-list .coll-link { 
+  margin-top: auto; 
+  padding-top: 1rem; 
+  display: flex;
+  justify-content: flex-end;
+}
 
 .collections-list a.btn {
   display: inline-flex;
@@ -756,13 +801,35 @@ body.public-facing .feature-carousel h2 {
   gap: 8px;
   border-radius: 4px;
   padding: 8px 16px;
-  background-color: $greige-light;
-  color: $black;
+  transition: transform 0.1s ease-in;
 }
 
-.collections-list a.btn:hover { background-color: $gray2-hover; color: white; }
+.collections-list a.btn:hover i { transform:translateX(50%); }
+
+.collection-card p:nth-of-type(2) {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow:hidden;
+  text-overflow: ellipsis;
+}
+
+.collections-list span.item-count { display: none;}
+
+.collections-list .collection-card>div>p:nth-of-type(1),
+.collections-list .collection-card>div>p:nth-of-type(3) { display:none;}
 
 @media (max-width: 767.9px) {
   .collections-list .collection-card { grid-template-columns: 1fr; }
   .collections-list .collection-card img { width: 100%; height: 200px; }
+}
+
+@media (min-width: 1200px) {
+
+  .collections-list .collection-card { height:251px; min-height:unset;}
+
+  .collection-card p:nth-of-type(2) { 
+    -webkit-line-clamp: 4;
+  }
+
 }
