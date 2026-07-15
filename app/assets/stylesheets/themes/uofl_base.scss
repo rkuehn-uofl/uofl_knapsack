@@ -1,7 +1,10 @@
-/* TEST -------------------------- */
+/*  uofl_base.scss batik all pages */
+
+
 
 /* COLORS ----------------------------------------- */
 $black: #111111; 
+$black2: #222222; 
 $blue: #215480;
 $blue-hover: #286090;
 $red: #ad0000;
@@ -122,22 +125,22 @@ body.public-facing .nav.navbar-nav > li.nav-item > a.nav-link { font-weight:500;
    overlay-on-hero treatment - it still sits on top of the hero via
    position:absolute, just without depending on the hero's scrim for
    legibility. */
-body.public-facing {
-
-.site-header {
-	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	z-index: 30;
-	display: flex;
-	flex-wrap: wrap;
-	align-items: center;
-	gap: 20px;
-	padding: 18px 24px;
-	background: rgba(17, 17, 17, 0.92);
-	color: white;
-}
+body.public-facing { 
+	#orig-navbar { display:none;}
+	.site-header {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		z-index: 30;
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 20px;
+		padding: 18px 24px;
+		background: $black2;
+		color: white;
+	}
 
 /* On the homepage/all_collections hero, the header should float
    transparently over the image (matching the design mock) instead of
@@ -145,152 +148,166 @@ body.public-facing {
    (darkest at the top-left) is what keeps the white nav text legible
    there, same as the mock relies on. Every other page keeps the solid
    background above since they have no hero image behind the header. */
-&.has-hero .site-header {
-	background: transparent;
-}
+	&.has-hero .site-header {
+		background: transparent;
+	}
 
-.brand {
-	display: flex;
-	align-items: center;
-	gap: 16px;
-	font-weight: 800;
-	text-transform: uppercase;
-	letter-spacing: 0.04em;
-	font-size: 1.3rem;
-	line-height: 1;
-	color: white;
-	text-decoration: none;
-	margin-right: auto;
-}
+	.brand {
+		display: flex;
+		align-items: center;
+		gap: 16px;
+		font-weight: 800;
+		text-transform: uppercase;
+		letter-spacing: 0.04em;
+		font-size: 1.3rem;
+		line-height: 1;
+		color: white;
+		text-decoration: none;
+		margin-right: auto;
+	}
 
-@media (min-width: 768px) {
-	.brand { font-size: 1.6rem; }
-}
+	@media (min-width: 768px) {
+		.brand { font-size: 1.6rem; }
+	}
 
-.brand img {
-	width: 46px;
-	height: 26px;
-	object-fit: cover;
-	object-position: left center;
-	filter: invert(1) brightness(2.2);
-}
+	.brand img {
+		width: 46px;
+		height: 26px;
+		object-fit: cover;
+		object-position: left center;
+		filter: invert(1) brightness(2.2);
+	}
 
-.mobile-menu-toggle {
-	display: grid;
-	gap: 5px;
-	width: 40px;
-	padding: 9px;
-	border: 1px solid rgba(255, 255, 255, 0.3);
-	border-radius: 6px;
-	background: rgba(255, 255, 255, 0.08);
-	margin-left: auto;
-}
-.mobile-menu-toggle span:not(.sr-only) {
-	height: 2px;
-	background: white;
-}
+	.mobile-menu-toggle {
+		display: grid;
+		gap: 5px;
+		width: 40px;
+		padding: 9px;
+		border: 1px solid rgba(255, 255, 255, 0.3);
+		border-radius: 6px;
+		background: rgba(255, 255, 255, 0.08);
+		margin-left: auto;
+	}
+	.mobile-menu-toggle span:not(.sr-only) {
+		height: 2px;
+		background: white;
+	}
 
-.primary-nav {
-	display: none;
-	gap: 8px;
-}
-.primary-nav.is-open {
-	display: grid;
-	width: 100%;
-	gap: 4px;
-	padding-top: 12px;
-}
+	.primary-nav {
+		display: none;
+		gap: 8px;
+	}
+	.primary-nav.is-open {
+		display: grid;
+		width: 100%;
+		gap: 4px;
+		padding-top: 12px;
+	}
 
-.nav-trigger {
-	width: 100%;
-	text-align: left;
-	padding: 10px 8px;
-	border: 0;
-	background: transparent;
-	color: white;
-	font-weight: 700;
-	font-size: 0.95rem;
-	text-transform: uppercase;
-	cursor: pointer;
-}
-.nav-trigger::after {
-	content: "";
-	display: inline-block;
-	width: 6px;
-	height: 6px;
-	margin-left: 8px;
-	border-right: 1.5px solid currentColor;
-	border-bottom: 1.5px solid currentColor;
-	transform: translateY(-2px) rotate(45deg);
-}
+	.nav-trigger {
+		display: flex;
+		align-items: center;
+		gap:.5rem;
+		width: 100%;
+		text-align: left;
+		padding: 10px 8px;
+		border: 0;
+		background: transparent;
+		color: white;
+		font-weight: 700;
+		font-size: 0.95rem;
+		text-transform: uppercase;
+		cursor: pointer;
+		transform: 200ms ease-in-out;
+	}
+	.nav-trigger[aria-expanded="true"] { background-color:$gray2;}
+	.nav-trigger[aria-expanded="true"] i { transform:rotate(180deg);}
 
-#header-search-wrap {
-	width: 100%;
-	order: 3;
-	display: flex;
-	align-items: center;
-	gap: 12px;
-	padding-top: 12px;
-}
+	#header-search-wrap {
+		width: 90vw!important;
+		order: 3;
+		display: flex;
+		align-items: center;
+		gap: 12px;
+		padding-top: 12px;
+	}
 
-#header-search-wrap #search-form-header {
+	#header-search-wrap #search-form-header {
 	/* flex-basis:0 (not auto) so this is sized purely by flex-grow, not by
 	   its own content/percentage-width, which was computing much narrower
 	   than the available space for reasons that weren't worth chasing
 	   further (percentage widths on flex items resolving unpredictably
 	   against the item's own box rather than the container once padding/
 	   box-sizing entered the picture). */
-	flex: 1 1 0%;
-	min-width: 0;
-	width: auto !important;
-}
+		flex: 1 1 0%;
+		min-width: 0;
+		width: auto !important;
+	}
 
-#filters-adv { flex: 0 0 auto; }
+	#filters-adv { flex: 0 0 auto; }
 
-.mega-menu {
-	position: absolute;
-	top: 100%;
-	left: 16px;
-	right: 16px;
-	z-index: 35;
-	display: none;
-	grid-template-columns: 1fr;
-	gap: 20px;
-	padding: 20px;
-	background: rgba(255, 255, 255, 0.98);
-	border-radius: $border-radius-tabs;
-	box-shadow: 0 18px 60px rgba(17, 17, 17, 0.24);
-	color: $black;
-}
-.mega-menu.is-open { display: grid; }
-.mega-menu img { display: none; }
-.mega-menu .eyebrow {
-	margin: 0 0 12px;
-	color: $gray2;
-	font-size: 0.8rem;
-	font-weight: 800;
-	text-transform: uppercase;
-	letter-spacing: 0.08em;
-}
-.mega-menu a {
-	display: block;
-	padding: 8px 0;
-	font-weight: 700;
-	color: $black;
-}
+	.mega-menu {
+		position: absolute;
+		top: 100%;
+		left: 16px;
+		right: 16px;
+		z-index: 35;
+		display: none;
+		grid-template-columns: 1fr;
+		gap: 20px;
+		padding: 20px;
+		background: rgba(255, 255, 255, 0.98);
+		border-radius: $border-radius-tabs;
+		box-shadow: 0 18px 60px rgba(17, 17, 17, 0.24);
+		color: $black;
+	}
+	.mega-menu.is-open { display: grid; }
 
-@media (min-width: 768px) {
-	.site-header { padding: 20px 32px; }
+	@media (max-width:991.9px) {
+		.mega-menu.repositories { gap:0;}
+		.mega-menu.repositories p.eyebrow.spacer { display: none;}
+		.mega-menu.is-open { top:270px!important; }
+		}
+
+
+	.mega-menu img { display: none; }
+	.mega-menu .eyebrow {
+		margin: 0 0 12px;
+		color: $gray2;
+		font-size: 1rem;
+		font-weight: 800;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+	}
+	.mega-menu a {
+		display: block;
+		padding: 8px 0;
+		font-weight: 700;
+		color: $black;
+	}
+
+	@media (min-width: 992px) {
+		.site-header { 
+			display: grid;
+			grid-template-columns: 365px 1fr;
+			gap:2rem;
+			padding: 20px 32px; 
+		}
 
 	.mobile-menu-toggle { display: none; }
 
 	.primary-nav {
 		display: flex;
+		justify-content: flex-end;
 		width: auto;
 		margin-right: 24px;
 	}
 
-	.nav-trigger { width: auto; padding: 8px 4px; }
+	.nav-trigger { 
+		width: auto; 
+		padding: 8px; 
+		border-radius: $border-radius-tabs;
+	}
 
 	#header-search-wrap {
 		/* Needs its own flex-grow here at the .site-header level - the
@@ -305,16 +322,23 @@ body.public-facing {
 	}
 
 	.mega-menu {
-		top: 100%;
+		top:70px!important;
 		left: 50%;
 		right: auto;
 		width: calc(100vw - 48px);
 		max-width: 960px;
-		grid-template-columns: 240px 1fr 1fr;
+		grid-template-columns: 250px 1fr 1fr;
 		transform: translateX(-50%);
+		border-radius:$border-radius;
 	}
-	.mega-menu img { display: block; height: 160px; width: 100%; object-fit: cover; border-radius: 6px; filter: grayscale(0.5); }
-}
+	.mega-menu img { 
+		display: block; 
+		height: 250px; 
+		width: 100%; 
+		object-fit: cover; 
+		border-radius: $border-radius; 
+		filter: grayscale(0.5); }
+	}
 
 /* The homepage/all_collections hero already has its own prominent search
    (and, on the homepage, its own Browse Items button) matching the design,
@@ -322,29 +346,26 @@ body.public-facing {
    real facets drawer) and its openNav()/closeNav() JS still need to render
    unconditionally though - the hero's "Browse Items" button calls openNav()
    directly - so this only hides the visible box/buttons, not the drawer. */
-&.has-hero #header-search-wrap #search-form-header,
-&.has-hero #header-search-wrap #filters-adv {
-	display: none;
-}
+	&.has-hero #header-search-wrap #search-form-header,
+	&.has-hero #header-search-wrap #filters-adv {
+		display: none;
+	}
 
 /* Pages without a full-bleed hero need #content-wrapper pushed down below
    the absolutely-positioned header so it doesn't cover the page title/
    breadcrumbs; hero pages (body.has-hero) handle their own spacing via
    .hero-content's own padding-top, so they get none of this. */
-#content-wrapper { padding-top: 84px; }
-&.has-hero #content-wrapper { padding-top: 0; }
+	#content-wrapper { padding-top: 84px; }
+	&.has-hero #content-wrapper { padding-top: 0; }
 
-@media (min-width: 768px) {
-	#content-wrapper { padding-top: 92px; }
-}
+	@media (min-width: 768px) {
+		#content-wrapper { padding-top: 92px; }
+	}
 
 } // end body.public-facing (HEADER 2026)
 
 
 
-@media (max-width: 767.9px){	
-	#filters-adv { margin-top:1rem;}
- }
 
 
 
@@ -370,28 +391,14 @@ a#advanced-search-link:hover { color: $blue-hover!important;}
 	}
 }
 
-#filters-adv button,
-#filters-adv .btn {
-  font-size: 1rem;
-  font-weight: 700;
-  cursor: pointer;
-  background-color: $greige-light;
-  color: $black;
-  padding: 10px 15px;
-  border: none;
-  border-radius: $border-radius;
-}
 
-#filters-adv button:hover,
-#filters-adv .btn:hover {
-  background-color: $gray2-hover;
-  color:white;
-}
 
 /* In the header (dark bg, see .site-header) these should read like the
    homepage hero's own Advanced Search/Browse Items buttons - not the grey
    pill above, which is for the OTHER place #filters-adv renders: inline in
    the (light-background) collection show page body. */
+
+
 #header-search-wrap #filters-adv button,
 #header-search-wrap #filters-adv .btn {
   background-color: transparent;
@@ -399,7 +406,12 @@ a#advanced-search-link:hover { color: $blue-hover!important;}
   color: white;
   border-radius: 999px;
   white-space: nowrap;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 10px 15px;
 }
+
 
 #header-search-wrap #filters-adv button:hover,
 #header-search-wrap #filters-adv .btn:hover {
@@ -410,11 +422,6 @@ a#advanced-search-link:hover { color: $blue-hover!important;}
 /* FACETS  FILTERS */
 
 
-h2.facets-heading { color:$greige-dark; }
-
-#facets { margin-left:1rem;}
-
-div#mySidebar2 #facet-panel-collapse { width:95%;}
 
 #mySidebar2 a.facet-select { padding:unset;}
 #facets button.dropdown-toggle {
@@ -590,6 +597,7 @@ i.fa.fa-sign-in { display:none; }
 	height: 50px;
 	object-fit: cover;
 	object-position: left center;
+	margin-top:.3rem;
 }
 
 .site-footer a { color: $gray2; text-decoration: none; }
@@ -629,8 +637,17 @@ div#user-util-links a.dropdown-item:hover { color:#ad0000;}
 
 /* CATALOG RESULTS */
 
+#content { margin-top:4rem;}
+
+.sort-pagination {
+	display:flex!important;
+	flex-wrap:wrap;
+}
+
 #sort-dropdown a.dropdown-item { color:$black!important;}
 #sort-dropdown .dropdown-menu a.dropdown-item.active { background-color:$greige-light!important;}
+
+h4.search-result-title p { margin-bottom:0;}
 
 .metadata dt { 
 	width:10rem;
@@ -641,3 +658,31 @@ div#user-util-links a.dropdown-item:hover { color:#ad0000;}
 	max-width:unset;
 	width:calc(100% - 10rem);
 }
+
+
+/* ITME RECORD need to restart when editing these */
+body.public-facing {
+
+	.breadcrumb { 
+		margin-top:2rem;
+		border:none;
+		background-color:transparent;
+	}
+	.work-type-tag,
+	.title-with-badges .badge { display:none;}
+
+	.work-type .card-body { border:none!important;}
+
+	.card-header {
+		border-bottom-right-radius: 0!important;
+		border-bottom-left-radius: 0!important;
+	}
+
+	table.related-files th { border-top:none;}
+
+}
+
+
+/* ADVANCED SEARCH PAGE */
+
+.advanced-search-form { margin-top:3rem; }

@@ -1,10 +1,15 @@
+<%# edited by TH %>
 <%# OVERRIDE Hyrax 5.0.1 to enable markdown for index field values in search results %>
 <%# OVERRIDE Hyrax 5.0.1 to handle search only accounts %>
 <%# OVERRIDE Hyrax 5.0.1 display label only when a property has a value, to prevent blank metadata %>
 <%# UOFL OVERRIDE: UofL Theme %>
 <%# edited by TH %>
 
-<div class="col-md-9">
+<div class="col-md-9 col-lg-7" id="index_list_default">
+  <h4 class="search-result-title">
+    <%= link_to markdown(document.title_or_label), generate_work_url(document, request, params) %>
+  </h4>
+
   <div class="metadata">
     <dl>
       <% doc_presenter = index_presenter(document) %>

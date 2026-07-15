@@ -6,20 +6,20 @@
 <% if slides.present? %>
   <section class="feature-carousel" aria-label="Featured collections" id="featured-carousel">
     <div class="carousel-copy">
-      <p class="eyebrow">Featured Collection</p>
+      <p class="eyebrow">Featured Theme</p>
       <h2 data-slide-title><%= slides.first[:title] %></h2>
       <p data-slide-description><%= slides.first[:description] %></p>
-      <a class="button-link" data-slide-link href="<%= slides.first[:url] %>">Explore this collection</a>
+      <a class="button-link" data-slide-link href="<%= slides.first[:url] %>">Explore this theme <i class="fa-solid fa-arrow-right-long"></i></a>
 
       <% if slides.size > 1 %>
         <div class="carousel-controls" aria-label="Carousel controls">
-          <button type="button" data-carousel-prev aria-label="Previous featured collection"></button>
+          <button type="button" data-carousel-prev aria-label="Previous featured theme item"></button>
           <div class="carousel-dots" data-carousel-dots>
             <% slides.each_with_index do |slide, index| %>
               <button type="button" class="<%= 'is-active' if index.zero? %>" data-slide-index="<%= index %>" aria-label="Show <%= slide[:title] %>"></button>
             <% end %>
           </div>
-          <button type="button" data-carousel-next aria-label="Next featured collection"></button>
+          <button type="button" data-carousel-next aria-label="Next featured theme item"></button>
         </div>
       <% end %>
     </div>

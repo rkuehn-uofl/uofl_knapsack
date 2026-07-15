@@ -1,3 +1,4 @@
+<%# edited by TH %>
 <!-- OVERRIDE Hyrax v5.0 to allow passign options to the thumbnail tag
      to allow carrying along the query to the universal viewer -->
 <%# UOFL OVERRIDE: UofL Theme %>
@@ -11,7 +12,7 @@
   <% additional_options = {} %>
 <% end %>
 
-<div class="col-md-3">
+<div class="col-md-3 col-lg-5">
   <% if model == Hyrax::PcdmCollection || model < Hyrax::PcdmCollection %>
     <%= document_presenter(document)&.thumbnail&.thumbnail_tag({ alt: thumbnail_alt_text_for(document, block_name: 'default_collection_image_text') }, suppress_link: true) %>
   <% else %>
