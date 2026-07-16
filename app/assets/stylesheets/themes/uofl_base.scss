@@ -1,7 +1,6 @@
 /*  uofl_base.scss batik all pages */
 
 
-
 /* COLORS ----------------------------------------- */
 $black: #111111; 
 $black2: #222222; 
@@ -30,7 +29,9 @@ $border-radius-tabs: 4px;
 
 /* Z-INDEX -------------------------------------- */
 
-.dropdown-menu { z-index: 1000; }
+
+.dropdown-menu { z-index:1000; }
+
 .navbar-collapse.show { z-index:900; }
 
 /* FOCUS OUTLINE HOVER --------------------------*/
@@ -659,30 +660,3 @@ h4.search-result-title p { margin-bottom:0;}
 	width:calc(100% - 10rem);
 }
 
-
-/* ITME RECORD need to restart when editing these */
-body.public-facing {
-
-	.breadcrumb { 
-		margin-top:2rem;
-		border:none;
-		background-color:transparent;
-	}
-	.work-type-tag,
-	.title-with-badges .badge { display:none;}
-
-	.work-type .card-body { border:none!important;}
-
-	.card-header {
-		border-bottom-right-radius: 0!important;
-		border-bottom-left-radius: 0!important;
-	}
-
-	table.related-files th { border-top:none;}
-
-}
-
-
-/* ADVANCED SEARCH PAGE */
-
-.advanced-search-form { margin-top:3rem; }

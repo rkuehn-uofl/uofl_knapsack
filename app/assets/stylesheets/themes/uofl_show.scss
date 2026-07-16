@@ -1,6 +1,37 @@
 /* uofl_show.scss showering every page but the homepage  */
 
 
+/* COLORS ----------------------------------------- */
+$black: #111111; 
+$black2: #222222; 
+$blue: #215480;
+$blue-hover: #286090;
+$red: #ad0000;
+$red-hover: #7d0000;
+$soft-gray: #D3D3D3;
+$gray2: #555555;
+$gray2-hover: #444444;
+$greige: #cabdbd;
+$greige-dark: #494545;
+$greige-light: #E7E1E1;
+
+
+/* PADDING --------------------------------------- */
+$padding-xs: 8px;
+$padding-sm: 16px;
+$padding-md: 24px;
+$padding-lg: 32px; 
+$padding-xl: 40px; 
+
+/* BORDER --------------------------------------- */
+$border-radius: 24px;
+$border-radius-tabs: 4px;
+
+
+
+
+/* ---------------------------------------------- */
+
 .facets-heading  {
   font-family:"Stack Sans Text", Helvetica Neue, Helvetica, Arial, sans-serif!important;
 }
@@ -79,8 +110,13 @@
 }
 
 
+
 /* ADVANCED SEARCH PAGE */
 body.advanced h1 { margin-bottom:2rem;}
+
+.advanced-search-form { margin-top:3rem; }
+
+
 .advanced-search-form > .row { flex-direction: column;}
 .advanced-search-form > .row > .col-md-8 { 
   max-width: 100%;
@@ -172,13 +208,39 @@ body.public-facing .hyc-container {
     #uofl-hyrax-collections-show table td:nth-of-type(4)    { display:none;}
 }
 
+/* ITME RECORD need to restart when editing these */
+body.public-facing {
 
-/* ITEM RECORD */
-.viewer-wrapper iframe { 
-  border-radius:24px;
-  top:-16px;
+	.breadcrumb { 
+		margin-top:2rem;
+		border:none;
+		background-color:transparent;
+	}
+	.work-type-tag,
+	.title-with-badges .badge { display:none;}
+
+	.work-type .card-body { 
+		border:none!important;
+		padding:0 1rem;
+		border-top-left-radius:$border-radius;
+		border-top-right-radius:$border-radius;
+	}
+
+	.card-header {
+		border-bottom-right-radius: 0!important;
+		border-bottom-left-radius: 0!important;
+	}
+
+	table.related-files th { border-top:none;}
+
+  .viewer-wrapper iframe { 
+    border-radius:24px;
+    top:-16px;
+  }
+  .work-show.image {
+    display: grid;
+    grid-template-columns: 10rem 1fr;
+  }
+
 }
-.work-show.image {
-  display: grid;
-  grid-template-columns: 10rem 1fr;
-}
+ .uv .centerPanel .title { padding-left:20px;}
