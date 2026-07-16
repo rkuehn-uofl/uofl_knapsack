@@ -17,6 +17,9 @@ module Hyrax
       @collection_description_query = params[:collection_description_query].to_s.strip
       @collections = filtered_collections(@collections)
       @collections = resort_collections(@collections)
+      # Populate @response so the header's facets drawer (has_facet_values?,
+      # render_facet_partials) has data here too, same as the homepage index action.
+      (@response, @document_list) = search_service.search_results
     end
 
     private

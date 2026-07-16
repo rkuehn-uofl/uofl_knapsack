@@ -3,10 +3,10 @@
 <%# edited by TH %>
 <%# UOFL OVERRIDE: UofL Theme %>
 <% content_for(:navbar) do %>
-  <% if params[:action] == 'all_collections' %>
-    <%= render 'hyrax/homepage/all_collections_hero' %>
-  <% else %>
+  <% if params[:action] == 'index' %>
     <%= render 'hyrax/homepage/hero' %>
+  <% else %>
+    <%= render '/controls' %>
   <% end %>
 <% end %>
 
