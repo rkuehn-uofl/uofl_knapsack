@@ -1,3 +1,6 @@
+<%# FIX FAKE LINKS %>
+<%# EDITED BY TH %>
+
 <%# UOFL OVERRIDE: UofL Theme - Header ported from the new hyku-home design
     (mega-menu nav), rendered on every page. Real data: Popular Collections,
     Repositories, Explore By Type/Places all link to real facet searches or
@@ -25,17 +28,91 @@
 
   <nav class="primary-nav" id="primary-nav" aria-label="Primary navigation">
     <div class="nav-item">
-      <button class="nav-trigger" type="button" aria-expanded="false" data-menu="collections">Collections <i class="fa-solid fa-chevron-down"></i></button>
-    </div>
-    <div class="nav-item">
-      <button class="nav-trigger" type="button" aria-expanded="false" data-menu="repositories">Repositories <i class="fa-solid fa-chevron-down"></i></button>
-    </div>
-    <div class="nav-item">
-      <button class="nav-trigger" type="button" aria-expanded="false" data-menu="explore">Explore <i class="fa-solid fa-chevron-down"></i></button>
-    </div>
-    <div class="nav-item">
-      <button class="nav-trigger" type="button" aria-expanded="false" data-menu="help">Help <i class="fa-solid fa-chevron-down"></i></button>
-    </div>
+      <button class="nav-trigger" type="button" aria-haspopup="true" aria-expanded="false" data-menu="collections">Collections <i class="fa-solid fa-chevron-down"></i></button>
+      <div class="mega-menu collections" data-panel="collections" aria-hidden="true">
+		  <img alt="boy reading with bookmobile behind him" src="<%= image_path('themes/uofl/header/SONJ_51793_n_250s.png') %>">
+		  <div>
+			  <p class="eyebrow">Popular Collections</p>
+			  <a href="fake.html">Caufield &amp; Shook Collection</a>
+			  <a href="fake.html">Standard Oil (New Jersey) Collection</a>
+			  <a href="fake.html">Louisville Leader Collection</a>
+			  <a href="fake.html">Royal Photo Company Collection</a>
+			  
+			  <!--
+    <% uofl_navbar_collections = uofl_top_collections %>
+    <% uofl_navbar_collections.each do |collection| %>
+      <%= link_to markdown(collection.title_or_label), hyrax.collection_path(collection.id) %>
+    <% end %>
+    -->
+		  </div>
+		  
+		  <div>
+			  <p class="eyebrow">Browse Collections</p>
+			  <a href="/all_collections">View all collections with descriptions</a>
+		  </div>
+		</div>
+	</div>
+    
+	<div class="nav-item">
+		<button class="nav-trigger" type="button" aria-haspopup="true" aria-expanded="false" data-menu="repositories">Repositories <i class="fa-solid fa-chevron-down"></i></button>
+		<div class="mega-menu repositories" data-panel="repositories" aria-hidden="true">
+			<img alt="two women talking 1920" src="<%= image_path('themes/uofl/header/CS_033312_c_pt_250s.png') %>">
+			<div>
+    <p class="eyebrow">Repositories</p>
+    <a href="/catalog?f%5Bpublisher_sim%5D%5B%5D=University+of+Louisville+Photographic+Archives&locale=en">ASC Photographic Archives</a>
+    <a href="/catalog?f%5Bpublisher_sim%5D%5B%5D=University+of+Louisville+Rare+Books&locale=en">ASC Rare Books</a>
+    <a href="/catalog?f%5Bpublisher_sim%5D%5B%5D=University+of+Louisville+Archives+and+Records+Center&locale=en">ASC University Archives &amp; Records Center</a>
+    <a href="/catalog?f%5Bpublisher_sim%5D%5B%5D=University+of+Louisville+Margaret+M.+Bridwell+Art+Library&locale=en">Bridwell Art Library</a>
+			</div>
+			<div>
+				<p class="eyebrow spacer">&nbsp;</p>
+				<a href="/catalog?f%5Bpublisher_sim%5D%5B%5D=University+of+Louisville+Dwight+Anderson+Music+Library&locale=en">Dwight Anderson Memorial Music Library</a>
+				<a href="/catalog?f%5Bpublisher_sim%5D%5B%5D=University+of+Louisville+Kornhauser+Health+Sciences+Library&locale=en">Kornhauser Health Sciences Library</a>
+				<a href="/catalog?f%5Bpublisher_sim%5D%5B%5D=Law+Library+of+the+Louis+D.+Brandeis+School+of+Law%2C+University+of+Louisville&locale=en">Law Library, Louis D. Brandeis School of Law</a>
+			</div>
+		</div>
+	  </div>
+	  
+	  
+	  <div class="nav-item">
+      <button class="nav-trigger" type="button" aria-haspopup="true" aria-expanded="false" data-menu="explore">Explore <i class="fa-solid fa-chevron-down"></i></button>
+		  <div class="mega-menu explore" data-panel="explore" aria-hidden="true">
+			  <img alt="Historic map detail" src="<%= image_path('themes/uofl/header/SONJ_58546_n_250s.png') %>">
+			  <div>
+				  <p class="eyebrow">Explore By Type</p>
+				  <a href="<%= main_app.search_catalog_path(f_inclusive: { resource_type_sim: ['Film negatives', 'Gelatin silver printing-out paper prints', 'Gelatin silver prints', 'Glass negatives', 'Halftone photomechanical prints', 'Nitrate negatives', 'Photographic postcards', 'Photographic prints', 'Photogravures', 'Photomechanical prints', 'Stereographs'] }) %>">Photographs</a>
+				  <a href="<%= main_app.search_catalog_path(q: 'illuminated manuscripts') %>">Illuminated Manuscripts</a>
+				  <a href="<%= main_app.search_catalog_path(q: 'maps') %>">Maps</a>
+				  <a href="<%= main_app.search_catalog_path(q: 'newspapers') %>">Newspapers</a>
+			  </div>
+			  <div>
+				  <p class="eyebrow">Explore Places</p>
+				  <a href="<%= main_app.search_catalog_path(f: { city_sim: ['Louisville (Ky.)'] }) %>">Louisville</a>
+				  <a href="<%= main_app.search_catalog_path(q: 'Kentucky') %>">Kentucky</a>
+				  <a href="<%= main_app.search_catalog_path(q: 'Ohio River Valley') %>">Ohio River Valley</a>
+				  <a href="<%= main_app.search_catalog_path(q: 'University of Louisville') %>">University of Louisville</a>
+			  </div>
+		  </div>
+	  </div>
+	  
+	  <div class="nav-item">
+		  <button class="nav-trigger" type="button" aria-haspopup="true" aria-expanded="false" data-menu="help">Help <i class="fa-solid fa-chevron-down"></i></button>
+		  <div class="mega-menu help" data-panel="help" aria-hidden="true">
+			  <img alt="librarian helping students in the University Library" src="<%= image_path('themes/uofl/header/001_0435_300x300.jpg') %>">
+			  <div>
+				  <p class="eyebrow">Help</p>
+				  <a href="fake.html">Search the Digital Collections</a>
+				  <a href="fake.html">Navigate multi-page objects</a>
+				  <a href="fake.html">Cite sources</a>
+				  <a href="fake.html">Order reproductions</a>
+			  </div>
+			  <div>
+				  <p class="eyebrow">Need more help?</p>
+				  <a href="mailto:digital@louisville.edu">Email us</a>
+				  <a href="tel:5028524476">Call 502.852.4476</a>
+			  </div>
+		  </div>
+	  </div>
   </nav>
 
   <div id="header-search-wrap">
@@ -43,78 +120,6 @@
   </div>
 </header>
 
-<div class="mega-menu collections" data-panel="collections" aria-hidden="true">
-  <img alt="boy reading with bookmobile behind him" src="<%= image_path('themes/uofl/header/SONJ_51793_n_250s.png') %>">
-  <div>
-    <p class="eyebrow">Popular Collections</p>
-    <a href="fake.html">Caufield &amp; Shook Collection</a>
-    <a href="fake.html">Standard Oil (New Jersey) Collection</a>
-    <a href="fake.html">Louisville Leader Collection</a>
-    <a href="fake.html">Royal Photo Company Collection</a>
-    
-    <!--
-    <% uofl_navbar_collections = uofl_top_collections %>
-    <% uofl_navbar_collections.each do |collection| %>
-      <%= link_to markdown(collection.title_or_label), hyrax.collection_path(collection.id) %>
-    <% end %>
-    -->
-  </div>
-  <div>
-    <p class="eyebrow">Browse Collections</p>
-    <a href="/all_collections">View all collections with descriptions</a>
-  </div>
-</div>
-
-<div class="mega-menu repositories" data-panel="repositories" aria-hidden="true">
-  <img alt="two women talking 1920" src="<%= image_path('themes/uofl/header/CS_033312_c_pt_250s.png') %>">
-  <div>
-    <p class="eyebrow">Repositories</p>
-    <a href="/catalog?f%5Bpublisher_sim%5D%5B%5D=University+of+Louisville+Photographic+Archives&locale=en">ASC Photographic Archives</a>
-    <a href="/catalog?f%5Bpublisher_sim%5D%5B%5D=University+of+Louisville+Rare+Books&locale=en">ASC Rare Books</a>
-    <a href="/catalog?f%5Bpublisher_sim%5D%5B%5D=University+of+Louisville+Archives+and+Records+Center&locale=en">ASC University Archives &amp; Records Center</a>
-    <a href="/catalog?f%5Bpublisher_sim%5D%5B%5D=University+of+Louisville+Margaret+M.+Bridwell+Art+Library&locale=en">Bridwell Art Library</a>
-  </div>
-  <div>
-    <p class="eyebrow spacer">&nbsp;</p>
-    <a href="/catalog?f%5Bpublisher_sim%5D%5B%5D=University+of+Louisville+Dwight+Anderson+Music+Library&locale=en">Dwight Anderson Memorial Music Library</a>
-    <a href="/catalog?f%5Bpublisher_sim%5D%5B%5D=University+of+Louisville+Kornhauser+Health+Sciences+Library&locale=en">Kornhauser Health Sciences Library</a>
-    <a href="/catalog?f%5Bpublisher_sim%5D%5B%5D=Law+Library+of+the+Louis+D.+Brandeis+School+of+Law%2C+University+of+Louisville&locale=en">Law Library, Louis D. Brandeis School of Law</a>
-  </div>
-</div>
-
-<div class="mega-menu explore" data-panel="explore" aria-hidden="true">
-  <img alt="Historic map detail" src="<%= image_path('themes/uofl/header/SONJ_58546_n_250s.png') %>">
-  <div>
-    <p class="eyebrow">Explore By Type</p>
-    <a href="<%= main_app.search_catalog_path(f_inclusive: { resource_type_sim: ['Film negatives', 'Gelatin silver printing-out paper prints', 'Gelatin silver prints', 'Glass negatives', 'Halftone photomechanical prints', 'Nitrate negatives', 'Photographic postcards', 'Photographic prints', 'Photogravures', 'Photomechanical prints', 'Stereographs'] }) %>">Photographs</a>
-    <a href="<%= main_app.search_catalog_path(q: 'illuminated manuscripts') %>">Illuminated Manuscripts</a>
-    <a href="<%= main_app.search_catalog_path(q: 'maps') %>">Maps</a>
-    <a href="<%= main_app.search_catalog_path(q: 'newspapers') %>">Newspapers</a>
-  </div>
-  <div>
-    <p class="eyebrow">Explore Places</p>
-    <a href="<%= main_app.search_catalog_path(f: { city_sim: ['Louisville (Ky.)'] }) %>">Louisville</a>
-    <a href="<%= main_app.search_catalog_path(q: 'Kentucky') %>">Kentucky</a>
-    <a href="<%= main_app.search_catalog_path(q: 'Ohio River Valley') %>">Ohio River Valley</a>
-    <a href="<%= main_app.search_catalog_path(q: 'University of Louisville') %>">University of Louisville</a>
-  </div>
-</div>
-
-<div class="mega-menu help" data-panel="help" aria-hidden="true">
-  <img alt="librarian helping students in the University Library" src="<%= image_path('themes/uofl/header/001_0435_300x300.jpg') %>">
-  <div>
-    <p class="eyebrow">Help</p>
-    <a href="fake.html">Search the Digital Collections</a>
-    <a href="fake.html">Navigate multi-page objects</a>
-    <a href="fake.html">Cite sources</a>
-    <a href="fake.html">Order reproductions</a>
-  </div>
-  <div>
-    <p class="eyebrow">Need more help?</p>
-    <a href="mailto:digital@louisville.edu">Email us</a>
-    <a href="tel:5028524476">Call 502.852.4476</a>
-  </div>
-</div>
 
 <script>
   (function () {

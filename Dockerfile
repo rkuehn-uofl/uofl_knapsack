@@ -23,7 +23,13 @@ ENV BUNDLE_DISABLE_LOCAL_REVISION_CHECK=true
 RUN bundle install --jobs "$(nproc)"
 ############## END KNAPSACK SPECIFIC CODE ################
 
-RUN RAILS_ENV=production SECRET_KEY_BASE=`ruby -rsecurerandom -e 'print SecureRandom.hex(64)'` DB_ADAPTER=nulldb DB_URL='postgresql://fake' bundle exec rake assets:precompile && yarn install
+# Set to "true" for local/dev builds so no stale manifest gets baked into the
+# assets volume, letting Sprockets live-compile SCSS/JS changes on each request.
+# Leave unset (false) for production builds, which need real precompiled assets.
+ARG SKIP_ASSET_PRECOMPILE=false
+RUN if [ "$SKIP_ASSET_PRECOMPILE" != "true" ]; then \
+      RAILS_ENV=production SECRET_KEY_BASE=`ruby -rsecurerandom -e 'print SecureRandom.hex(64)'` DB_ADAPTER=nulldb DB_URL='postgresql://fake' bundle exec rake assets:precompile; \
+    fi && yarn install
 CMD ./bin/web
 
 FROM hyku-web AS hyku-worker

@@ -152,6 +152,177 @@ label.control-label { font-weight:bold;}
 }
 
 
+/* ALL COLLECTIONS PAGE ------------------------------------------------ */
+
+.collections-list section {
+  width: calc(100% - 56px);
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-top: 2rem;
+}
+
+.collections-list .collection-search-and-filter .search {
+  width: 100%;
+  max-width: 970px;
+  height: 62px;
+  display: grid;
+  grid-template-columns: 1fr 40px;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px 8px 28px;
+  background: white;
+  border: 1px solid $soft-gray;
+  border-radius: 999px;
+}
+
+.collections-list .collection-search-and-filter .search input {
+  border: 0;
+  outline: 0;
+  font-size: 1.05rem;
+}
+
+.collections-list .collection-search-and-filter .search button {
+  width: 38px;
+  height: 38px;
+  border: 0;
+  border-radius: 50%;
+  background: $black;
+  color: white;
+  cursor: pointer;
+}
+
+.browse-by-collection-name {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+
+.browse-by-collection-name strong { white-space: nowrap; }
+
+.alpha-nav { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+.alpha-nav a, .alpha-nav span.disabled {
+  border-radius: 24px;
+  padding: 0.2rem 0.6rem;
+}
+
+.alpha-nav a { 
+  color:white!important;
+  background-color:$blue;
+  text-decoration: none;
+  font-weight:500;
+}
+.alpha-nav a:hover { background-color: $red;}
+
+.alpha-nav span.disabled { color: $soft-gray; }
+
+.alpha-nav a.active { 
+  background-color: $black; 
+  color: white; }
+
+.number-and-sort {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.sort-collections { display: flex; align-items: center; gap: 1rem; }
+.sort-collections select { border-radius: 6px; padding: 0.4rem 0.6rem; border: 1px solid $soft-gray; }
+
+.collections-list .collection-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  margin: 0;
+  width: 100%;
+}
+
+
+.collections-list .collection-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  gap: 1rem;
+  min-height: 250px;
+  border: 1px solid $soft-gray;
+  border-radius: 8px;
+}
+
+.collections-list .collection-card img {
+  width: 250px;
+  height: 250px;
+  object-fit: cover;
+  filter: none;
+}
+
+.collection-card h3,
+.collection-card h3 p { 
+  margin-bottom:0;
+  font-size:1.1rem;
+  font-weight:700;
+}
+
+/* The "View Collection" link grows with the card instead of being absolutely
+   positioned over it - a long description would otherwise run underneath a
+   fixed-position button regardless of its own height. */
+.collections-list .collection-card > div {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+}
+
+
+.collections-list .coll-link { 
+  margin-top: auto; 
+  padding-top: 1rem; 
+  display: flex;
+  justify-content: flex-end;
+}
+
+.collections-list a.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 4px;
+  padding: 8px 16px;
+  transition: transform 0.1s ease-in;
+}
+
+.collections-list a.btn:hover i { transform:translateX(50%); }
+
+.collection-card p:nth-of-type(2) {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow:hidden;
+  text-overflow: ellipsis;
+}
+
+.collections-list span.item-count { display: none;}
+
+.collections-list .collection-card>div>p:nth-of-type(1),
+.collections-list .collection-card>div>p:nth-of-type(3) { display:none;}
+
+@media (max-width: 767.9px) {
+  .collections-list .collection-card { grid-template-columns: 1fr; }
+  .collections-list .collection-card img { width: 100%; height: 200px; }
+}
+
+@media (min-width: 1200px) {
+
+  .collections-list .collection-card { height:251px; min-height:unset;}
+
+  .collection-card p:nth-of-type(2) { 
+    -webkit-line-clamp: 4;
+  }
+
+}
+
+
+
 /* INDIVIDUAL COLLECTION PAGE */
 
 body.public-facing .hyc-container {
@@ -243,4 +414,4 @@ body.public-facing {
   }
 
 }
- .uv .centerPanel .title { padding-left:20px;}
+ .uv .centerPanel .title { padding-left:20px; display:none;}

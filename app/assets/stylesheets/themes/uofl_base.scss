@@ -2,7 +2,7 @@
 
 
 /* COLORS ----------------------------------------- */
-$black: #111111; 
+$black: rgb(0, 0, 0); 
 $black2: #222222; 
 $blue: #215480;
 $blue-hover: #286090;
@@ -153,7 +153,7 @@ body.public-facing {
 		background: transparent;
 	}
 
-	.brand {
+	a.brand {
 		display: flex;
 		align-items: center;
 		gap: 16px;
@@ -165,6 +165,11 @@ body.public-facing {
 		color: white;
 		text-decoration: none;
 		margin-right: auto;
+	}
+
+	a.brand:hover { 
+		color:white!important;
+		text-decoration:underline;
 	}
 
 	@media (min-width: 768px) {
@@ -203,6 +208,8 @@ body.public-facing {
 		width: 100%;
 		gap: 4px;
 		padding-top: 12px;
+		padding-left:12px;
+		background-color: rgb(17, 17, 17);
 	}
 
 	.nav-trigger {
@@ -302,6 +309,10 @@ body.public-facing {
 		justify-content: flex-end;
 		width: auto;
 		margin-right: 24px;
+	}
+
+	@media (max-width:991px) {
+		.primary-nav.is-open { background-color:$black2;}
 	}
 
 	.nav-trigger { 

@@ -373,6 +373,10 @@ body.public-facing .feature-carousel h2 {
   justify-content: space-between;
   margin-bottom: 24px;
 }
+@media (max-width: 640px) {
+  .section-heading { align-items: flex-start; gap: 20px; flex-direction: column; }
+}
+
 
 .section-heading h2, .type-filter h2 {
   margin: 0;
@@ -388,22 +392,35 @@ body.public-facing .feature-carousel h2 {
   font-weight: 600;
   border: 0;
   background: transparent;
-  color: $black;
+  color: $black!important;
   cursor: pointer;
+  text-decoration: none;
 }
 
 .plain-link::after { content: "\2192"; font-size: 1.4rem; }
 
+
 .collection-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: 1fr;
   gap: 24px;
 }
+@media (max-width: 980px) {
+  .collection-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 981px) {
+  .collection-grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 640px) {
+  .collection-grid { grid-template-columns: 1fr; }
+}
+
 
 .browse-section .collection-card {
   position: relative;
   overflow: hidden;
   min-height: 285px;
+  min-width:250px;
   background: white;
   border: 1px solid $soft-gray;
   border-radius: 8px;
@@ -411,7 +428,7 @@ body.public-facing .feature-carousel h2 {
 
 .browse-section .collection-card img {
   width: 100%;
-  height: 150px;
+  height: 250px;
   object-fit: cover;
   filter: grayscale(0.5);
 }
@@ -429,6 +446,12 @@ body.public-facing .feature-carousel h2 {
   color: #4b4b4b;
   font-size: 0.9rem;
   line-height: 1.45;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow:hidden;
+  text-overflow: ellipsis;
+
 }
 
 .item-count {
@@ -437,6 +460,11 @@ body.public-facing .feature-carousel h2 {
   font-size: 0.86rem;
   font-weight: 700;
 }
+
+
+
+
+
 
 /* Icon is a real <i class="fa-solid fa-images"> in markup rather than a CSS
    content-code hack: the app pins a specific Font Awesome CDN version, and a
@@ -469,14 +497,7 @@ body.public-facing .feature-carousel h2 {
 
 .type-filter a:hover { background: $greige-light; }
 
-@media (max-width: 980px) {
-  .collection-grid { grid-template-columns: repeat(2, 1fr); }
-}
 
-@media (max-width: 640px) {
-  .section-heading { align-items: flex-start; gap: 20px; flex-direction: column; }
-  .collection-grid { grid-template-columns: 1fr; }
-}
 
 /* FILTER DRAWER (facets sidebar fly-out) ------------------------------ */
 
@@ -849,3 +870,25 @@ body.public-facing #facets {
   }
 
 }
+.browse-drawer .drawer-search input {
+  width: 100%;
+  margin: 22px 0;
+  padding: 16px;
+  border: 1px solid $soft-gray;
+  border-radius: 6px;
+}
+
+.browse-drawer .drawer-list { display: grid; gap: 12px; }
+
+.browse-drawer .drawer-list a {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 18px;
+  border: 1px solid $soft-gray;
+  border-radius: 8px;
+  color: $black;
+}
+
+.browse-drawer .drawer-list span { color: #686868; white-space: nowrap; }
+
