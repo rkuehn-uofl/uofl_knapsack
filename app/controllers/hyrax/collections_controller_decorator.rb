@@ -16,7 +16,7 @@
 # curation_concern starts resolving to an arbitrary public document instead of this one.
 # facet_limit_for's implementation is copied verbatim from Blacklight::Catalog.
 module Hyrax
-  module CollectionsControllerFacetLimitDecorator
+  module CollectionsControllerDecorator
     extend ActiveSupport::Concern
 
     included do
@@ -45,4 +45,4 @@ module Hyrax
   end
 end
 
-Hyrax::CollectionsController.include Hyrax::CollectionsControllerFacetLimitDecorator
+Hyrax::CollectionsController.include Hyrax::CollectionsControllerDecorator
