@@ -478,21 +478,43 @@ body.public-facing .feature-carousel h2 {
   .collection-grid { grid-template-columns: 1fr; }
 }
 
-/* BROWSE DRAWER (quick collections list) ----------------------------- */
+/* FILTER DRAWER (facets sidebar fly-out) ------------------------------ */
 
-.browse-drawer, .filter-drawer {
+.filter-drawer {
   position: fixed;
   inset: 0;
   z-index: 1050;
   background: rgba(0, 0, 0, 0.42);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 200ms ease;
 }
 
-.browse-drawer.is-open, .filter-drawer.is-open { opacity: 1; pointer-events: auto; }
+/* .filter-drawer (#mySidebar2) is a native <dialog>. showModal()/close()
+   handle show/hide, the modal focus trap, Escape-to-close, and making the
+   rest of the page inert - this just undoes the UA default dialog box
+   (centered, bordered, auto-sized) so it can fill the viewport, and fades
+   it in/out across the display:none swap. Needs a browser with
+   @starting-style support (Chrome/Edge 117+, Safari 17.4+, Firefox 129+);
+   older browsers just get an instant open/close with no fade, which still
+   works fine. */
+.filter-drawer {
+  margin: 0;
+  border: none;
+  padding: 0;
+  width: auto;
+  height: auto;
+  max-width: none;
+  max-height: none;
+  color: inherit;
+  opacity: 0;
+  transition: opacity 200ms ease, overlay 200ms ease allow-discrete, display 200ms ease allow-discrete;
 
-.browse-drawer .drawer-panel, .filter-drawer .drawer-panel {
+  &[open] {
+    opacity: 1;
+
+    @starting-style { opacity: 0; }
+  }
+}
+
+.filter-drawer .drawer-panel {
   width: calc(100% - 28px);
   max-width: 520px;
   height: 100%;
@@ -505,17 +527,21 @@ body.public-facing .feature-carousel h2 {
   overflow-y: auto;
 }
 
-.browse-drawer.is-open .drawer-panel, .filter-drawer.is-open .drawer-panel { transform: translateX(0); }
+.filter-drawer[open] .drawer-panel {
+  transform: translateX(0);
 
-.browse-drawer .drawer-panel h2, .filter-drawer .drawer-panel h2 {
+  @starting-style { transform: translateX(100%); }
+}
+
+.filter-drawer .drawer-panel h2 {
   margin: 0 0 12px;
   font-family: "Libre Baskerville", Georgia, serif !important;
   font-size: 2.1rem;
 }
 
-.browse-drawer .drawer-panel p:not(.eyebrow), .filter-drawer .drawer-panel p:not(.eyebrow) { color: #4a4a4a; line-height: 1.55; }
+.filter-drawer .drawer-panel p:not(.eyebrow) { color: #4a4a4a; line-height: 1.55; }
 
-.browse-drawer .drawer-close, .filter-drawer .drawer-close {
+.filter-drawer .drawer-close {
   float: right;
   width: 42px;
   height: 42px;
@@ -525,7 +551,6 @@ body.public-facing .feature-carousel h2 {
   cursor: pointer;
 }
 
-.browse-drawer .drawer-close::before, .browse-drawer .drawer-close::after,
 .filter-drawer .drawer-close::before, .filter-drawer .drawer-close::after {
   content: "";
   display: block;
@@ -535,8 +560,8 @@ body.public-facing .feature-carousel h2 {
   background: $black;
 }
 
-.browse-drawer .drawer-close::before, .filter-drawer .drawer-close::before { transform: rotate(45deg); }
-.browse-drawer .drawer-close::after, .filter-drawer .drawer-close::after { transform: rotate(-45deg); }
+.filter-drawer .drawer-close::before { transform: rotate(45deg); }
+.filter-drawer .drawer-close::after { transform: rotate(-45deg); }
 
 /* The drawer panel supplies its own "Refine Results / Filter Search" heading
    (matching the design mock's copy), so the real facets partial's own
@@ -655,28 +680,6 @@ body.public-facing #facets {
   font-weight: 700;
   color: $blue;
 }
-
-.browse-drawer .drawer-search input {
-  width: 100%;
-  margin: 22px 0;
-  padding: 16px;
-  border: 1px solid $soft-gray;
-  border-radius: 6px;
-}
-
-.browse-drawer .drawer-list { display: grid; gap: 12px; }
-
-.browse-drawer .drawer-list a {
-  display: flex;
-  justify-content: space-between;
-  gap: 18px;
-  padding: 18px;
-  border: 1px solid $soft-gray;
-  border-radius: 8px;
-  color: $black;
-}
-
-.browse-drawer .drawer-list span { color: #686868; white-space: nowrap; }
 
 /* ALL COLLECTIONS PAGE ------------------------------------------------ */
 

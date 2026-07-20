@@ -26,7 +26,7 @@
         Advanced Search
       </a>
       <% if has_facet_values? %>
-        <button class="filter-launch" type="button" onclick="openNav()">
+        <button class="filter-launch" type="button" aria-haspopup="dialog" aria-controls="mySidebar2" aria-expanded="false" onclick="openNav(this)">
           <span class="filter-icon" aria-hidden="true"></span>
           Browse Items
         </button>

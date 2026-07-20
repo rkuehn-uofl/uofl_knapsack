@@ -2,8 +2,17 @@
 
 <%# edited by TH %>
 <%# UOFL OVERRIDE: UofL Theme %>
-<% show_header_facets = (controller_path == 'catalog' && action_name == 'index') ||
-                        (controller_path == 'hyrax/homepage' && %w[index all_collections].include?(action_name)) %>
+<%# The header Browse/Filter button should appear on every public page (same
+    "public-facing" test the layout uses to add the body class in
+    layouts/hyrax.html.erb) - not just the homepage and catalog search. It was
+    previously allow-listed to just those two, which silently dropped it from
+    collection show, work show, and the advanced search page. %>
+<% show_header_facets = !params[:controller].to_s.match?(/\Aproprietor/) %>
+<%# "Filter" only makes sense as a label on the search-results page (you're
+    refining an existing result set); everywhere else (homepage, collection
+    show, work show, advanced search, ...) this opens the same drawer to
+    browse, so it reads "Browse" there instead. %>
+<% search_results_page = controller_path == 'catalog' && action_name == 'index' %>
 
 <%= form_tag search_form_action, method: :get, class: ["search-form", ("has-query" if current_search_parameters.present?)].compact.join(" "), id: "search-form-header", role: "search" do %>
   <%= render Blacklight::HiddenSearchStateComponent.new(params: search_state.params_for_search.except(:q, :search_field, :qt, :page, :utf8)) %>
@@ -44,39 +53,60 @@
 
   <div id="filters-adv">
     <% if show_header_facets %>
-      <button class="openbtn2" type="button" onclick="openNav()"><i class="fa-solid fa-arrow-down-wide-short"></i> <%= controller_name == 'homepage' ? 'Browse' : 'Filter' %> </button>
+      <button class="openbtn2" type="button" aria-haspopup="dialog" aria-controls="mySidebar2" aria-expanded="false" onclick="openNav(this)"><i class="fa-solid fa-arrow-down-wide-short"></i> <%= search_results_page ? 'Filter' : 'Browse' %> </button>
     <% end %>
 
     <a class="btn" id="advanced-search-link2" href="/advanced"><i class="fa-solid fa-up-right-from-square"></i> Advanced <span class="sr-only">search page</span></a>
 </div>
 
-<% if show_header_facets %>
-  <div id="mySidebar2" class="filter-drawer" aria-hidden="true" aria-labelledby="filter-title">
-    <div class="drawer-panel filter-panel" role="dialog" aria-modal="true">
-      <button class="drawer-close" type="button" onclick="closeNav()" aria-label="Close filters"></button>
-      <p class="eyebrow">Refine Results</p>
-      <h2 id="filter-title"><%= controller_name == 'homepage' ? 'Browse' : 'Filter' %></h2>
-      <p>Browse or filter your results.</p>
-      <%= render 'hyrax/homepage/facets' %>
-    </div>
+<%# #mySidebar2 renders on every page (not gated by show_header_facets) - the
+    homepage hero's own "Browse Items" button calls openNav() directly and
+    needs the dialog to exist regardless of whether the compact header
+    button above is shown. hyrax/homepage/facets self-guards on
+    has_facet_values?, so this is an empty shell on pages with no facets. %>
+<dialog id="mySidebar2" class="filter-drawer" aria-labelledby="filter-title">
+  <div class="drawer-panel filter-panel">
+    <button class="drawer-close" type="button" onclick="closeNav()" aria-label="Close filters"></button>
+    <p class="eyebrow">Refine Results</p>
+    <h2 id="filter-title"><%= search_results_page ? 'Filter' : 'Browse' %></h2>
+    <p>Browse or filter your results.</p>
+    <%= render 'hyrax/homepage/facets' %>
   </div>
-<% end %>
+</dialog>
 
 
 <script>
-function openNav() {
-  document.getElementById("mySidebar2").classList.add("is-open");
-  document.getElementById("mySidebar2").setAttribute("aria-hidden", "false");
-  document.body.style.overflow = "hidden";
-}
+(function () {
+  var sidebar = document.getElementById("mySidebar2");
+  if (!sidebar) return;
 
-function closeNav() {
-  document.getElementById("mySidebar2").classList.remove("is-open");
-  document.getElementById("mySidebar2").setAttribute("aria-hidden", "true");
-  document.body.style.overflow = "";
-}
+  var filterDrawerTrigger = null;
 
-document.addEventListener("click", function (event) {
-  if (event.target.id === "mySidebar2") closeNav();
-});
+  window.openNav = function (trigger) {
+    filterDrawerTrigger = trigger || document.activeElement;
+    sidebar.showModal();
+    document.body.style.overflow = "hidden";
+    if (filterDrawerTrigger) filterDrawerTrigger.setAttribute("aria-expanded", "true");
+  };
+
+  window.closeNav = function () {
+    sidebar.close();
+  };
+
+  // Fires for every close path - the close button's onclick, Escape (which
+  // <dialog> handles natively), and the backdrop click below - so cleanup
+  // only needs to live in one place.
+  sidebar.addEventListener("close", function () {
+    document.body.style.overflow = "";
+    if (filterDrawerTrigger) {
+      filterDrawerTrigger.setAttribute("aria-expanded", "false");
+      filterDrawerTrigger.focus();
+      filterDrawerTrigger = null;
+    }
+  });
+
+  sidebar.addEventListener("click", function (event) {
+    if (event.target === sidebar) sidebar.close();
+  });
+})();
 </script>

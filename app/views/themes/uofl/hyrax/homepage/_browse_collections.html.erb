@@ -1,12 +1,10 @@
 <%# UOFL OVERRIDE: UofL Theme - "Browse Collections" grid (real collections,
-    curated images) plus an Explore-by-type quick filter row and the
-    all-collections quick-list drawer. %>
+    curated images) plus an Explore-by-type quick filter row. %>
 <% cards = uofl_homepage_collection_slides(limit: 4) %>
 <section class="browse-section">
   <% if cards.present? %>
     <div class="section-heading">
       <h2>Browse Collections</h2>
-      <button class="plain-link" type="button" data-open-browse>View all collections</button>
     </div>
 
     <div class="collection-grid">
@@ -35,5 +33,3 @@
     <%= link_to 'Artifacts', main_app.search_catalog_path(q: 'artifacts') %>
   </div>
 </section>
-
-<%= render 'hyrax/homepage/browse_drawer' %>

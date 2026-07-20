@@ -1,6 +1,6 @@
 <%# UOFL OVERRIDE: UofL Theme - Render facets on the UofL homepage. %>
 
-<% if has_facet_values? %>
+<% if @response.present? && has_facet_values? %>
   <div id="facets" class="facets sidenav">
     <div class="facets-header">
       <h2 class="facets-heading">
