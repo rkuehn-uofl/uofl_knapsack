@@ -415,3 +415,6 @@ body.public-facing {
 
 }
  .uv .centerPanel .title { padding-left:20px; display:none;}
+
+ #file_download { background-color:$red;}
+ #file_download:hover { background-color:$red-hover;}

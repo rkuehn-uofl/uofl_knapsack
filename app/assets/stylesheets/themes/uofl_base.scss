@@ -171,6 +171,17 @@ body.public-facing {
 		color:white!important;
 		text-decoration:underline;
 	}
+	a.brand:focus {
+		color: white !important;
+		outline:2px dashed white!important;
+		outline-offset:2px;
+	}
+
+	button.mobile-menu-toggle:hover { background-color:$blue; }
+	button.mobile-menu-toggle:focus { outline:2px dashed white; }
+
+
+
 
 	@media (min-width: 768px) {
 		.brand { font-size: 1.6rem; }
@@ -289,9 +300,13 @@ body.public-facing {
 	}
 	.mega-menu a {
 		display: block;
-		padding: 8px 0;
+		padding: 8px;
 		font-weight: 700;
 		color: $black;
+	}
+	.mega-menu a:focus {
+		outline:1px dashed $black;
+		outline-offset: 2px;
 	}
 
 	@media (min-width: 992px) {
@@ -376,17 +391,32 @@ body.public-facing {
 
 } // end body.public-facing (HEADER 2026)
 
+.hero-content .search button:hover,
+.hero-content .search button:focus { 
+	background-color:$red; 
+	color:white!important;
+}
+
+.hero-buttons a:hover, 
+.hero-buttons .filter-launch:hover { 
+	background-color:$blue;
+	color: white!important;
+}
+.hero-buttons a:focus, 
+.hero-buttons .filter-launch:focus { 
+	outline:2px dashed white;
+	color:white!important;
+}
 
 
 
-
-
+/* delete these ? 
 a#advanced-search-link { 
 	color:$blue!important;
 	padding: 16px 32px;
 }
 a#advanced-search-link:hover { color: $blue-hover!important;}
-
+ thru here */
 
 
 
@@ -436,6 +466,19 @@ a#advanced-search-link:hover { color: $blue-hover!important;}
 
 
 #mySidebar2 a.facet-select { padding:unset;}
+#facets button:focus {
+	outline:2px dashed $black;
+}
+
+#facets .facet-select:hover {
+	text-decoration: underline;
+}
+#facets .facet-select:focus {
+	outline:2px dashed $black;
+	outline-offset:2px;
+}
+
+
 #facets button.dropdown-toggle {
 	width:100%; 
 	display:flex; 
