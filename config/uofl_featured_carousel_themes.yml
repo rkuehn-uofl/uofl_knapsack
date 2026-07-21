@@ -1,0 +1,58 @@
+# UOFL OVERRIDE: UofL Theme
+#
+# Curated "Featured Images" carousel entries for the homepage (see
+# app/views/themes/uofl/hyrax/homepage/_featured_carousel.html.erb and
+# UoflHomepageHelper#uofl_featured_carousel_slides). This is separate from
+# Hyrax's "Featured Collections" admin feature, which still powers the
+# "Browse Collections" grid further down the homepage.
+#
+# Entries are organized into named groups so the whole carousel can be
+# swapped out at once (e.g. for a seasonal rotation) instead of editing
+# every entry individually. Only the group named by `active_group` below
+# is shown on the homepage - change it to switch carousels, no restart
+# needed since this file is re-read on every request.
+#
+# To add a theme to a group:
+#   1. Run the filtered catalog search you want to feature, and copy its
+#      URL path (including the query string) into `search_path`. This is
+#      what the "Explore this theme" button links to.
+#   2. Pick one work from those results to represent the theme visually.
+#      Copy its id from the URL of its own show page into `work_id` - its
+#      item number and link are looked up live from that record at render
+#      time, so they always stay accurate even if the record changes.
+#   3. Add an image file under
+#      app/assets/images/themes/uofl/homepage/featured_carousel/ and
+#      reference its path (relative to app/assets/images/) in `image`.
+
+active_group: breckinridge
+
+groups:
+  breckinridge:
+    - title: Breckinridge Storefronts
+      description: This is the description for storefront featured images.
+      search_path: "/catalog?f%5Bstreet_sim%5D%5B%5D=Breckinridge+Street+%28Louisville%2C+Ky.%29&f%5Bsubject_sim%5D%5B%5D=Storefronts&locale=en&search_field=all_fields&sort=title_ssi+asc"
+      work_id: b8a33076-78b7-462e-a75b-f8529fe9fde1
+      image: themes/uofl/homepage/featured_carousel/1981_008_002_pt.jpg
+      image_alt: Ewing's Creamery in Louisville, Kentucky (item ULPA 1981_008_004)
+
+    - title: Carts & Wagons
+      description: This is the description for our super cool featured cart & wagon images.
+      search_path: "/catalog?f%5Bsubject_sim%5D%5B%5D=Carts+%26+wagons&locale=en&q=&search_field=all_fields&sort=title_ssi+asc"
+      work_id: bdb747d5-6ea8-47ac-b683-ed1b8eeb387a
+      image: themes/uofl/homepage/featured_carousel/1981_008_006_pt.jpg
+      image_alt: Milk delivery wagons at Ewing's Creamery (item ULPA 1981_008_006)
+
+  dairy:
+    - title: Milk
+      description: This is all about Milk
+      search_path: "/catalog?f%5Bobject_type_sim%5D%5B%5D=Photographic+prints&f%5Bsubject_sim%5D%5B%5D=Milk&locale=en"
+      work_id: 9b5ed9b4-57a6-4ef6-b0f7-7b2b3dabfa62
+      image: themes/uofl/homepage/featured_carousel/milk.jpg
+      image_alt: Ewing's Creamery in Louisville, Kentucky (item ULPA 1981_008_003)
+
+    - title: Bake
+      description: This is all about Bake
+      search_path: "/catalog?f%5Bobject_type_sim%5D%5B%5D=Photographic+prints&f%5Bsubject_sim%5D%5B%5D=Bakeries&locale=en&q=&search_field=all_fields"
+      work_id: e94e2791-73b5-4551-9692-6eb0559c1b17
+      image: themes/uofl/homepage/featured_carousel/bake.jpg
+      image_alt: Dairy worker examining milk bottles (item ULPA 1981_008_001)

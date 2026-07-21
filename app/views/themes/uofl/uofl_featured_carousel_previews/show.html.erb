@@ -1,0 +1,34 @@
+<%# UOFL OVERRIDE: UofL Theme - signed-in-only preview of every configured
+    "Featured Theme" carousel group, so a curator can check a new group
+    before flipping `active_group` in
+    config/uofl_featured_carousel_themes.yml to make it live on the
+    homepage. Uses the same `layout 'homepage'` as
+    Hyrax::HomepageController, and an action name other than `index`, so
+    app/views/themes/uofl/layouts/homepage.html.erb's non-hero branch
+    renders the same compact `/controls` bar all_collections gets in this
+    slot - matching its header exactly with no extra markup needed here.
+
+    The masthead is absolutely positioned and overlaps the top ~40-70px of
+    whatever content follows it; every other non-hero uofl page clears that
+    overlap via its own content's top padding rather than any generic
+    layout-level compensation (see e.g. `.collections-list section` in
+    app/assets/stylesheets/themes/uofl_show.scss, used by all_collections).
+    Reusing that same existing class/tag combination here - rather than
+    introducing new CSS - gives this page the same clearance. %>
+<div class="collections-list">
+  <section>
+    <h1>Featured Carousel Preview</h1>
+    <p>Live on homepage: <strong><%= @active_group %></strong></p>
+
+    <% @group_names.each do |group_name| %>
+      <h2>
+        <%= group_name %>
+        <%= '(currently live on homepage)' if group_name == @active_group&.to_sym %>
+      </h2>
+      <%= render 'themes/uofl/hyrax/homepage/featured_carousel',
+                 slides: uofl_featured_carousel_slides(limit: 4, group: group_name),
+                 carousel_id: "featured-carousel-preview-#{group_name}" %>
+      <hr>
+    <% end %>
+  </section>
+</div>

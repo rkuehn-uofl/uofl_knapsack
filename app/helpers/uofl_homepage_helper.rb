@@ -60,4 +60,36 @@ module UoflHomepageHelper
       }
     end
   end
+
+  # Slide data for the homepage's curated "Featured Theme" carousel (see
+  # UoflFeaturedCarouselThemes for the config format). Unlike
+  # uofl_homepage_collection_slides, each theme's title/description/search
+  # link are hand-written by a curator; only the item number and the link
+  # to the work's own record are looked up live (from the theme's
+  # `work_id`), so those two details can't drift out of sync with the
+  # actual record. A theme is silently skipped, with a logged warning, if
+  # its work_id no longer resolves to a real work.
+  #
+  # `group:` resolves a specific named group instead of the active one -
+  # used by the carousel preview page to render every configured group.
+  def uofl_featured_carousel_slides(limit: 4, group: nil)
+    themes = group ? UoflFeaturedCarouselThemes.for_group(group) : UoflFeaturedCarouselThemes.all
+
+    themes.first(limit).filter_map do |theme|
+      solr_document = SolrDocument.find(theme[:work_id])
+
+      {
+        title: theme[:title],
+        description: theme[:description],
+        search_url: theme[:search_path],
+        item_number: Array(solr_document[:source_identifier_tesim]).first,
+        item_url: polymorphic_path([main_app, solr_document]),
+        image_src: image_path(theme[:image]),
+        image_alt: theme[:image_alt]
+      }
+    rescue Blacklight::Exceptions::RecordNotFound
+      Rails.logger.warn("UofL featured carousel: work_id #{theme[:work_id]} not found, skipping theme '#{theme[:title]}'")
+      next
+    end
+  end
 end

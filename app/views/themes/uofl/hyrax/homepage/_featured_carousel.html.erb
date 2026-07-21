@@ -1,15 +1,26 @@
-<%# UOFL OVERRIDE: UofL Theme - Featured-collection carousel driven by the real,
-    admin-curated Featured Collections list (falls back to top collections by
-    title when none are featured yet). Images are hand-picked, see
-    UoflCuratedImages; text/link/count are real. %>
-<% slides = uofl_homepage_collection_slides(limit: 4) %>
+<%# UOFL OVERRIDE: UofL Theme - Curated "Featured Theme" carousel. Each
+    theme's heading, description, and "Explore this theme" search link are
+    hand-written by a curator in config/uofl_featured_carousel_themes.yml;
+    each theme's image links to one specific work, and that work's item
+    number/link are looked up live from Solr (see
+    UoflHomepageHelper#uofl_featured_carousel_slides) so they can't go
+    stale. This is separate from the "Browse Collections" grid further down
+    the page, which is still driven by the real, admin-curated Featured
+    Collections list.
+
+    Takes `slides` and `carousel_id` as locals (rather than computing its
+    own slides) so the same markup/JS can render more than once on a page -
+    e.g. the signed-in-only carousel preview page renders one instance per
+    configured group - without id collisions. %>
+<% slides = local_assigns.fetch(:slides) %>
+<% carousel_id = local_assigns.fetch(:carousel_id) %>
 <% if slides.present? %>
-  <section class="feature-carousel" aria-label="Featured collections" id="featured-carousel">
+  <section class="feature-carousel" aria-label="Featured theme" id="<%= carousel_id %>">
     <div class="carousel-copy">
       <p class="eyebrow">Featured Theme</p>
       <h2 data-slide-title><%= slides.first[:title] %></h2>
       <p data-slide-description><%= slides.first[:description] %></p>
-      <a class="button-link" data-slide-link href="<%= slides.first[:url] %>">Explore this theme <i class="fa-solid fa-arrow-right-long"></i></a>
+      <a class="button-link" data-slide-link href="<%= slides.first[:search_url] %>">Explore this theme <i class="fa-solid fa-arrow-right-long"></i></a>
 
       <% if slides.size > 1 %>
         <div class="carousel-controls" aria-label="Carousel controls">
@@ -24,30 +35,30 @@
       <% end %>
     </div>
     <div class="carousel-image-wrap">
-      <span class="item-pill" data-slide-count><%= uofl_item_count_label(slides.first[:count]) %></span>
-      <img src="<%= slides.first[:image_src] %>" alt="<%= slides.first[:image_alt] %>" data-slide-image>
+      <a class="item-pill" data-slide-item-link href="<%= slides.first[:item_url] %>"><%= slides.first[:item_number] %></a>
+      <a data-slide-image-link href="<%= slides.first[:item_url] %>">
+        <img src="<%= slides.first[:image_src] %>" alt="<%= slides.first[:image_alt] %>" data-slide-image>
+      </a>
     </div>
   </section>
 
   <% if slides.size > 1 %>
-    <script type="application/json" id="featured-carousel-data"><%== slides.to_json %></script>
+    <script type="application/json" id="<%= carousel_id %>-data"><%== slides.to_json %></script>
     <script>
       (function () {
-        const dataEl = document.getElementById('featured-carousel-data');
+        const dataEl = document.getElementById('<%= carousel_id %>-data');
         if (!dataEl) return;
         const slides = JSON.parse(dataEl.textContent);
         let current = 0;
 
-        const title = document.querySelector('#featured-carousel [data-slide-title]');
-        const description = document.querySelector('#featured-carousel [data-slide-description]');
-        const link = document.querySelector('#featured-carousel [data-slide-link]');
-        const count = document.querySelector('#featured-carousel [data-slide-count]');
-        const image = document.querySelector('#featured-carousel [data-slide-image]');
-        const dots = document.querySelectorAll('#featured-carousel [data-carousel-dots] button');
-
-        function itemLabel(n) {
-          return n.toLocaleString() + (n === 1 ? ' item' : ' items');
-        }
+        const scope = document.getElementById('<%= carousel_id %>');
+        const title = scope.querySelector('[data-slide-title]');
+        const description = scope.querySelector('[data-slide-description]');
+        const link = scope.querySelector('[data-slide-link]');
+        const itemLink = scope.querySelector('[data-slide-item-link]');
+        const imageLink = scope.querySelector('[data-slide-image-link]');
+        const image = scope.querySelector('[data-slide-image]');
+        const dots = scope.querySelectorAll('[data-carousel-dots] button');
 
         function setSlide(index) {
           current = (index + slides.length) % slides.length;
@@ -55,21 +66,22 @@
 
           title.textContent = slide.title;
           description.textContent = slide.description || '';
-          link.href = slide.url;
-          count.textContent = itemLabel(slide.count);
+          link.href = slide.search_url;
+          itemLink.textContent = slide.item_number;
+          itemLink.href = slide.item_url;
+          imageLink.href = slide.item_url;
           image.src = slide.image_src;
           image.alt = slide.image_alt;
 
           dots.forEach((dot, dotIndex) => dot.classList.toggle('is-active', dotIndex === current));
         }
 
-        document.querySelector('#featured-carousel [data-carousel-prev]')
+        scope.querySelector('[data-carousel-prev]')
           .addEventListener('click', () => setSlide(current - 1));
-        document.querySelector('#featured-carousel [data-carousel-next]')
+        scope.querySelector('[data-carousel-next]')
           .addEventListener('click', () => setSlide(current + 1));
         dots.forEach((dot, index) => dot.addEventListener('click', () => setSlide(index)));
       })();
     </script>
   <% end %>
 <% end %>
-
