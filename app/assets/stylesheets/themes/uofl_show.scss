@@ -39,6 +39,7 @@ $border-radius-tabs: 4px;
 
 
 /* RESULTS */
+.view-type-group a.view-type-slideshow,
 .search-widgets .view-type,
 .search-result-wrapper .badge,
 .search-result-wrapper .collection-counts-wrapper,
@@ -137,7 +138,7 @@ label.control-label { font-weight:bold;}
 @media (min-width:768px) {
   .advanced-search-field { display:flex;}
 }
-@media (min-width:1400px) {
+@media (min-width:1200px) {
   body.advanced .container { 
     margin-right:1rem; 
     margin-left:1rem;
@@ -296,7 +297,9 @@ label.control-label { font-weight:bold;}
 .collection-card p:nth-of-type(2) {
   display: -webkit-box;
   -webkit-line-clamp: 3;
+  line-clamp: 3;
   -webkit-box-orient: vertical;
+  box-orient: vertical;
   overflow:hidden;
   text-overflow: ellipsis;
 }
@@ -317,6 +320,7 @@ label.control-label { font-weight:bold;}
 
   .collection-card p:nth-of-type(2) { 
     -webkit-line-clamp: 4;
+    line-clamp: 4;
   }
 
 }
@@ -340,6 +344,8 @@ body.public-facing .hyc-container {
       border-top-left-radius:24px;
     }
     input#collection_search { padding-left:1rem;}
+
+    .row.hyc-body img { border-radius:$border-radius;}
 
     .hyc-last-updated,
     #hyc-collection-metadata-total_items  { display:none;}
@@ -373,13 +379,40 @@ body.public-facing .hyc-container {
     .documents-gallery .document .blacklight-format_tesim
       { display:none;}
 
-    #uofl-hyrax-collections-show table th:nth-of-type(1),
-    #uofl-hyrax-collections-show table th:nth-of-type(4),
-    #uofl-hyrax-collections-show table td:nth-of-type(1),
-    #uofl-hyrax-collections-show table td:nth-of-type(4)    { display:none;}
 }
 
-/* ITME RECORD need to restart when editing these */
+
+
+  @media (max-width:767.9px) {
+    .d-none.file_listing_thumbnail { display:block!important;}    
+  }
+
+  @media (max-width:499.9px) {
+    th:nth-of-type(3),
+    td:nth-of-type(3) {display: none;}     
+  }
+
+  @media (min-width:992px) {
+    .file_listing_thumbnail { width:150px;}
+
+  }
+
+
+
+body.hyrax-collections.public-facing.gallery_view .documents-gallery {
+  dt.blacklight-creator_tesim,
+  dd.blacklight-creator_tesim,
+  dt.blacklight-contributor_tesim,
+  dd.blacklight-contributor_tesim, 
+  dt.blacklight-publisher_tesim,
+  dd.blacklight-publisher_tesim,
+  dt.blacklight-language_tesim,
+  dd.blacklight-language_tesim {display:none; }
+}
+
+
+/* ITEM RECORD need to restart when editing these */
+
 body.public-facing {
 
 	.breadcrumb { 
@@ -390,31 +423,36 @@ body.public-facing {
 	.work-type-tag,
 	.title-with-badges .badge { display:none;}
 
-	.work-type .card-body { 
-		border:none!important;
-		padding:0 1rem;
-		border-top-left-radius:$border-radius;
-		border-top-right-radius:$border-radius;
-	}
+}
 
-	.card-header {
-		border-bottom-right-radius: 0!important;
-		border-bottom-left-radius: 0!important;
+body.public-facing #uofl_show-hyrax-base_show {
+	.work-type .card-body { 
+		padding:0 1rem;
 	}
 
 	table.related-files th { border-top:none;}
 
   .viewer-wrapper iframe { 
-    border-radius:24px;
-    top:-16px;
+
   }
+
+  .work-show a { text-underline-offset: 2px;}
+
   .work-show.image {
     display: grid;
     grid-template-columns: 10rem 1fr;
   }
+  .uv .centerPanel .title { padding-left:20px; display:none;}
+  
+  .download-pdf-controls { margin-top:1rem;}
+  #file_download { background-color:$red;}
+  #file_download:hover { background-color:$red-hover;}
+
+  @media (min-width:992px) {
+    dl.work-show {
+      display: grid;
+      grid-template-columns: 150px 1fr;
+    }
+  }
 
 }
- .uv .centerPanel .title { padding-left:20px; display:none;}
-
- #file_download { background-color:$red;}
- #file_download:hover { background-color:$red-hover;}

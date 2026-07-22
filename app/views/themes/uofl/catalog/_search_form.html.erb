@@ -21,7 +21,7 @@
     <%= text_field_tag :q, current_search_parameters , 'aria-label': 'Search', class: "q form-control", id: "search-input-header", placeholder: t("hyrax.search.form.q.placeholder"), oninput: "this.form.classList.toggle('has-query', this.value.length > 0)" %>
 
    <button type="submit" class="btn btn-primary search-submit-button" id="search-submit-header">
-          <label for="search-input-header">search</label>
+          <div class="sr-only">search</div>
           <div class="search-icon"></div>
     </button>
 

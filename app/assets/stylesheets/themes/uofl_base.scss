@@ -110,11 +110,7 @@ body.public-facing .nav.navbar-nav > li.nav-item > a.nav-link { font-weight:500;
 
 .dropdown-menu h2 { font-size:1rem; }
 
-/* LAYOUT */
-.btn,
-.card,
-.card-header,
-.card-header:first-child { border-radius:$border-radius;}
+
 
 
 
@@ -127,7 +123,7 @@ body.public-facing .nav.navbar-nav > li.nav-item > a.nav-link { font-weight:500;
    position:absolute, just without depending on the hero's scrim for
    legibility. */
 body.public-facing { 
-	#orig-navbar { display:none;}
+	#orig-navbar, #navbar-2026721 { display:none;}
 	.site-header {
 		position: absolute;
 		top: 0;
@@ -584,6 +580,9 @@ body.uofl .search-form {
 			transition: opacity 300ms ease-in-out;
 		}
 
+		&:hover { background-color:$red!important;}
+		&:focus { outline:2px dashed $black; }
+
 		&:hover::before {
 			opacity: 1;
 		}
@@ -618,10 +617,15 @@ body.uofl .search-form {
 			}
 		}
 	}
+button.search-submit-button:hover .search-icon { border-color:white!important;}
 
+button.search-submit-button:hover .search-icon::after {background-color:white!important;}
 	
 }
-body.uofl form#search-form-header:focus-within {border-color:#555!important;}
+body.uofl form#search-form-header:focus-within {
+	border-color:#555!important;
+	outline:2px dashed white;
+}
 body.uofl #search-form-header input.form-control:focus { border-color:transparent!important; box-shadow:none;}
 
 

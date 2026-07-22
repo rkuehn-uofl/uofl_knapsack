@@ -1,3 +1,5 @@
+<%# edited by TH - moved render advanced search tips from index into new search-tips section under search form fields %>
+
 <%# UOFL OVERRIDE: UofL Theme %>
   <% unless (search_context_str = render_search_to_s( advanced_search_context)).blank? %>
     <div class="constraints well search_history">
@@ -19,6 +21,9 @@
 
         <div id="advanced_search">
           <%= render 'advanced/advanced_search_fields' %>
+        </div>
+        <div id="search-tips">
+          <%= render "advanced_search_help" %>
         </div>
       </div>
 

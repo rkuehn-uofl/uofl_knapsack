@@ -21,9 +21,12 @@
     <div class="skip-to-content">
       <%= link_to "Skip to Content", "#skip-to-content" %>
     </div>
+    <div id="masthead-20260721" class="layouts-hyrax-html-erb">
     <%= render '/masthead', placement_class: nil %>
+</div>
+<div id="navbar-2026721" class="layouts-hyrax-html-erb">
     <%= content_for(:navbar) %>
-
+</div>
     <%= content_for(:precontainer_content) %>
     <div id="content-wrapper" class="container" role="main">
       <%= render '/flash_msg' %>

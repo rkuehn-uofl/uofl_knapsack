@@ -1,9 +1,13 @@
+<%# edited by TH added id around %>
+
 <%# OVERRIDE: Hyrax 5.2.0, see below for details %>
 
 <%# OVERRIDE: add works-show class %>
 <%# UOFL OVERRIDE: UofL Theme %>
 <% content_for(:extra_body_classes, 'works-show ') %>
 <% provide :page_title, @presenter.page_title %>
+
+<div id="uofl_show-hyrax-base_show">
 <%= render 'shared/citations' %>
 <%# OVERRIDE: additional citations %>
 <%= render 'shared/additional_citations' %>
@@ -79,4 +83,5 @@
     <% end %>
 
   </div>
+</div>
 </div>

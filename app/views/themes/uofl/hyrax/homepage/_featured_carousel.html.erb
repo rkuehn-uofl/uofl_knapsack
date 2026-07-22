@@ -24,13 +24,13 @@
 
       <% if slides.size > 1 %>
         <div class="carousel-controls" aria-label="Carousel controls">
-          <button type="button" data-carousel-prev aria-label="Previous featured theme item"></button>
+          <button type="button" data-carousel-prev aria-label="Previous featured theme item"><i class="fa-solid fa-chevron-left"></i></button>
           <div class="carousel-dots" data-carousel-dots>
             <% slides.each_with_index do |slide, index| %>
               <button type="button" class="<%= 'is-active' if index.zero? %>" data-slide-index="<%= index %>" aria-label="Show <%= slide[:title] %>"></button>
             <% end %>
           </div>
-          <button type="button" data-carousel-next aria-label="Next featured theme item"></button>
+          <button type="button" data-carousel-next aria-label="Next featured theme item"><i class="fa-solid fa-chevron-right"></i></button>
         </div>
       <% end %>
     </div>
