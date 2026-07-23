@@ -30,6 +30,21 @@ module HykuKnapsack
     end
 
     config.before_initialize do
+      # UOFL OVERRIDE: decorator files are loaded manually below (config.to_prepare
+      # glob-requires app/**/*_decorator*.rb / lib/**/*_decorator*.rb), not via
+      # Zeitwerk constant autoloading. Several of them intentionally reopen an
+      # existing externally-namespaced module (e.g. a Blacklight /
+      # blacklight_advanced_search gem module) rather than defining a fresh
+      # constant matching their own filename - which Zeitwerk's eager_load step
+      # (triggered by RAILS_ENV=production during assets:precompile) rejects
+      # with a Zeitwerk::NameError. Since these files are never constant-
+      # autoloaded by reference, only ever require'd/load'd directly by path,
+      # tell Zeitwerk to leave them alone entirely.
+      Rails.autoloaders.main.ignore(
+        HykuKnapsack::Engine.root.glob("app/**/*_decorator*.rb"),
+        HykuKnapsack::Engine.root.glob("lib/**/*_decorator*.rb")
+      )
+
       config.i18n.load_path += Dir["#{config.root}/config/locales/**/*.yml"]
 
       # if Hyku::Application.respond_to?(:user_devise_parameters=)
