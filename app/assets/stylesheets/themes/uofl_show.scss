@@ -39,6 +39,8 @@ $border-radius-tabs: 4px;
 
 
 /* RESULTS */
+.constraints-container { margin-bottom:2rem!important;}
+
 .view-type-group a.view-type-slideshow,
 .search-widgets .view-type,
 .search-result-wrapper .badge,
@@ -82,22 +84,15 @@ $border-radius-tabs: 4px;
 
 .document.blacklight-collection {
   padding:0 1rem!important;
-  background:linear-gradient(165deg, #204694 0%, #214f87 50%, #215480 100%);
+  background-color:$greige-light;
   border-radius:20px;
 }
 
 .document.blacklight-collection .search-result-wrapper.row {
   border-radius:20px;
-  box-shadow:rgba(5, 71, 17, 0) 40px 50px 25px -40px, rgb(86, 118, 171) 0 25px 25px -5px;
   margin-bottom:3rem;
 }
 
-.document.blacklight-collection h4.search-result-title a p,
-.document.blacklight-collection .metadata-field {
-  color:white!important;
-}
-
-.document.blacklight-collection h4.search-result-title a:hover { color:white;}
 
 /* search results list text document listing */
 @media (min-width:992px) {

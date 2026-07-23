@@ -20,7 +20,7 @@
       <% field_value = doc_presenter.field_value(field) %>
         <% if should_render_index_field?(document, field) && field_value.present? %>
           <div class="row">
-            <dt class="col-4 text-right" data-solr-field-name="<%= field_name %>">
+            <dt class="col-4" data-solr-field-name="<%= field_name %>">
               <%= uofl_index_field_labels.fetch(field_name) { render_index_field_label document, field: field_name } %>
             </dt>
             <dd class="col-8"><%= markdown(field_value) %></dd>

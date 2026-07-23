@@ -523,14 +523,15 @@ a#advanced-search-link:hover { color: $blue-hover!important;}
 	width: 100%;
 }
 #header-search-wrap .search-form input {
-	width: 100%;
+	width: calc(100% - 1.5rem);
+	padding-left: 1.5rem;
+	border-radius:$border-radius;
 }
 
 body.uofl .search-form {
 	position: relative;
 	width: 40ch;
 	height: 60px;
-	padding-left: 1.5rem;
 	border-radius: $border-radius;
 	background: #ffffff;
 	border:1px solid $greige;
@@ -631,6 +632,8 @@ body.uofl #search-form-header input.form-control:focus { border-color:transparen
 
 
 /* FOOTER ------------------------------------------------------------------  */
+.footer-meta strong { display:block;}
+
 #user_utility_links{display:flex;align-items:center}
 #user_utility_links li:last-of-type a.nav-link { text-transform: uppercase; font-weight: bold;}
 #user_utility_links li:nth-of-type(1),

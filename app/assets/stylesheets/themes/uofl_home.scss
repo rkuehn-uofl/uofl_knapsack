@@ -330,7 +330,7 @@ body.public-facing .feature-carousel h2 {
   background: white;
   cursor: pointer;
 }
-
+.carousel-controls button i { pointer-events: none; }
 
 .carousel-dots { 
   display: flex; 
