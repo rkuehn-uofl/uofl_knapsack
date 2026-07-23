@@ -12,47 +12,97 @@
 # is shown on the homepage - change it to switch carousels, no restart
 # needed since this file is re-read on every request.
 #
-# To add a theme to a group:
+# Each group is ONE theme: its `title`, `description`, and `search_path`
+# (what the "Explore this theme" button links to) are set once and apply to
+# the whole carousel. `pictures` is the list of images that cycle through
+# that same theme - each picture only needs its own `work_id`; the item
+# number/link shown over each picture are looked up live from that
+# picture's own work_id at render time, so they always stay accurate even
+# if the record changes.
+#
+# `image`/`image_alt` are required on every picture: hand-pick a hero image
+# for it and write alt text describing what that image actually shows (not
+# just the linked work's title - a picture's image and its work_id don't
+# have to be the exact same photo, e.g. when reusing one hero image across
+# several picture entries). If a picture has no `image`/`image_alt` set,
+# UoflHomepageHelper#uofl_featured_carousel_slides falls back to the work's
+# own live thumbnail and title, but that's a safety net, not how entries
+# here should normally be written.
+#
+# To add a group:
 #   1. Run the filtered catalog search you want to feature, and copy its
 #      URL path (including the query string) into `search_path`. This is
 #      what the "Explore this theme" button links to.
-#   2. Pick one work from those results to represent the theme visually.
-#      Copy its id from the URL of its own show page into `work_id` - its
-#      item number and link are looked up live from that record at render
-#      time, so they always stay accurate even if the record changes.
-#   3. Add an image file under
-#      app/assets/images/themes/uofl/homepage/featured_carousel/ and
-#      reference its path (relative to app/assets/images/) in `image`.
+#   2. Add a `pictures` entry for each image you want to cycle through:
+#      a. Pick a work to represent it and copy its id from the URL of its
+#         own show page into `work_id`.
+#      b. Add an image file under
+#         app/assets/images/themes/uofl/homepage/featured_carousel/ and
+#         reference its path (relative to app/assets/images/) in `image`,
+#         with matching `image_alt` text describing that image.
 
-active_group: breckinridge
+active_group: storefronts
 
 groups:
-  breckinridge:
-    - title: Breckinridge Storefronts
-      description: This is the description for storefront featured images.
-      search_path: "/catalog?f%5Bstreet_sim%5D%5B%5D=Breckinridge+Street+%28Louisville%2C+Ky.%29&f%5Bsubject_sim%5D%5B%5D=Storefronts&locale=en&search_field=all_fields&sort=title_ssi+asc"
-      work_id: b8a33076-78b7-462e-a75b-f8529fe9fde1
-      image: themes/uofl/homepage/featured_carousel/1981_008_002_pt.jpg
-      image_alt: Ewing's Creamery in Louisville, Kentucky (item ULPA 1981_008_004)
+  storefronts:
+    title: Storefronts & Deliveries
+    description: Ewing's Creamery storefront and delivery scenes along Breckinridge Street.
+    search_path: "/catalog?f%5Bstreet_sim%5D%5B%5D=Breckinridge+Street+%28Louisville%2C+Ky.%29&f%5Bsubject_sim%5D%5B%5D=Storefronts&locale=en&search_field=all_fields&sort=title_ssi+asc"
+    pictures:
+      - work_id: b8a33076-78b7-462e-a75b-f8529fe9fde1
+        image: themes/uofl/homepage/featured_carousel/1981_008_002_pt.jpg
+        image_alt: Three men in the doorway of Ewing's Creamery, "Ice Cream" painted on the storefront window (item ULPA 1981_008_004)
 
-    - title: Carts & Wagons
-      description: This is the description for our super cool featured cart & wagon images.
-      search_path: "/catalog?f%5Bsubject_sim%5D%5B%5D=Carts+%26+wagons&locale=en&q=&search_field=all_fields&sort=title_ssi+asc"
-      work_id: bdb747d5-6ea8-47ac-b683-ed1b8eeb387a
-      image: themes/uofl/homepage/featured_carousel/1981_008_006_pt.jpg
-      image_alt: Milk delivery wagons at Ewing's Creamery (item ULPA 1981_008_006)
+      - work_id: bdb747d5-6ea8-47ac-b683-ed1b8eeb387a
+        image: themes/uofl/homepage/featured_carousel/1981_008_006_pt.jpg
+        image_alt: A horse-drawn Ewing's Creamery delivery wagon with workers loading milk (item ULPA 1981_008_006)
 
-  dairy:
-    - title: Milk
-      description: This is all about Milk
-      search_path: "/catalog?f%5Bobject_type_sim%5D%5B%5D=Photographic+prints&f%5Bsubject_sim%5D%5B%5D=Milk&locale=en"
-      work_id: 9b5ed9b4-57a6-4ef6-b0f7-7b2b3dabfa62
-      image: themes/uofl/homepage/featured_carousel/milk.jpg
-      image_alt: Ewing's Creamery in Louisville, Kentucky (item ULPA 1981_008_003)
+      - work_id: 7359a017-4c70-4369-b389-e1d5ad6abe7f
+        image: themes/uofl/homepage/featured_carousel/milk.jpg
+        image_alt: Interior of the Ewing's Creamery shop, milk cans lined along the floor beneath a "Sunday" sign (item ULPA 1981_008_002)
 
-    - title: Bake
-      description: This is all about Bake
-      search_path: "/catalog?f%5Bobject_type_sim%5D%5B%5D=Photographic+prints&f%5Bsubject_sim%5D%5B%5D=Bakeries&locale=en&q=&search_field=all_fields"
-      work_id: e94e2791-73b5-4551-9692-6eb0559c1b17
-      image: themes/uofl/homepage/featured_carousel/bake.jpg
-      image_alt: Dairy worker examining milk bottles (item ULPA 1981_008_001)
+      - work_id: e636dab5-fa8e-4df2-9788-7000555c08e6
+        image: themes/uofl/homepage/featured_carousel/bake.jpg
+        image_alt: A dairy worker in white examines milk bottles beside tall wooden storage crates (item ULPA 1981_008_015)
+
+  dairy_workers:
+    title: Dairy Workers
+    description: Workers at Ewing's Creamery handling milk, bottles, and deliveries.
+    search_path: "/catalog?f%5Bsubject_sim%5D%5B%5D=Dairy+workers&locale=en&q=&search_field=all_fields&sort=title_ssi+asc"
+    pictures:
+      - work_id: e94e2791-73b5-4551-9692-6eb0559c1b17
+        image: themes/uofl/homepage/featured_carousel/bake.jpg
+        image_alt: A dairy worker in white examines milk bottles beside tall wooden storage crates (item ULPA 1981_008_001)
+
+      - work_id: 2247a9e5-5a1d-45ee-98bb-7c63a3c2eec2
+        image: themes/uofl/homepage/featured_carousel/milk.jpg
+        image_alt: Interior of the Ewing's Creamery shop, milk cans lined along the floor beneath a "Sunday" sign (item ULPA 1981_008_016)
+
+      - work_id: 2850996a-1b4d-4ca7-ab64-8f6043d43ab3
+        image: themes/uofl/homepage/featured_carousel/1981_008_002_pt.jpg
+        image_alt: Three men in the doorway of Ewing's Creamery, "Ice Cream" painted on the storefront window (item ULPA 1981_008_020)
+
+      - work_id: 1219591c-ca23-4497-b1df-2a98ebb62bba
+        image: themes/uofl/homepage/featured_carousel/1981_008_006_pt.jpg
+        image_alt: A horse-drawn Ewing's Creamery delivery wagon with workers loading milk (item ULPA 1981_008_025)
+
+  creamery_equipment:
+    title: Processing Equipment
+    description: Pasteurization and processing equipment inside the Ewing's Creamery facility.
+    search_path: "/catalog?f%5Bsubject_sim%5D%5B%5D=Food+processing+machinery&locale=en&q=&search_field=all_fields&sort=title_ssi+asc"
+    pictures:
+      - work_id: 9b5ed9b4-57a6-4ef6-b0f7-7b2b3dabfa62
+        image: themes/uofl/homepage/featured_carousel/milk.jpg
+        image_alt: Interior of the Ewing's Creamery shop, milk cans lined along the floor beneath a "Sunday" sign (item ULPA 1981_008_003)
+
+      - work_id: c694de0c-adac-4496-ac8e-22fd783f6ef1
+        image: themes/uofl/homepage/featured_carousel/bake.jpg
+        image_alt: A dairy worker in white examines milk bottles beside tall wooden storage crates (item ULPA 1981_008_017)
+
+      - work_id: 1aced765-ce1c-4c3d-8f3f-80372f0791fa
+        image: themes/uofl/homepage/featured_carousel/1981_008_006_pt.jpg
+        image_alt: A horse-drawn Ewing's Creamery delivery wagon with workers loading milk (item ULPA 1981_008_018)
+
+      - work_id: c871008e-5d2e-4a3b-9196-93a2c2aacf8e
+        image: themes/uofl/homepage/featured_carousel/1981_008_002_pt.jpg
+        image_alt: Three men in the doorway of Ewing's Creamery, "Ice Cream" painted on the storefront window (item ULPA 1981_008_014)

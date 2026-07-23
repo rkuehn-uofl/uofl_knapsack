@@ -62,33 +62,40 @@ module UoflHomepageHelper
   end
 
   # Slide data for the homepage's curated "Featured Theme" carousel (see
-  # UoflFeaturedCarouselThemes for the config format). Unlike
-  # uofl_homepage_collection_slides, each theme's title/description/search
-  # link are hand-written by a curator; only the item number and the link
-  # to the work's own record are looked up live (from the theme's
-  # `work_id`), so those two details can't drift out of sync with the
-  # actual record. A theme is silently skipped, with a logged warning, if
-  # its work_id no longer resolves to a real work.
+  # UoflFeaturedCarouselThemes for the config format). A group's
+  # title/description/search link are hand-written by a curator and shared
+  # by every slide; only each picture's item number and the link to its own
+  # work record are looked up live (from that picture's `work_id`), so
+  # those two details can't drift out of sync with the actual record. A
+  # picture is silently skipped, with a logged warning, if its work_id no
+  # longer resolves to a real work.
+  #
+  # A picture's `image`/`image_alt` are optional: without them the work's
+  # own thumbnail and title stand in, so a picture is never missing an
+  # image just because no one has hand-cropped a hero image for it yet.
   #
   # `group:` resolves a specific named group instead of the active one -
   # used by the carousel preview page to render every configured group.
   def uofl_featured_carousel_slides(limit: 4, group: nil)
-    themes = group ? UoflFeaturedCarouselThemes.for_group(group) : UoflFeaturedCarouselThemes.all
+    theme = group ? UoflFeaturedCarouselThemes.for_group(group) : UoflFeaturedCarouselThemes.all
+    return [] unless theme
 
-    themes.first(limit).filter_map do |theme|
-      solr_document = SolrDocument.find(theme[:work_id])
+    Array(theme[:pictures]).first(limit).filter_map do |picture|
+      solr_document = SolrDocument.find(picture[:work_id])
+      item_number = Array(solr_document[:source_identifier_tesim]).first
+      work_title = Array(solr_document[:title_tesim]).first
 
       {
         title: theme[:title],
         description: theme[:description],
         search_url: theme[:search_path],
-        item_number: Array(solr_document[:source_identifier_tesim]).first,
+        item_number: item_number,
         item_url: polymorphic_path([main_app, solr_document]),
-        image_src: image_path(theme[:image]),
-        image_alt: theme[:image_alt]
+        image_src: picture[:image].present? ? image_path(picture[:image]) : thumbnail_url(solr_document),
+        image_alt: picture[:image_alt].presence || "#{work_title} (item #{item_number})"
       }
     rescue Blacklight::Exceptions::RecordNotFound
-      Rails.logger.warn("UofL featured carousel: work_id #{theme[:work_id]} not found, skipping theme '#{theme[:title]}'")
+      Rails.logger.warn("UofL featured carousel: work_id #{picture[:work_id]} not found, skipping picture in theme '#{theme[:title]}'")
       next
     end
   end

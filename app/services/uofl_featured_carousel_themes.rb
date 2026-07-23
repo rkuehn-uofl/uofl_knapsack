@@ -2,18 +2,18 @@
 
 # UOFL OVERRIDE: UofL Theme
 #
-# Loads the human-curated "Featured Theme" carousel entries for the
-# homepage from config/uofl_featured_carousel_themes.yml. The config file
-# holds one or more named groups of entries; only the group named by the
-# file's `active_group` key is shown on the homepage, so a curator can swap
-# the whole carousel by changing that one value. All groups (not just the
-# active one) are available via `.for_group`/`.group_names`, which power
-# the signed-in-only carousel preview page
-# (UoflFeaturedCarouselPreviewsController) that lets a curator check a new
-# group before making it active. See the config file for the entry format
-# and instructions for adding a theme; see
-# UoflHomepageHelper#uofl_featured_carousel_slides for how each entry is
-# resolved into carousel slide data.
+# Loads the human-curated "Featured Theme" carousel groups for the homepage
+# from config/uofl_featured_carousel_themes.yml. Each group is one theme -
+# a title/description/search_path shown once - plus a list of pictures that
+# cycle through it. Only the group named by the file's `active_group` key
+# is shown on the homepage, so a curator can swap the whole carousel by
+# changing that one value. All groups (not just the active one) are
+# available via `.for_group`/`.group_names`, which power the signed-in-only
+# carousel preview page (UoflFeaturedCarouselPreviewsController) that lets
+# a curator check a new group before making it active. See the config file
+# for the entry format and instructions for adding a group; see
+# UoflHomepageHelper#uofl_featured_carousel_slides for how a group's
+# pictures are resolved into carousel slide data.
 class UoflFeaturedCarouselThemes
   CONFIG_PATH = HykuKnapsack::Engine.root.join('config', 'uofl_featured_carousel_themes.yml')
 
@@ -30,7 +30,7 @@ class UoflFeaturedCarouselThemes
   end
 
   def self.for_group(name)
-    Array(groups[name&.to_sym])
+    groups[name&.to_sym]
   end
 
   def self.groups
