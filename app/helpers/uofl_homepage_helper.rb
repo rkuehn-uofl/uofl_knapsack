@@ -65,10 +65,13 @@ module UoflHomepageHelper
   # UoflFeaturedCarouselThemes for the config format). A group's
   # title/description/search link are hand-written by a curator and shared
   # by every slide; only each picture's item number and the link to its own
-  # work record are looked up live (from that picture's `work_id`), so
-  # those two details can't drift out of sync with the actual record. A
-  # picture is silently skipped, with a logged warning, if its work_id no
-  # longer resolves to a real work.
+  # work record are looked up live (from that picture's `work_id`, which is
+  # the item's human-readable identifier, e.g. "ULPA 1981_008_004" - not a
+  # system-generated id), so those two details can't drift out of sync with
+  # the actual record. A picture is silently skipped, with a logged
+  # warning, if its work_id no longer resolves to a real work. `notes` is
+  # ignored here - it's a plain YAML field for curators, not read by any
+  # code.
   #
   # A picture's `image`/`image_alt` are optional: without them the work's
   # own thumbnail and title stand in, so a picture is never missing an
@@ -81,7 +84,13 @@ module UoflHomepageHelper
     return [] unless theme
 
     Array(theme[:pictures]).first(limit).filter_map do |picture|
-      solr_document = SolrDocument.find(picture[:work_id])
+      solr_document = uofl_find_by_item_number(picture[:work_id])
+
+      unless solr_document
+        Rails.logger.warn("UofL featured carousel: item number #{picture[:work_id]} not found, skipping picture in theme '#{theme[:title]}'")
+        next
+      end
+
       item_number = Array(solr_document[:source_identifier_tesim]).first
       work_title = Array(solr_document[:title_tesim]).first
 
@@ -94,9 +103,20 @@ module UoflHomepageHelper
         image_src: picture[:image].present? ? image_path(picture[:image]) : thumbnail_url(solr_document),
         image_alt: picture[:image_alt].presence || "#{work_title} (item #{item_number})"
       }
-    rescue Blacklight::Exceptions::RecordNotFound
-      Rails.logger.warn("UofL featured carousel: work_id #{picture[:work_id]} not found, skipping picture in theme '#{theme[:title]}'")
-      next
     end
+  end
+
+  # Looks up a work by its human-readable item number (`source_identifier`,
+  # e.g. "ULPA 1981_008_004") rather than its system id, so curators can
+  # write `work_id` values in config/uofl_featured_carousel_themes.yml that
+  # they can find and verify on the item itself instead of having to copy a
+  # UUID out of a URL. The underlying Solr field is analyzed text, but an
+  # exact `{!field}` query still matches the identifier as a whole
+  # (case-insensitively) rather than any of its words individually.
+  def uofl_find_by_item_number(item_number)
+    Hyrax::SolrQueryService.new
+                            .with_field_pairs(field_pairs: { 'source_identifier_tesim' => item_number.to_s })
+                            .solr_documents
+                            .first
   end
 end
