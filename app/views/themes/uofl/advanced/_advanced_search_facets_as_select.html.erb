@@ -7,7 +7,11 @@
     #render_facet_limit.
 %>
 
-<% facets_from_request(facet_field_names).each do |display_facet| %>
+<%# UOFL OVERRIDE: use the advanced-search-filtered field list (respects
+    config.facet_fields[...].include_in_advanced_search) instead of the
+    unfiltered facet_field_names, which was showing every /catalog sidebar
+    facet here regardless of that flag. %>
+<% facets_from_request(facet_field_names_for_advanced_search).each do |display_facet| %>
     <% if display_facet.items.present? %>
         <div class="form-group advanced-search-facet">
             <%= label_tag display_facet.name.parameterize, :class => "col-sm-3 control-label" do %>

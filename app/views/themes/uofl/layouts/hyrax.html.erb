@@ -44,10 +44,6 @@
       <%= content_for?(:content) ? yield(:content) : yield %>
     </div><!-- /#content-wrapper -->
     <%= render 'shared/footer' %>
-    <% if content_for?(:footer) %>
-      <%= render 'shared/modal' %>
-    <% end %>
-
-    
+    <%= render 'shared/modal' %>
   </body>
 </html>

@@ -11,12 +11,34 @@ module CatalogControllerDecorator
     ['city_sim', { label: 'City', limit: 5 }],
     ['neighborhood_sim', { label: 'Neighborhood', limit: 5 }],
     ['street_sim', { label: 'Street', limit: 5 }],
-    ['region_sim', { label: 'Region', limit: 5 }],
     ['decade_sim', { label: 'Decade', limit: 5 }],
     ['creator_sim', { label: 'Creator', limit: 5 }],
     ['contributor_sim', { label: 'Contributor', limit: 5 }],
-    ['object_type_sim', { label: 'Object Type', limit: 5 }],
-    ['resource_type_sim', { label: 'Media Type', limit: 5 }]
+    ['object_type_sim', { label: 'Object type', limit: 5 }],
+    ['resource_type_sim', { label: 'Resource type', limit: 5 }]
+  ].freeze
+
+  # Which of the FACETS above also surface in the "Attribute" pulldown on
+  # /advanced. Everything in FACETS still renders as a sidebar facet on
+  # regular search/browse -- BlacklightAdvancedSearch separately keys off
+  # facet_fields[...].include_in_advanced_search (see
+  # blacklight_advanced_search's #facet_field_names_for_advanced_search) to
+  # decide what appears on the advanced search page specifically.
+  ADVANCED_SEARCH_FACETS = %w[
+    member_of_collections_ssim county_sim city_sim neighborhood_sim
+    street_sim region_sim location_sim object_type_sim resource_type_sim
+  ].freeze
+
+  # Which config.search_fields show up in the field pulldown on /advanced
+  # (BlacklightAdvancedSearch#search_fields_for_advanced_search, same
+  # include_in_advanced_search mechanism as facets above). Order here is the
+  # display order, since Blacklight renders the pulldown in config insertion
+  # order and CatalogController#configure_blacklight defines all_fields,
+  # contributor, creator, title, description, subject in that order already;
+  # people_represented and story are new fields added below.
+  ADVANCED_SEARCH_FIELDS = %w[
+    all_fields contributor creator title description subject
+    people_represented story
   ].freeze
 
   def configure_uofl_facets
@@ -27,7 +49,40 @@ module CatalogControllerDecorator
         config.add_facet_field field, **options
       end
 
+      config.facet_fields.each do |key, field|
+        field.include_in_advanced_search = ADVANCED_SEARCH_FACETS.include?(key)
+      end
+
       config.add_facet_fields_to_solr_request!
+    end
+  end
+
+  def configure_uofl_search_fields
+    configure_blacklight do |config|
+      # Not defined by CatalogController's own configure_blacklight block --
+      # add them so they can appear in the advanced search field pulldown.
+      # Guarded because in development this file is reloaded (not just
+      # required once) on every request; add_search_field raises if the key
+      # is already registered.
+      unless config.search_fields.key?('people_represented')
+        config.add_search_field('people_represented') do |field|
+          field.label = 'People'
+          solr_name = 'people_represented_tesim'
+          field.solr_local_parameters = { qf: solr_name, pf: solr_name }
+        end
+      end
+
+      unless config.search_fields.key?('story')
+        config.add_search_field('story') do |field|
+          field.label = 'Story'
+          solr_name = 'story_tesim'
+          field.solr_local_parameters = { qf: solr_name, pf: solr_name }
+        end
+      end
+
+      config.search_fields.each do |key, field|
+        field.include_in_advanced_search = ADVANCED_SEARCH_FIELDS.include?(key)
+      end
     end
   end
 
@@ -82,5 +137,6 @@ end
 CatalogController.include(Hyku::HomePageThemesBehavior) unless CatalogController < Hyku::HomePageThemesBehavior
 CatalogController.singleton_class.prepend(CatalogControllerDecorator)
 CatalogController.configure_uofl_facets
+CatalogController.configure_uofl_search_fields
 CatalogControllerDecorator.configure_uofl_index_fields(CatalogController)
 CatalogControllerDecorator.configure_uofl_index_fields(Hyrax::CollectionsController)

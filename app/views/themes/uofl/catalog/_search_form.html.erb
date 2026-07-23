@@ -107,6 +107,11 @@
 
   sidebar.addEventListener("click", function (event) {
     if (event.target === sidebar) sidebar.close();
+    // A facet's "more »" link opens Blacklight's own modal (data-blacklight-modal
+    // trigger, bound separately at the body level in Blacklight's modal.js) -
+    // close this drawer out of its way so the user isn't left having to
+    // dismiss both overlays.
+    else if (event.target.closest('[data-blacklight-modal~="trigger"]')) sidebar.close();
   });
 })();
 </script>
