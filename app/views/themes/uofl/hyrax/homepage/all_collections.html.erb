@@ -6,7 +6,7 @@
     <div class="collection-search-and-filter">
       <%= form_with url: main_app.all_collections_path, method: :get, local: true, class: 'search' do |form| %>
         <%= hidden_field_tag :collection_letter, @selected_collection_letter if @selected_collection_letter.present? %>
-        <%= hidden_field_tag :collection_sort, @selected_sort if @selected_sort.present? %>
+        <%= hidden_field_tag :collection_sort, @selected_sort, id: nil if @selected_sort.present? %>
         <h2 class="sr-only"><%= form.label :collection_description_query, 'Search collection titles and descriptions' %></h2>
         <%= form.search_field :collection_description_query,
                               value: @collection_description_query,
@@ -43,16 +43,28 @@
   <section class="number-and-sort">
     <div class="number-of-collections"><%= pluralize(@collections.size, 'collection') %></div>
     <div class="sort-collections">
-      <strong>Sort by</strong>
-      <%= form_with url: main_app.all_collections_path, method: :get, local: true do |form| %>
-        <%= hidden_field_tag :collection_letter, @selected_collection_letter if @selected_collection_letter.present? %>
-        <%= hidden_field_tag :collection_description_query, @collection_description_query if @collection_description_query.present? %>
-        <%= form.select :collection_sort,
-                        Hyrax::HomepageControllerDecorator::SORT_OPTIONS.map { |value, opts| [opts[:label], value] },
-                        { selected: @selected_sort },
-                        { onchange: 'this.form.requestSubmit()' } %>
-        <noscript><%= form.submit 'Sort' %></noscript>
-      <% end %>
+      <%# UOFL OVERRIDE: use Blacklight's own sort dropdown component -- the same
+          button + dropdown-menu widget /catalog uses -- instead of a bare <select>
+          inside a <form>, whose native browser behavior (implicit submit-on-Enter,
+          OS-rendered popup) is unpredictable across browsers/AT.
+          Options are pre-built with main_app-prefixed URLs (like every other link
+          in this view) rather than left to the component's own url_for, since a
+          plain url_for inside Hyrax::HomepageController resolves against the
+          engine's routes and can't find this app's all_collections route. %>
+      <% collection_sort_dropdown = Blacklight::System::DropdownComponent.new(
+           param: 'collection_sort',
+           choices: Hyrax::HomepageControllerDecorator::SORT_OPTIONS.map { |value, opts| [opts[:label], value] },
+           search_state: nil,
+           selected: @selected_sort
+         )
+         Hyrax::HomepageControllerDecorator::SORT_OPTIONS.each do |value, opts|
+           collection_sort_dropdown.with_option(
+             text: opts[:label],
+             url: main_app.all_collections_path(collection_letter: @selected_collection_letter.presence, collection_description_query: @collection_description_query.presence, collection_sort: value),
+             selected: @selected_sort == value
+           )
+         end %>
+      <%= render collection_sort_dropdown %>
     </div>
   </section>
 

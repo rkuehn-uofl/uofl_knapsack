@@ -1,0 +1,5 @@
+en:
+  blacklight:
+    search:
+      collection_sort:
+        label_html: 'Sort<span class="d-none d-sm-inline"> by %{field}</span>'
