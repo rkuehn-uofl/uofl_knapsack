@@ -7,6 +7,11 @@ module Hyrax
     extend ActiveSupport::Concern
 
     include Hyku::HomePageThemesBehavior
+
+    prepended do
+      skip_around_action :inject_theme_views, raise: false
+      around_action :inject_theme_views, only: :show
+    end
   end
 end
 
