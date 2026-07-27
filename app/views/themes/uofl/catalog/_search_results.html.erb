@@ -4,7 +4,7 @@
   TODO: Figure out why this is happening and apply a proper fix.
 %>
 <%# UOFL OVERRIDE: UofL Theme %>
-<% @page_title = t('blacklight.search.page_title.title', constraints: render_search_to_page_title(params), application_name: application_name) %>
+<% content_for(:page_title, construct_page_title(uofl_page_title_with_page('Catalog Search Results'))) %>
 
 <% content_for(:head) do -%>
   <%= render 'catalog/opensearch_response_metadata', response: @response %>

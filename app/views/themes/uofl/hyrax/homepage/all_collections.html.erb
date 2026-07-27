@@ -1,5 +1,9 @@
 <%# UOFL OVERRIDE: UofL Theme - Display all viewable collections. %>
-<% provide :page_title, "Browse by Collection | #{application_name}" %>
+<%
+  collection_browse_title = 'Browse by Collection'
+  collection_browse_title += " - Letter #{@selected_collection_letter}" if @selected_collection_letter.present?
+%>
+<% provide :page_title, construct_page_title(uofl_page_title_with_page(collection_browse_title)) %>
 <div class="home-collections-browse">
 <div class="collections-list">
   <section>
