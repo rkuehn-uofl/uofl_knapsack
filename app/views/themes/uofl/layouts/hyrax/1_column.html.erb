@@ -1,0 +1,10 @@
+<%# UOFL OVERRIDE: UofL Theme %>
+<%# Hyrax's default layouts/hyrax/1_column.html.erb (used for work/collection/
+    file set show pages) sets content_for(:navbar) to the original Hyrax
+    Home/About/Help/Contact nav (the /controls partial) before delegating to
+    layouts/hyrax. That nav was replaced by the masthead in
+    themes/uofl/layouts/hyrax.html.erb, so this override skips the
+    content_for(:navbar) block entirely and just renders the themed shell -
+    matching the index branch of themes/uofl/layouts/homepage.html.erb, which
+    leaves the old nav out in favor of the new one. %>
+<%= render template: 'layouts/hyrax' %>
