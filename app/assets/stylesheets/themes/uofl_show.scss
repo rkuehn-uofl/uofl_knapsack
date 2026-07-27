@@ -108,17 +108,22 @@ $border-radius-tabs: 4px;
 
 
 /* ADVANCED SEARCH PAGE */
-body.advanced h1 { margin-bottom:2rem;}
 
-.advanced-search-form { margin-top:3rem; }
+body.public-facing .advanced-search-form {
+  margin-top:6rem;
 
+  h1 { margin-bottom:2rem;}
+  
+  > .row { flex-direction: column;}
+  > .row > .col-md-8 { 
+    max-width: 100%;
+    flex:unset;
+    }
+  > label.control-label { font-weight:bold;}
 
-.advanced-search-form > .row { flex-direction: column;}
-.advanced-search-form > .row > .col-md-8 { 
-  max-width: 100%;
-  flex:unset;
+  #search-tips .card { background-color:$greige-light; border-color: $greige;}
+
 }
-label.control-label { font-weight:bold;}
 
 
 
@@ -451,3 +456,4 @@ body.public-facing #uofl_show-hyrax-base_show {
   }
 
 }
+

@@ -36,35 +36,84 @@ $border-radius-tabs: 4px;
 
 /* FOCUS OUTLINE HOVER --------------------------*/
 
-body.public-facing #content-wrapper .btn-secondary > dd, 
-body.public-facing #content-wrapper .btn-secondary > li, 
-body.public-facing #content-wrapper .btn-secondary > a, 
-body.public-facing #content-wrapper .btn-secondary, 
-body.public-facing #content-wrapper .btn-outline-secondary, 
-body.public-facing #content-wrapper .btn-light,
-body.public-facing #content-wrapper .dropdown-menu a {
-	background-color:white;
-	border-color:$greige!important;
-	color:$black!important;
+body.public-facing #content-wrapper {
+	.btn:focus, 
+	td.toggle input[type=submit]:focus, 
+	.btn.focus, 
+	td.toggle input.focus[type=submit] {
+		box-shadow:none;
+	}
+	.btn:focus-visible, 
+	td.toggle input[type=submit]:focus-visible, 
+	.btn.focus-visible, 
+	td.toggle input.focus-visible[type=submit] {
+		outline: 2px dashed $black;
+		outline-offset:2px;
+	}
+
+
+	.btn-secondary > dd, 
+	.btn-secondary > li, 
+	.btn-secondary > a, 
+	.btn-secondary, 
+	.btn-outline-secondary, 
+	.btn-light,
+	.dropdown-menu a {
+		background-color:white;
+		border-color:$greige!important;
+		color:$black!important;
+	}
+	.btn-secondary > dd.hover, 
+	.btn-secondary > li.hover, 
+	.btn-secondary > a.hover, 
+	.btn-secondary:hover, 
+	.btn-outline-secondary:hover, 
+	.btn-light:hover,
+	.dropdown-menu a:hover {
+		background-color:$greige-light!important;
+		border-color:$greige!important;
+		color:$black!important;
+	}
+	.btn-secondary:focus, 
+	.btn-secondary.focus, 
+	.btn-outline-secondary:focus, 
+	.btn-outline-secondary.focus, 
+	.btn-light:focus, 
+	.btn-light.focus {
+		background-color:rgba(231,225, 225, .9)!important;
+		box-shadow:none;
+	}
+	
+	#content a:focus-visible,
+	#content .btn:focus-visible,
+	h4.search-result-title a:focus-visible p { 
+		outline:2px dashed $black;
+		outline-offset:2px; 
+	}
 }
 
-body.public-facing #content-wrapper .btn-secondary > dd.hover, 
-body.public-facing #content-wrapper .btn-secondary > li.hover, 
-body.public-facing #content-wrapper .btn-secondary > a.hover, 
-body.public-facing #content-wrapper .btn-secondary:hover, 
-body.public-facing #content-wrapper .btn-outline-secondary:hover, 
-body.public-facing #content-wrapper .btn-light:hover,
-body.public-facing #content-wrapper .dropdown-menu a:hover {
-	background-color:$greige-light!important;
-	border-color:$greige!important;
-	color:$black!important;
+
+
+
+header button:focus-visible,
+header a.brand:focus-visible,
+header a.nav-item:focus-visible,
+a#advanced-search-link2:focus-visible {
+	outline:2px dashed white;
+	outline-offset:2px;
 }
 
-.btn-outline-secondary:not(:disabled):not(.disabled):active:focus, .btn-outline-secondary.active:not(:disabled):not(.disabled):focus, .show > .btn-outline-secondary.dropdown-toggle:focus, .no-js .btn-group:focus-within .dropdown-menu > .btn-outline-secondary.dropdown-toggle:focus, .no-js .btn-group:focus-within .twitter-typeahead .tt-menu > .btn-outline-secondary.dropdown-toggle:focus, .twitter-typeahead .no-js .btn-group:focus-within .tt-menu > .btn-outline-secondary.dropdown-toggle:focus {
+.btn-primary:focus, 
+.btn-outline-secondary:focus,
+.btn-outline-secondary:not(:disabled):not(.disabled):active:focus, 
+.btn-outline-secondary.active:not(:disabled):not(.disabled):focus, .show > .btn-outline-secondary.dropdown-toggle:focus, 
+.no-js .btn-group:focus-within .dropdown-menu > .btn-outline-secondary.dropdown-toggle:focus, 
+.no-js .btn-group:focus-within .twitter-typeahead .tt-menu > .btn-outline-secondary.dropdown-toggle:focus, 
+.twitter-typeahead .no-js .btn-group:focus-within .tt-menu > .btn-outline-secondary.dropdown-toggle:focus {
 	box-shadow:none!important;
-	outline: 1px dashed $black;
-	outline-offset: 2px;
+	background-color:transparent!important;
 }
+
 
 
 /* VISIBILITY */
@@ -264,6 +313,7 @@ body.public-facing {
 	.mega-menu {
 		position: absolute;
 		top: 100%;
+
 		left: 16px;
 		right: 16px;
 		z-index: 35;
@@ -404,15 +454,6 @@ body.public-facing {
 	color:white!important;
 }
 
-
-
-/* delete these ? 
-a#advanced-search-link { 
-	color:$blue!important;
-	padding: 16px 32px;
-}
-a#advanced-search-link:hover { color: $blue-hover!important;}
- thru here */
 
 
 

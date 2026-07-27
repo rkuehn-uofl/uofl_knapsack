@@ -126,6 +126,7 @@ body.public-facing .hero-content h1 {
   font-size: 1.15rem;
   color: $black;
 }
+.hero-content .search input:focus-visible { outline:2px dashed black; }
 
 .hero-content .search button {
   display: flex;
@@ -138,6 +139,10 @@ body.public-facing .hero-content h1 {
   background: $black;
   color: white;
   cursor: pointer;
+}
+.hero-content .search button:focus-visible { 
+  outline:2px dashed black;
+  outline-offset: 2px;
 }
 
 .hero-buttons {
@@ -154,7 +159,7 @@ body.public-facing .hero-content h1 {
   align-items: center;
   gap: 12px;
   padding: 14px 20px;
-  border: 1px solid rgba(255, 255, 255, 0.36);
+  border: 1px solid rgba(100, 100, 100, 0.5);
   border-radius: 999px;
   background: rgba(17, 17, 17, 0.8);
   color: white;
@@ -163,6 +168,13 @@ body.public-facing .hero-content h1 {
   font-size: 1.05rem;
   text-transform: uppercase;
   text-decoration: none;
+}
+
+.hero-buttons .filter-launch:focus-visible, 
+.hero-buttons .adv-search:focus-visible {
+  outline:2px dashed white;
+  outline-offset:2px;
+  border:1px solid transparent;
 }
 
 .hero-buttons .filter-icon {
