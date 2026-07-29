@@ -58,8 +58,8 @@ img { max-width:100%; }
 
 .hero-scrim {
   background:
-    linear-gradient(90deg, rgba(0, 0, 0, 0.72), rgba(0, 0, 0, 0.34) 48%, rgba(0, 0, 0, 0.2)),
-    linear-gradient(180deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.12) 40%, rgba(0, 0, 0, 0.48));
+   linear-gradient(90deg, rgba(0, 0, 0, 0.42), rgba(0, 0, 0, 0.14) 48%, rgba(0, 0, 0, -0.8)), 
+   linear-gradient(180deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.12) 40%, rgba(0, 0, 0, 0.28));
 }
 
 .hero-content {
@@ -100,7 +100,7 @@ body.public-facing .hero-content h1 {
 
 .hero-content .search {
   width: 100%;
-  max-width: 970px;
+  max-width: 800px;
   height: 62px;
   display: grid;
   grid-template-columns: 1fr 40px;
