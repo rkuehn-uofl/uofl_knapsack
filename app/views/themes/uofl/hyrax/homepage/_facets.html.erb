@@ -9,7 +9,17 @@
     </div>
 
     <div id="facet-panel-collapse" class="facets-collapse">
-      <%= render_facet_partials %>
+      <%# @response is deterministic (unfiltered) only on the homepage - on
+          catalog search/collection/work pages it reflects the current
+          query, so caching there would leak one visitor's facet counts
+          into another's. %>
+      <% if controller_name == "homepage" %>
+        <% cache "homepage-facets", expires_in: 5.minutes do %>
+          <%= render_facet_partials %>
+        <% end %>
+      <% else %>
+        <%= render_facet_partials %>
+      <% end %>
     </div>
   </div>
 <% end %>
