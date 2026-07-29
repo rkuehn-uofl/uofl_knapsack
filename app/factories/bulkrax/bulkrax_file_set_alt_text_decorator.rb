@@ -40,7 +40,7 @@ module Bulkrax
       return if resource.blank?
       return if resource.class == Bulkrax.collection_model_class
 
-      updated_file_sets = persisted_file_sets_for(resource).filter_map.with_index do |file_set, index|
+      updated_file_sets = persisted_file_sets_for(resource).each_with_index.filter_map do |file_set, index|
         sync_persisted_file_set_alt_text_for(file_set, index)
       end
 
