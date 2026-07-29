@@ -130,6 +130,34 @@ module CatalogControllerDecorator
       end
     end
   end
+
+  # hyrax-webapp/app/controllers/catalog_controller.rb sets hl.fl to every qf
+  # field (via omission -- Solr defaults hl.fl to qf) with hl.snippets=30 and
+  # hl.maxAnalyzedChars=5_100_000. Measured cost: on a search matching several
+  # large scanned documents, highlighting alone added tens of ms per request,
+  # most of it spent analyzing fields nothing reads. The only feature that
+  # consumes highlight output is the "jump to the matching page" deep link
+  # (shared_search_helper.rb / _thumbnail_list_default.html.erb), which reads
+  # exactly one field -- config.iiif_search[:full_text_field], i.e.
+  # all_text_tsimv -- and only checks for presence of a match, not snippet
+  # count. Narrowing hl.fl to that field and cutting hl.snippets removes
+  # wasted work with no visible effect. hl.maxAnalyzedChars is capped well
+  # above the largest all_text field we've seen (~740K chars) so no document
+  # loses the deep link.
+  #
+  # Applied directly to both controllers for the same reason as
+  # configure_uofl_index_fields above -- Hyrax::CollectionsController's
+  # blacklight_config is a copy taken at gem-autoload time, not a live
+  # reference back to CatalogController's.
+  def self.configure_uofl_solr_highlighting(klass)
+    klass.configure_blacklight do |config|
+      config.default_solr_params = config.default_solr_params.merge(
+        "hl.fl": klass.blacklight_config.iiif_search[:full_text_field],
+        "hl.snippets": 3,
+        "hl.maxAnalyzedChars": 2_000_000
+      )
+    end
+  end
 end
 
 # Catalog pages need the active home theme in their view path so shared partials
@@ -140,3 +168,5 @@ CatalogController.configure_uofl_facets
 CatalogController.configure_uofl_search_fields
 CatalogControllerDecorator.configure_uofl_index_fields(CatalogController)
 CatalogControllerDecorator.configure_uofl_index_fields(Hyrax::CollectionsController)
+CatalogControllerDecorator.configure_uofl_solr_highlighting(CatalogController)
+CatalogControllerDecorator.configure_uofl_solr_highlighting(Hyrax::CollectionsController)
