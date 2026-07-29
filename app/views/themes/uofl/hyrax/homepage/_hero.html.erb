@@ -15,7 +15,7 @@
 
     <%= form_tag search_action_url, method: :get, class: 'hero-search search', id: 'hero-search-form', role: 'search' do %>
       <%= label_tag :hero_q, 'Search all digital collections', class: 'sr-only' %>
-      <%= text_field_tag :q, current_search_parameters, id: 'hero-search-q', name: 'q', placeholder: 'Search all digital collections' %>
+      <%= text_field_tag :q, current_search_parameters, id: 'hero_q', name: 'q', placeholder: 'Search all digital collections' %>
       <button type="submit" aria-label="Search"><i class="fa-solid fa-magnifying-glass"></i></button>
     <% end %>
 
