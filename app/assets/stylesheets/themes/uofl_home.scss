@@ -59,7 +59,7 @@ img { max-width:100%; }
   position:absolute;
   bottom:0;
   right:0;
-  background:rgba(0, 0, 0, .6);
+  background:linear-gradient(180deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.12) 40%, rgba(0, 0, 0, 1));
   padding:.5rem .5rem .5rem .8rem;
   border-top-left-radius: $border-radius;
 }
@@ -80,7 +80,7 @@ body.public-facing .hero-image-number a:focus-visible {
 
 .hero-scrim {
   background:
-   linear-gradient(90deg, rgba(0, 0, 0, 0.42), rgba(0, 0, 0, 0.14) 48%, rgba(0, 0, 0, -0.8)), 
+   linear-gradient(90deg, rgba(0, 0, 0, 0.62), rgba(0, 0, 0, 0.34) 48%, rgba(0, 0, 0, 0)), 
    linear-gradient(180deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.12) 40%, rgba(0, 0, 0, 0.28));
 }
 

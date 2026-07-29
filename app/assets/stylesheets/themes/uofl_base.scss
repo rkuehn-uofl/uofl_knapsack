@@ -284,7 +284,8 @@ body.public-facing {
 		cursor: pointer;
 		transform: 200ms ease-in-out;
 	}
-	.nav-trigger[aria-expanded="true"] { background-color:$gray2;}
+.nav-trigger:hover,
+	.nav-trigger[aria-expanded="true"] { background-color:$black;}
 	.nav-trigger[aria-expanded="true"] i { transform:rotate(180deg);}
 
 	#header-search-wrap {
@@ -321,7 +322,7 @@ body.public-facing {
 		grid-template-columns: 1fr;
 		gap: 20px;
 		padding: 20px;
-		background: rgba(255, 255, 255, 0.98);
+		background: rgba(255, 255, 255, 1);
 		border-radius: $border-radius-tabs;
 		box-shadow: 0 18px 60px rgba(17, 17, 17, 0.24);
 		color: $black;

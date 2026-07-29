@@ -42,7 +42,7 @@ module Bulkrax
 
       updated_file_sets = persisted_file_sets_for(resource).each_with_index.filter_map do |file_set, index|
         sync_persisted_file_set_alt_text_for(file_set, index)
-      end
+      end.to_a
 
       return if updated_file_sets.blank?
 
