@@ -158,6 +158,22 @@ module CatalogControllerDecorator
       )
     end
   end
+
+  # Measured cost (dev, 7k-doc index, per_page dropdown values): process_action
+  # went 738ms -> 1916ms -> 2850ms for per_page 10 -> 50 -> 100, almost entirely
+  # in render_partial/render_template (view rendering of each result), not Solr
+  # (sql.active_record stayed under 40ms throughout). Dropping the 100 option
+  # removes the worst case; max_per_page enforces it server-side too, so a
+  # hand-edited ?per_page=100 URL is clamped down rather than silently ignored.
+  #
+  # Applied directly to both controllers for the same copy-timing reason as
+  # configure_uofl_index_fields/configure_uofl_solr_highlighting above.
+  def self.configure_uofl_per_page(klass)
+    klass.configure_blacklight do |config|
+      config.per_page = [10, 20, 50]
+      config.max_per_page = 50
+    end
+  end
 end
 
 # Catalog pages need the active home theme in their view path so shared partials
@@ -170,3 +186,5 @@ CatalogControllerDecorator.configure_uofl_index_fields(CatalogController)
 CatalogControllerDecorator.configure_uofl_index_fields(Hyrax::CollectionsController)
 CatalogControllerDecorator.configure_uofl_solr_highlighting(CatalogController)
 CatalogControllerDecorator.configure_uofl_solr_highlighting(Hyrax::CollectionsController)
+CatalogControllerDecorator.configure_uofl_per_page(CatalogController)
+CatalogControllerDecorator.configure_uofl_per_page(Hyrax::CollectionsController)

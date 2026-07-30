@@ -4,7 +4,13 @@
     (implicit submit-on-Enter, OS-rendered popup) is unpredictable across
     browsers/AT. Both dropdowns navigate directly on choice (like catalog's), so
     the <form>/Refresh button that used to submit the old selects is gone too --
-    catalog's own sort/per-page controls don't have one either. %>
+    catalog's own sort/per-page controls don't have one either.
+
+    Choices come from blacklight_config.per_page (set in
+    CatalogControllerDecorator.configure_uofl_per_page), not
+    Hyrax.config.range_for_number_of_results_to_display_per_page -- that global
+    also drives the internal dashboard's My Works/My Collections per-page
+    pickers, which weren't part of the public-page slowdown this caps. %>
 <% if show_sort_and_per_page? && collection_member_sort_fields.many? %>
   <div class="per_page form-horizontal">
     <%= render 'view_type_group' %>
@@ -18,7 +24,7 @@
       <span class="sr-only"><%= t('blacklight.search.per_page.title') %></span>
       <%= render Blacklight::System::DropdownComponent.new(
                    param: 'per_page',
-                   choices: Hyrax.config.range_for_number_of_results_to_display_per_page.map { |count| [t('blacklight.search.per_page.label', count: count).html_safe, count] },
+                   choices: blacklight_config.per_page.map { |count| [t('blacklight.search.per_page.label', count: count).html_safe, count] },
                    search_state: search_state,
                    selected: params[:per_page].presence&.to_i,
                    interpolation: :count
