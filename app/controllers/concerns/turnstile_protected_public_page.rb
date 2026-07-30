@@ -33,7 +33,7 @@ module TurnstileProtectedPublicPage
 
     session[:turnstile_return_to] = request.fullpath
     response.headers['Cache-Control'] = 'no-store'
-    render 'turnstile/challenge', layout: false
+    render 'turnstile/challenge', layout: false, status: :forbidden
   end
 
   def turnstile_protected_public_request?
