@@ -28,7 +28,7 @@ module HykuKnapsack
     end
 
     def register_model_mappings
-      [AdminSet, Collection, Etd, GenericWork, Image, Oer].each do |klass|
+      [AdminSet, Collection, Etd, GenericWork, Image, Oer, Text].each do |klass|
         resource_klass = "#{klass}Resource".safe_constantize
         ::Wings::ModelRegistry.register(resource_klass, klass) if resource_klass
         ::Wings::ModelRegistry.register(klass, klass)
