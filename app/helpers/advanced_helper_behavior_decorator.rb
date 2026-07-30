@@ -26,6 +26,23 @@ module AdvancedHelperBehaviorDecorator
     @facet_field_names_for_advanced_search ||=
       ADVANCED_SEARCH_FACET_ORDER.select { |key| blacklight_config.facet_fields.key?(key) }
   end
+
+  # UOFL OVERRIDE: the <select name="op"> rendered here has no associated
+  # <label> -- it's spliced into the middle of the translated heading
+  # "Find items that match %{select_menu} of" (see
+  # app/views/themes/uofl/advanced/_advanced_search_form.html.erb), so a
+  # visible <label for="op"> would break that sentence. An aria-label gives
+  # screen readers the same association without changing the visible markup.
+  def select_menu_for_field_operator
+    options = {
+      t('blacklight_advanced_search.all') => 'AND',
+      t('blacklight_advanced_search.any') => 'OR'
+    }.sort
+
+    select_tag(:op, options_for_select(options, params[:op]),
+               class: 'input-small',
+               aria: { label: 'Match all or any of the following' })
+  end
 end
 
 BlacklightAdvancedSearch::AdvancedHelperBehavior.prepend(AdvancedHelperBehaviorDecorator)

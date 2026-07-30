@@ -16,7 +16,7 @@
 
 <%= form_tag search_form_action, method: :get, class: ["search-form", ("has-query" if current_search_parameters.present?)].compact.join(" "), id: "search-form-header", role: "search" do %>
   <%= render Blacklight::HiddenSearchStateComponent.new(params: search_state.params_for_search.except(:q, :search_field, :qt, :page, :utf8)) %>
-  <%= hidden_field_tag :search_field, 'all_fields' %>
+  <%= hidden_field_tag :search_field, 'all_fields', id: 'header-search-field' %>
   
     <%= text_field_tag :q, current_search_parameters , 'aria-label': 'Search', class: "q form-control", id: "search-input-header", placeholder: t("hyrax.search.form.q.placeholder"), oninput: "this.form.classList.toggle('has-query', this.value.length > 0)" %>
 
