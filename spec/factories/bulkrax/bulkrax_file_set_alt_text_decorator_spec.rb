@@ -7,22 +7,31 @@ require 'active_support/core_ext/hash/indifferent_access'
 require 'active_support/core_ext/object/blank'
 require 'active_support/core_ext/object/try'
 
-module Bulkrax
-  def self.field_mappings
-    {}
-  end
+# Stand in for the real Bulkrax gem so this spec can run standalone, without
+# booting Rails. When the full suite runs, rails_helper (required by other
+# spec files) boots Rails - and with it the real Bulkrax gem - before this
+# file loads, so skip the stub entirely rather than reopening the real
+# Bulkrax module: redefining its field_mappings/collection_model_class/
+# file_model_class here would silently and permanently overwrite those
+# real, load-bearing methods for every other spec in the same process.
+unless defined?(Bulkrax)
+  module Bulkrax
+    def self.field_mappings
+      {}
+    end
 
-  def self.collection_model_class
-    CollectionResource
-  end
+    def self.collection_model_class
+      CollectionResource
+    end
 
-  def self.file_model_class
-    FileSetResource
-  end
+    def self.file_model_class
+      FileSetResource
+    end
 
-  class CollectionResource; end
-  class FileSetResource; end
-  class ValkyrieObjectFactory; end
+    class CollectionResource; end
+    class FileSetResource; end
+    class ValkyrieObjectFactory; end
+  end
 end
 
 require_relative '../../../app/factories/bulkrax/bulkrax_file_set_alt_text_decorator'
