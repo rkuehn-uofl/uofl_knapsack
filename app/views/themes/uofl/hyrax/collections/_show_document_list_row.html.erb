@@ -1,4 +1,4 @@
-<%# edited by TH removed visibility column td %>
+<%# edited by TH removed visibility and updated columns td %>
 <%# UOFL OVERRIDE Hyrax 5.2.0: add an Item Number cell to the collection's list-view table %>
 <% id = document.id %>
 <tr id="document_<%= id %>">
@@ -24,5 +24,4 @@
     </div>
   </td>
   <td class="text-center"><%= Array(document[:source_identifier_tesim]).first %></td>
-  <td class="text-center"><%= document.date_uploaded %> </td>
 </tr>

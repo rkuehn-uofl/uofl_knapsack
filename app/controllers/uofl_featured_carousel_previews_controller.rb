@@ -22,7 +22,10 @@ class UoflFeaturedCarouselPreviewsController < ApplicationController
   # gets, action name `show` avoids that branch's `index` special-case.
   layout 'homepage'
 
-  before_action :authenticate_user!
+  before_action :ensure_admin!
+  def ensure_admin!
+    authorize! :read, :admin_dashboard
+  end
 
   def show
     @group_names = UoflFeaturedCarouselThemes.group_names

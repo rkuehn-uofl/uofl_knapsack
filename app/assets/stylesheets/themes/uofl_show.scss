@@ -110,7 +110,7 @@ $border-radius-tabs: 4px;
 /* ADVANCED SEARCH PAGE */
 
 body.public-facing .advanced-search-form {
-  margin-top:6rem;
+  
 
   h1 { margin-bottom:2rem;}
   
@@ -329,6 +329,8 @@ body.public-facing .advanced-search-form {
 
 /* INDIVIDUAL COLLECTION PAGE */
 
+body.public-facing #uofl-hyrax-collections-show .view-type { display:none;}
+
 body.public-facing .hyc-container {
     .hyc-banner .badge { display:none;}
     .hyc-banner .hyc-item-count {
@@ -416,7 +418,6 @@ body.hyrax-collections.public-facing.gallery_view .documents-gallery {
 body.public-facing {
 
 	.breadcrumb { 
-		margin-top:2rem;
 		border:none;
 		background-color:transparent;
 	}

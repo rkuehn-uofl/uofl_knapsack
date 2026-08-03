@@ -83,7 +83,7 @@
 				  <a href="/catalog?f_inclusive%5Bobject_type_sim%5D%5B%5D=Photographic+prints&f_inclusive%5Bobject_type_sim%5D%5B%5D=Albumen+prints&f_inclusive%5Bobject_type_sim%5D%5B%5D=Boudoir+card+photographs&f_inclusive%5Bobject_type_sim%5D%5B%5D=Cabinet+photographs&f_inclusive%5Bobject_type_sim%5D%5B%5D=Cabinet+photographs&f_inclusive%5Bobject_type_sim%5D%5B%5D=Carbon+prints&f_inclusive%5Bobject_type_sim%5D%5B%5D=Cartes+de+visite&f_inclusive%5Bobject_type_sim%5D%5B%5D=Contact+prints&f_inclusive%5Bobject_type_sim%5D%5B%5D=Contact+sheets&f_inclusive%5Bobject_type_sim%5D%5B%5D=Digital+images&f_inclusive%5Bobject_type_sim%5D%5B%5D=Dye+coupler+negatives&f_inclusive%5Bobject_type_sim%5D%5B%5D=Film+negatives&f_inclusive%5Bobject_type_sim%5D%5B%5D=Gelatin+silver+printing-out+paper+prints&f_inclusive%5Bobject_type_sim%5D%5B%5D=Gelatin+silver+prints&f_inclusive%5Bobject_type_sim%5D%5B%5D=Glass+negatives&f_inclusive%5Bobject_type_sim%5D%5B%5D=Halftone+photomechanical+prints&f_inclusive%5Bobject_type_sim%5D%5B%5D=Imperial+card+photographs&f_inclusive%5Bobject_type_sim%5D%5B%5D=Negatives&f_inclusive%5Bobject_type_sim%5D%5B%5D=Nitrate+negatives&f_inclusive%5Bobject_type_sim%5D%5B%5D=Panel+card+photographs&f_inclusive%5Bobject_type_sim%5D%5B%5D=Photographic+postcards&f_inclusive%5Bobject_type_sim%5D%5B%5D=Photographic+prints&f_inclusive%5Bobject_type_sim%5D%5B%5D=Photogravures&f_inclusive%5Bobject_type_sim%5D%5B%5D=Photomechanical+prints&f_inclusive%5Bobject_type_sim%5D%5B%5D=Planographic+prints&f_inclusive%5Bobject_type_sim%5D%5B%5D=Platinum+prints&f_inclusive%5Bobject_type_sim%5D%5B%5D=Promenade+card+photographs&f_inclusive%5Bobject_type_sim%5D%5B%5D=Safety+film+negatives&f_inclusive%5Bobject_type_sim%5D%5B%5D=Silver+printing-out+paper+prints&f_inclusive%5Bobject_type_sim%5D%5B%5D=Slides&f_inclusive%5Bobject_type_sim%5D%5B%5D=Stereographs&f_inclusive%5Bobject_type_sim%5D%5B%5D=Tintypes&sort=score+desc%2C+system_create_dtsi+desc">Photographs</a>
 				  <a href="/catalog?
 f_inclusive%5Bmember_of_collections_ssim%5D%5B%5D=Illuminated+Manuscript+Collections&sort=score+desc%2C+system_create_dtsi+desc&search_field=advanced&commit=Search">Illuminated Manuscripts</a>
-				  <a href="/catalog?f_inclusive%5Bobject_type_sim%5D%5B%5D=Mapss&sort=score+desc%2C+system_create_dtsi+desc">Maps</a>
+				  <a href="/catalog?f_inclusive%5Bobject_type_sim%5D%5B%5D=Maps&sort=score+desc%2C+system_create_dtsi+desc">Maps</a>
 				  <a href="/catalog?f_inclusive%5Bobject_type_sim%5D%5B%5D=Newspapers&sort=score+desc%2C+system_create_dtsi+desc">Newspapers</a>
 			  </div>
 			  <div>
@@ -183,9 +183,9 @@ f_inclusive%5Bmember_of_collections_ssim%5D%5B%5D=Illuminated+Manuscript+Collect
     // work here because the header's actual height varies (it wraps to a
     // second row once the search box + Browse/Filter + Advanced buttons
     // don't fit on one line), so measure it for real instead.
-    const contentWrapper = document.getElementById('content-wrapper');
 
     function syncContentPadding() {
+      const contentWrapper = document.getElementById('content-wrapper');
       if (!header || !contentWrapper || document.body.classList.contains('has-hero')) return;
       contentWrapper.style.paddingTop = `${header.offsetHeight}px`;
     }

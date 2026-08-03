@@ -109,7 +109,9 @@ body.public-facing .hero-content h1 {
   text-shadow: 1px 1px 0 black;
 
 }
-
+body.public-facing .hero-content h1 span {
+  font-style: italic;
+}
 @media (min-width: 900px) {
   .hero-content h1 { font-size: 5.5rem; }
 }

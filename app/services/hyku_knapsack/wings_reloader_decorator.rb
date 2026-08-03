@@ -28,7 +28,12 @@ module HykuKnapsack
     end
 
     def register_model_mappings
-      [AdminSet, Collection, Etd, GenericWork, Image, Oer, Text].each do |klass|
+      # Text is a native Valkyrie resource (see app/models/text.rb) with no
+      # legacy ActiveFedora counterpart, so it's intentionally excluded here.
+      # Registering it as its own "legacy model" makes Hyrax::ResourceName's
+      # lookup point back at Text itself, and calling Text.model_name recurses
+      # forever (SystemStackError) trying to resolve its own route keys.
+      [AdminSet, Collection, Etd, GenericWork, Image, Oer].each do |klass|
         resource_klass = "#{klass}Resource".safe_constantize
         ::Wings::ModelRegistry.register(resource_klass, klass) if resource_klass
         ::Wings::ModelRegistry.register(klass, klass)

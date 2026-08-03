@@ -429,12 +429,9 @@ body.public-facing {
    the absolutely-positioned header so it doesn't cover the page title/
    breadcrumbs; hero pages (body.has-hero) handle their own spacing via
    .hero-content's own padding-top, so they get none of this. */
-	#content-wrapper { padding-top: 84px; }
+	#content-wrapper { padding-top: 200px; }
 	&.has-hero #content-wrapper { padding-top: 0; }
 
-	@media (min-width: 768px) {
-		#content-wrapper { padding-top: 92px; }
-	}
 
 } // end body.public-facing (HEADER 2026)
 
@@ -762,4 +759,6 @@ h4.search-result-title p { margin-bottom:0;}
 	max-width:unset;
 	width:calc(100% - 10rem);
 }
+
+/* ABOUT and HELP pages */
 
