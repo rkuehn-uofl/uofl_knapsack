@@ -113,10 +113,19 @@ module CatalogControllerSearchFieldsDecorator
         config.add_facet_field 'region_sim', label: 'Region', limit: 5, if: ->(*) { false }
       end
 
-      # Only flips a flag on facets that already exist -- this is the ONLY
-      # thing consulted by
-      # BlacklightAdvancedSearch::AdvancedHelperBehavior#facet_field_names_for_advanced_search,
-      # so it's harmless everywhere else facet_fields gets rendered.
+      # NOTE: as of app/helpers/advanced_helper_behavior_decorator.rb, this
+      # flag is no longer what decides the Attribute pulldown's contents.
+      # That file's facet_field_names_for_advanced_search override replaces
+      # BlacklightAdvancedSearch's version wholesale (never calls super) and
+      # derives the pulldown from its own ADVANCED_SEARCH_FACET_ORDER
+      # constant, filtered only by whether the facet exists -- it doesn't
+      # read include_in_advanced_search at all. The loop below still runs
+      # and still only flips this flag on facets that already exist (so it
+      # remains harmless everywhere else facet_fields gets rendered), but it
+      # has no live effect on /advanced today. Kept as-is (not removed)
+      # since FACET_FIELD_KEYS may still document prior intent worth
+      # preserving -- see app/helpers/advanced_helper_behavior_decorator.rb
+      # for the list that's actually authoritative now.
       config.facet_fields.each do |key, field|
         field.include_in_advanced_search = FACET_FIELD_KEYS.include?(key)
       end

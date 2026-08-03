@@ -18,12 +18,19 @@ module CatalogControllerDecorator
     ['resource_type_sim', { label: 'Resource type', limit: 5 }]
   ].freeze
 
-  # Which of the FACETS above also surface in the "Attribute" pulldown on
-  # /advanced. Everything in FACETS still renders as a sidebar facet on
-  # regular search/browse -- BlacklightAdvancedSearch separately keys off
-  # facet_fields[...].include_in_advanced_search (see
-  # blacklight_advanced_search's #facet_field_names_for_advanced_search) to
-  # decide what appears on the advanced search page specifically.
+  # NOTE: this constant and the loop that reads it (in #configure_uofl_facets
+  # below) no longer decide what shows in the "Attribute" pulldown on
+  # /advanced. That used to be true of the unmodified
+  # blacklight_advanced_search gem's #facet_field_names_for_advanced_search,
+  # which does key off facet_fields[...].include_in_advanced_search -- but
+  # app/helpers/advanced_helper_behavior_decorator.rb replaces that method
+  # wholesale (never calls super) and derives the pulldown from its own
+  # ADVANCED_SEARCH_FACET_ORDER constant instead, filtered only by whether
+  # the facet exists. Everything in FACETS still renders as a sidebar facet
+  # on regular search/browse regardless of this flag either way. Kept as-is
+  # (not removed) since it may still document prior intent worth preserving
+  # -- see app/helpers/advanced_helper_behavior_decorator.rb for the list
+  # that's actually authoritative now.
   ADVANCED_SEARCH_FACETS = %w[
     member_of_collections_ssim county_sim city_sim neighborhood_sim
     street_sim region_sim location_sim object_type_sim resource_type_sim
