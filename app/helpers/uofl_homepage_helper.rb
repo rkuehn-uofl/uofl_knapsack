@@ -104,6 +104,30 @@ module UoflHomepageHelper
     end
   end
 
+  # Resolved image/link data for the homepage hero banner (see
+  # app/views/themes/uofl/hyrax/homepage/_hero.html.erb for the markup and
+  # UoflHeroImages for how the picture itself is picked - an active
+  # config/uofl_hero_images.yml override, or the automatic weekly
+  # rotation). The hero's lower-right item-number button is optional: a
+  # picture only gets one if it has a `work_id` AND that work_id resolves
+  # to a real work; otherwise item_number/item_url come back nil and the
+  # view hides the button rather than linking to nothing.
+  def uofl_hero_image
+    picture = UoflHeroImages.current
+    solr_document = picture[:work_id].present? ? uofl_find_by_item_number(picture[:work_id]) : nil
+
+    if picture[:work_id].present? && solr_document.nil?
+      Rails.logger.warn("UofL hero image: item number #{picture[:work_id]} not found, hiding its item-number button")
+    end
+
+    {
+      image_src: image_path(picture[:image]),
+      image_alt: picture[:image_alt],
+      item_number: solr_document && Array(solr_document[:source_identifier_tesim]).first,
+      item_url: solr_document && polymorphic_path([main_app, solr_document])
+    }
+  end
+
   # Looks up a work by its human-readable item number (`source_identifier`,
   # e.g. "ULPA 1981_008_004") rather than its system id, so curators can
   # write `work_id` values in config/uofl_featured_carousel_themes.yml that

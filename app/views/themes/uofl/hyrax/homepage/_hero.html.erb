@@ -1,7 +1,20 @@
-<%# UOFL OVERRIDE: UofL Theme - Full-bleed homepage hero, replaces the old blank image-masthead banner. %>
+<%# UOFL OVERRIDE: UofL Theme - Full-bleed homepage hero, replaces the old blank image-masthead banner.
+    Image/alt text and the item-number button are resolved by
+    UoflHomepageHelper#uofl_hero_image - see config/uofl_hero_images.yml
+    for how the picture itself (weekly rotation, or a pinned override) is
+    picked.
+
+    fetchpriority="high" + eager loading + explicit dimensions tell the
+    browser to fetch/decode this as the page's LCP element immediately,
+    rather than discovering it only after CSS/layout - it's the single
+    largest image on the page and always above the fold. width/height
+    match every image in config/uofl_hero_images.yml (all 1800x1200);
+    object-fit: cover (see .hero-image in uofl_home.scss) means they're
+    just aspect-ratio hints, not the rendered size. %>
 <% content_for(:extra_body_classes, ' has-hero ') %>
+<% hero_image = uofl_hero_image %>
 <section class="hero">
-<img class="hero-image" alt="creamery wagons" src="<%= image_path('themes/uofl/homepage/hero/ULPA_SONJ_64308_1200x800_80.webp') %>">
+<img class="hero-image" alt="<%= hero_image[:image_alt] %>" src="<%= hero_image[:image_src] %>" width="1800" height="1200" fetchpriority="high" loading="eager" decoding="async">
   <div class="hero-scrim"></div>
   <div class="hero-content">
     <h1>Explore<span>!</span></h1>
@@ -32,5 +45,7 @@
       <% end %>
     </div>
   </div>
-  <div class="hero-image-number"><a href="fake.html">ULUA 2006_003_019</a></div>
+  <% if hero_image[:item_url] %>
+    <div class="hero-image-number"><a href="<%= hero_image[:item_url] %>"><%= hero_image[:item_number] %></a></div>
+  <% end %>
 </section>

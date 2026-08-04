@@ -1,0 +1,58 @@
+<%# UOFL OVERRIDE: UofL Theme - signed-in-only preview of the homepage hero
+    rotation and any configured overrides, so a curator can check a new
+    entry in config/uofl_hero_images.yml before it goes live. Uses the same
+    `layout 'homepage'` as Hyrax::HomepageController, and an action name
+    other than `index`, so app/views/themes/uofl/layouts/homepage.html.erb's
+    non-hero branch renders the same compact `/controls` bar all_collections
+    gets in this slot - matching its header exactly with no extra markup
+    needed here. See app/views/themes/uofl/uofl_featured_carousel_previews/
+    show.html.erb for the same pattern applied to the featured carousel. %>
+<div class="collections-list">
+  <section>
+    <h1>Hero Image Preview</h1>
+
+    <h2>Currently live</h2>
+    <figure>
+      <img src="<%= image_path(@current_image[:image]) %>" alt="<%= @current_image[:image_alt] %>" style="max-width: 480px; width: 100%; height: auto;">
+      <figcaption>
+        <%= @current_image[:image_alt] %>
+        <% if @current_image[:work_id].present? %>
+          &mdash; work_id: <%= @current_image[:work_id] %>
+        <% end %>
+      </figcaption>
+    </figure>
+
+    <h2>Overrides</h2>
+    <% if @overrides.empty? %>
+      <p>No overrides configured - the hero is on its normal weekly rotation.</p>
+    <% else %>
+      <ul>
+        <% @overrides.each do |override| %>
+          <li>
+            <strong><%= override[:status] %></strong>
+            &mdash; <%= override[:image_alt] %>
+            (<%= override[:start_date] || 'no start date' %> to <%= override[:end_date] || 'no end date' %>)
+            <% if override[:work_id].present? %>&mdash; work_id: <%= override[:work_id] %><% end %>
+          </li>
+        <% end %>
+      </ul>
+    <% end %>
+
+    <h2>Weekly rotation (<%= @images.size %> image<%= 's' unless @images.size == 1 %>)</h2>
+    <% if @images.empty? %>
+      <p>No rotation images configured &mdash; falling back to the hardcoded default (<%= UoflHeroImages::FALLBACK_IMAGE %>).</p>
+    <% else %>
+      <ol>
+        <% @images.each do |image| %>
+          <li>
+            <img src="<%= image_path(image[:image]) %>" alt="<%= image[:image_alt] %>" style="max-width: 240px; width: 100%; height: auto;">
+            <div>
+              <%= image[:image_alt] %>
+              <% if image[:work_id].present? %>&mdash; work_id: <%= image[:work_id] %><% end %>
+            </div>
+          </li>
+        <% end %>
+      </ol>
+    <% end %>
+  </section>
+</div>
