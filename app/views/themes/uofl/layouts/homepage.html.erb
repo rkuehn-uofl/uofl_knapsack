@@ -2,6 +2,16 @@
 
 <%# edited by TH %>
 <%# UOFL OVERRIDE: UofL Theme %>
+<%# The stock Hyrax `/controls` partial (Home/About/Help/Contact nav +
+    another catalog/search_form) used to render here on every non-index
+    page (about, help, all_collections, contact, ...). It's always been
+    CSS-hidden site-wide (#navbar-2026721 { display: none; } in
+    uofl_base.scss, only overridden back to visible on the homepage index
+    template) since _masthead already provides real navigation and search
+    on every page - so it had no visible effect, just a second copy of
+    every id catalog/_search_form defines (search-form-header, mySidebar2,
+    the facets partial's ids, ...) sitting hidden in the DOM. Dropped
+    instead of rendered. %>
 <% content_for(:navbar) do %>
   <% if params[:action] == 'index' %>
     <%= render 'hyrax/homepage/hero' %>
