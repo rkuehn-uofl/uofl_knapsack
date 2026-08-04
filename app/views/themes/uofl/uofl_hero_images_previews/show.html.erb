@@ -12,6 +12,11 @@
     <h1>Hero Image Preview</h1>
 
     <h2>Currently live</h2>
+    <p>Rotation mode: <strong><%= @rotation_mode %></strong>
+      <% if @rotation_mode == 'random' %>
+        &mdash; every visitor's browser gets its own random pick that sticks for their session. The image below is <em>this browser's</em> pick, not a single global "current" image; if this is the first hero-related page you've visited this session, it may not match what you see if you then load the homepage, since neither has picked/stored one yet.
+      <% end %>
+    </p>
     <figure>
       <img src="<%= image_path(@current_image[:image]) %>" alt="<%= @current_image[:image_alt] %>" style="max-width: 480px; width: 100%; height: auto;">
       <figcaption>
@@ -38,7 +43,7 @@
       </ul>
     <% end %>
 
-    <h2>Weekly rotation (<%= @images.size %> image<%= 's' unless @images.size == 1 %>)</h2>
+    <h2><%= @rotation_mode == 'random' ? 'Random pool' : 'Weekly rotation' %> (<%= @images.size %> image<%= 's' unless @images.size == 1 %>)</h2>
     <% if @images.empty? %>
       <p>No rotation images configured &mdash; falling back to the hardcoded default (<%= UoflHeroImages::FALLBACK_IMAGE %>).</p>
     <% else %>

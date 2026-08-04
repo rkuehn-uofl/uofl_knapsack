@@ -107,13 +107,24 @@ module UoflHomepageHelper
   # Resolved image/link data for the homepage hero banner (see
   # app/views/themes/uofl/hyrax/homepage/_hero.html.erb for the markup and
   # UoflHeroImages for how the picture itself is picked - an active
-  # config/uofl_hero_images.yml override, or the automatic weekly
-  # rotation). The hero's lower-right item-number button is optional: a
-  # picture only gets one if it has a `work_id` AND that work_id resolves
-  # to a real work; otherwise item_number/item_url come back nil and the
-  # view hides the button rather than linking to nothing.
+  # config/uofl_hero_images.yml override, or the configured rotation:
+  # deterministic weekly, or random per session). In `random` mode this
+  # reads/writes session[:uofl_hero_image] so the same visitor
+  # keeps seeing the same picture for the rest of their session instead of
+  # it changing on every request; an active override always wins and is
+  # never written to the session, so a visitor's earlier random pick (if
+  # any) resumes once the override's window ends. The hero's lower-right
+  # item-number button is optional: a picture only gets one if it has a
+  # `work_id` AND that work_id resolves to a real work; otherwise
+  # item_number/item_url come back nil and the view hides the button
+  # rather than linking to nothing.
   def uofl_hero_image
-    picture = UoflHeroImages.current
+    picture = UoflHeroImages.current(remembered_image: session[:uofl_hero_image])
+
+    if UoflHeroImages.rotation_mode == 'random' && UoflHeroImages.active_override.blank?
+      session[:uofl_hero_image] = picture[:image]
+    end
+
     solr_document = picture[:work_id].present? ? uofl_find_by_item_number(picture[:work_id]) : nil
 
     if picture[:work_id].present? && solr_document.nil?

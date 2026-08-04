@@ -25,8 +25,23 @@ class UoflHeroImages
   ROTATION_DAYS = 7
   ROTATION_EPOCH = Date.new(2024, 1, 1)
 
-  def self.current
-    active_override || rotated_image || fallback_image
+  ROTATION_MODES = %w[weekly random].freeze
+  DEFAULT_ROTATION_MODE = 'weekly'
+
+  # `remembered_image` is the `image` path of whatever picture this same
+  # visitor was already shown, if any (in `random` mode, the
+  # caller is expected to have read this back out of its own session
+  # storage - see UoflHomepageHelper#uofl_hero_image). It's ignored
+  # entirely in `weekly` mode, so callers that don't pass it (or that don't
+  # have a session, like a Rails console) still get the same deterministic
+  # weekly pick as always.
+  def self.current(remembered_image: nil)
+    active_override || pick_image(remembered_image) || fallback_image
+  end
+
+  def self.rotation_mode
+    mode = config[:rotation_mode].to_s
+    ROTATION_MODES.include?(mode) ? mode : DEFAULT_ROTATION_MODE
   end
 
   def self.images
@@ -61,11 +76,25 @@ class UoflHeroImages
     tier.first
   end
 
-  def self.rotated_image
+  def self.pick_image(remembered_image)
     return nil if images.empty?
 
+    rotation_mode == 'random' ? random_image(remembered_image) : rotated_image
+  end
+
+  def self.rotated_image
     weeks_elapsed = (Time.zone.today - ROTATION_EPOCH).to_i / ROTATION_DAYS
     images[weeks_elapsed % images.size]
+  end
+
+  # Sticks with `remembered_image` for the rest of the visitor's session if
+  # it's still a valid picture (so refreshing/navigating around the site
+  # doesn't change the hero mid-visit); otherwise picks a fresh random one
+  # for the caller to remember from here on. Matching on `image` (always
+  # present) rather than `work_id` (optional) or list position (would
+  # silently pick a different photo if a curator reorders the list).
+  def self.random_image(remembered_image)
+    images.find { |image| image[:image] == remembered_image } || images.sample
   end
 
   def self.fallback_image
