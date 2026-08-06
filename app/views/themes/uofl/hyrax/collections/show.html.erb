@@ -159,3 +159,29 @@
 </div>
 
 <span class='hide analytics-event' data-category="collection" data-action="collection-page-view" data-name="<%= @presenter.id %>" >
+
+<%# UOFL OVERRIDE: the browser's native jump to the #collection-results-anchor
+    fragment (see the search form and _paginate.html.erb overrides) happens
+    early in the page load, before the heading web font has finished
+    swapping in. That font swap -- which lands separately from, and
+    slightly after, `document.fonts.ready` resolving -- shifts the text
+    above the anchor by a few pixels right around the page's `load` event,
+    which is just enough to push the anchor above the viewport. Re-jumping
+    to the anchor -- instantly, no animation -- on both `fonts.ready` and
+    `load` (independently, since either one alone can fire before the
+    drift actually happens) corrects for it. %>
+<script>
+  (function () {
+    if (!window.location.hash) { return; }
+
+    function correctAnchorScroll() {
+      var target = document.querySelector(window.location.hash);
+      if (target) { target.scrollIntoView({ behavior: 'auto', block: 'start' }); }
+    }
+
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(correctAnchorScroll);
+    }
+    window.addEventListener('load', correctAnchorScroll);
+  })();
+</script>
