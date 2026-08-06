@@ -28,17 +28,9 @@ module Sipity
                Hyrax.logger.debug { "  Searching for GID: #{gid_string}" }
                entity_find_by_gid(input, gid_string)
              when SolrDocument
-               if Hyrax.config.disable_wings
-                 # In no-Wings mode, resolve via query_service instead of
-                 # SolrDocument#to_model, which can trigger ActiveFedora/Fedora lookups.
-                 item = Hyrax.query_service.find_by(id: input.id)
-                 Hyrax.logger.debug { "Entity() got a SolrDocument in valkyrie/no-wings mode, retrying on item #{item.id}" }
-                 Entity(item)
-               else
-                 model = input.to_model
-                 Hyrax.logger.debug { "Entity() got a SolrDocument, retrying on #{model}" }
-                 Entity(model)
-               end
+               item = Hyrax.query_service.find_by(id: input.id)
+               Hyrax.logger.debug { "Entity() got a SolrDocument, retrying on item #{item.id}" }
+               Entity(item)
              when Draper::Decorator
                Hyrax.logger.debug { "Entity() got a Decorator, retrying on #{input.model}" }
                Entity(input.model)
