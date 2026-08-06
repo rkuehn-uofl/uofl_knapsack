@@ -1,0 +1,14 @@
+<%# OVERRIDE Hyrax 5.2.0 app/views/hyrax/collections/_paginate.html.erb %>
+<%# UOFL OVERRIDE: append the #collection-results-anchor fragment to every
+    pagination link so that clicking a page number lands the browser on the
+    results section (see show.html.erb) instead of back at the top of the
+    page. Kaminari's `paginate` helper has no built-in option for adding a
+    URL fragment, so the fragment is spliced onto each rendered href. %>
+<% solr_response ||= @response %>
+<% page_param_name ||= :page %>
+<% if solr_response.total_pages > 1 %>
+    <div class="row record-padding col-md-9">
+      <%= paginate(solr_response, outer_window: 2, theme: 'blacklight', param_name: page_param_name)
+            .to_s.gsub(/href="([^"]*)"/) { %(href="#{Regexp.last_match(1)}#collection-results-anchor") }.html_safe %>
+    </div><!-- /pager -->
+<% end %>

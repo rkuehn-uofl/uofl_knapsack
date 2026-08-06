@@ -44,9 +44,15 @@
       <%# end OVERRIDE %>
 
       <!-- Search bar -->
+      <%# UOFL OVERRIDE: point the search form at the #collection-results-anchor
+          fragment (below) so that after a search submits, the browser lands
+          on the results instead of back at the top of the page. Browsers
+          preserve the URL fragment from a GET form's action when building
+          the submitted URL, and Turbolinks scrolls to a URL fragment before
+          falling back to scrolling to the top. %>
       <div class="row" id="collections_show_search_row">
         <div class="col-sm-8 mt-3">
-          <%= render 'search_form', presenter: @presenter, url: hyrax.collection_path(@presenter.id) %>
+          <%= render 'search_form', presenter: @presenter, url: hyrax.collection_path(@presenter.id, anchor: 'collection-results-anchor') %>
         </div>
       </div>
 
@@ -108,7 +114,7 @@
 
   <!-- Search results label -->
   <% if @members_count > 0 || @presenter.subcollection_count > 0 %>
-    <div class="hyc-blacklight hyc-bl-title">
+    <div class="hyc-blacklight hyc-bl-title" id="collection-results-anchor">
       <% if collection_search_parameters? %>
         <h2>
           <%= t('hyrax.dashboard.collections.show.search_results') %>
