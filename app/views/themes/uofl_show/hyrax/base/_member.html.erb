@@ -1,0 +1,12 @@
+<%# UOFL OVERRIDE: Hyrax 5.2.0 hyrax/base/_member.html.erb %>
+<%# UOFL OVERRIDE: remove the "Date Uploaded" cell to match the Items table header %>
+<tr class="<%= dom_class(member) %> attributes">
+  <td class="thumbnail">
+    <%= document_presenter(member).thumbnail.thumbnail_tag(alt: member.alt_text_for_view) %>
+  </td>
+  <td class="attribute attribute-filename ensure-wrapped"><%= link_to(member.link_name, contextual_path(member, @presenter)) %></td>
+  <td class="attribute attribute-permission"><%= member.permission_badge %></td>
+  <td>
+    <%= render 'actions', member: member %>
+  </td>
+</tr>

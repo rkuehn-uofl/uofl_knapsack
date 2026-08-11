@@ -1,0 +1,45 @@
+<%# UOFL OVERRIDE: Hyrax 5.2.0 hyrax/base/_attribute_rows.html.erb %>
+<%# UOFL OVERRIDE: insert a linked "Collection" row right after Source. Collection membership %>
+<%# is a PCDM relationship, not a literal metadata property, so it can't be added via the %>
+<%# flexible metadata (m3) schema - it has to be injected here instead. %>
+<% if Hyrax.config.flexible? %>
+  <% view_options_for(presenter).each do |field, options| %>
+    <% view_options = conform_options(field, options) %>
+
+    <%# can add metadata property called admin_note that is restricted to any editor role %>
+    <%# can add indexing.admin_only to restrict any property to admins %>
+    <% if field == :admin_note %>
+      <%= presenter.attribute_to_html(conform_field(field, options), view_options) if presenter.editor? %>
+    <% else %>
+      <%= presenter.attribute_to_html(conform_field(field, options), view_options) unless view_options[:admin_only] && !current_user&.admin?  %>
+    <% end %>
+
+    <% if field == :source && presenter.respond_to?(:member_of_collection_presenters) && presenter.member_of_collection_presenters.present? %>
+      <dt class="attribute-collection"><%= t('.collection', default: 'Collection') %></dt>
+      <dd class="attribute attribute-collection">
+        <ul class="tabular">
+          <% presenter.member_of_collection_presenters.each do |collection| %>
+            <li><%= link_to collection.title.first, hyrax.collection_path(collection.id) %></li>
+          <% end %>
+        </ul>
+      </dd>
+    <% end %>
+  <% end %>
+<% else %>
+  <%# Copied from hyrax-doi v0.2.0 %>
+  <%= presenter.attribute_to_html(:date_modified, label: t('hyrax.base.show.last_modified'), html_dl: true) %>
+  <%= presenter.attribute_to_html(:creator, render_as: :faceted, html_dl: true) %>
+  <%= presenter.attribute_to_html(:contributor, render_as: :faceted, html_dl: true) %>
+  <%= presenter.attribute_to_html(:subject, render_as: :faceted, html_dl: true) %>
+  <%= presenter.attribute_to_html(:publisher, render_as: :faceted, html_dl: true) %>
+  <%= presenter.attribute_to_html(:language, render_as: :faceted, html_dl: true) %>
+  <%= presenter.attribute_to_html(:identifier, render_as: :linked, search_field: 'identifier_tesim', html_dl: true) %>
+  <%= presenter.attribute_to_html(:keyword, render_as: :faceted, html_dl: true) %>
+  <%= presenter.attribute_to_html(:date_created, render_as: :linked, search_field: 'date_created_tesim', html_dl: true) %>
+  <%= presenter.attribute_to_html(:based_near_label, html_dl: true) %>
+  <%= presenter.attribute_to_html(:related_url, render_as: :external_link, html_dl: true) %>
+  <%= presenter.attribute_to_html(:resource_type, render_as: :faceted, html_dl: true) %>
+  <%= presenter.attribute_to_html(:source, html_dl: true) %>
+  <%= presenter.attribute_to_html(:rights_statement, render_as: :rights_statement, html_dl: true) %>
+  <%= presenter.attribute_to_html(:doi, render_as: :external_link, html_dl: true) if respond_to?(:render_doi?) && render_doi?(presenter) %>
+<% end %>
