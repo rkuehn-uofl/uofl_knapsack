@@ -11,4 +11,9 @@ HykuKnapsack::Engine.routes.draw do
   # UOFL OVERRIDE: Signed-in-only preview of the homepage hero rotation and
   # any configured overrides - see UoflHeroImagesPreviewsController.
   get 'uofl/hero_images/preview', to: '/uofl_hero_images_previews#show', as: :uofl_hero_images_preview
+
+  # UOFL OVERRIDE: Entry point for UofL's copy of the Universal Viewer iframe
+  # - see Hyrax::IiifHelperDecorator#universal_viewer_base_url and
+  # app/views/uofl_uv_viewer/show.html.erb.
+  get 'uofl_uv/uv.html', to: '/uofl_uv_viewer#show', as: :uofl_uv_viewer
 end

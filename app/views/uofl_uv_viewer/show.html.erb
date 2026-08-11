@@ -1,0 +1,87 @@
+<!--
+    UOFL OVERRIDE NEW FILE: Copy of hyrax-webapp/public/uv/uv.html (the
+    Universal Viewer iframe entry point) with one addition - a <style> block
+    that force-hides the footer download/share buttons and the header
+    gallery/settings buttons.
+
+    None of these four can be turned off through uv-config.json like the
+    other UofL toggles (uofl_uv_config.json's modules.footerPanel.options.
+    downloadEnabled/shareEnabled do reach UV's config object - see
+    Hyrax::IiifHelperDecorator#universal_viewer_config_url - but the
+    imageBtn-classed widgets (footer AND header) never re-sync their own
+    rendered options from that async-fetched config, so the buttons stay
+    visible regardless). CSS is the only lever left, and uv.html/uv.css live
+    in the hyrax-webapp submodule we don't edit, so this app serves its own
+    copy instead - see UoflUvViewerController and
+    Hyrax::IiifHelperDecorator#iiif_viewer_base_url.
+-->
+
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link rel="icon" href="/uv/favicon.ico" />
+    <link rel="stylesheet" type="text/css" href="/uv/uv.css" />
+    <script type="text/javascript" src="/uv/umd/UV.js"></script>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+      }
+
+      .imageBtn.download,
+      .imageBtn.share,
+      .imageBtn.gallery,
+      .imageBtn.settings {
+        display: none !important;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="uv" class="uv"></div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        var urlAdapter = new UV.IIIFURLAdapter(true);
+
+        const data = urlAdapter.getInitialData({
+          embedded: true,
+          highlight: urlAdapter.get('q', ''), // adds a way for catalog search term to be passed into UV for highlighting in the viewer
+        });
+
+        uv = UV.init("uv", data);
+
+
+        const configUrl = urlAdapter.get('config');
+        if (configUrl) {
+          uv.on("configure", function({ config, cb }) {
+            cb(
+              new Promise(function (resolve) {
+                fetch(configUrl).then(function (response) {
+                  resolve(response.json());
+                });
+              })
+            );
+          })
+        }
+
+        var $UV = document.getElementById("uv");
+
+        function resize() {
+          $UV.setAttribute("style", "width:" + window.innerWidth + "px");
+          $UV.setAttribute("style", "height:" + window.innerHeight + "px");
+        }
+
+        addEventListener("resize", function() {
+          resize();
+        });
+
+        resize();
+      });
+    </script>
+  </body>
+</html>
