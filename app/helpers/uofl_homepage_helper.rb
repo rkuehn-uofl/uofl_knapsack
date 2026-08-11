@@ -39,13 +39,49 @@ module UoflHomepageHelper
   # back to its default.png when a collection has no thumbnail set, so
   # thumbnail_url never returns blank here.
   def uofl_homepage_collection_slides(limit: 4)
-    items = @featured_collection_list&.featured_collections
+    featured_records = FeaturedCollection.all.to_a
+
+    items =
+      if featured_records.present?
+        ids = featured_records.map(&:collection_id)
+
+        documents =
+          Hyrax::SolrQueryService.new
+                                 .with_ids(ids: ids)
+                                 .solr_documents(rows: ids.length)
+
+        documents_by_id = documents.index_by { |document| document.id.to_s }
+
+        # Mirror FeaturedCollectionList#featured_collections: a featured row
+        # whose collection no longer resolves in Solr is stale, so drop it
+        # from the list and clean up the row rather than let it linger.
+        orphaned_records = featured_records.reject { |record| documents_by_id.key?(record.collection_id.to_s) }
+        orphaned_records.each(&:destroy)
+        featured_records -= orphaned_records
+
+        if featured_records.all? { |record| record.order == FeaturedCollection.feature_limit }
+          documents.sort_by { |document| Array(document.title).first.to_s.downcase }
+        else
+          featured_records.filter_map { |record| documents_by_id[record.collection_id.to_s] }
+        end
+      else
+        []
+      end
+
+    # Falls back to top collections both when nothing is featured and when
+    # every featured collection turned out to be orphaned above.
     items = items.presence || uofl_top_collections(rows: limit)
 
-    items.first(limit).map do |item|
-      object = item.respond_to?(:presenter) ? item.presenter : item
-      solr_document = object.respond_to?(:solr_document) ? object.solr_document : object
-      title = object.respond_to?(:title_or_label) ? object.title_or_label : Array(object.title).first
+    items.first(limit).map do |object|
+      solr_document =
+        object.respond_to?(:solr_document) ? object.solr_document : object
+
+      title =
+        if object.respond_to?(:title_or_label)
+          object.title_or_label
+        else
+          Array(object.title).first
+        end
 
       {
         id: object.id,
@@ -54,7 +90,10 @@ module UoflHomepageHelper
         url: polymorphic_path([hyrax, object]),
         count: uofl_collection_item_count(object.id),
         image_src: thumbnail_url(object),
-        image_alt: thumbnail_alt_text_for(solr_document, block_name: 'default_collection_image_text')
+        image_alt: thumbnail_alt_text_for(
+          solr_document,
+          block_name: 'default_collection_image_text'
+        )
       }
     end
   end
