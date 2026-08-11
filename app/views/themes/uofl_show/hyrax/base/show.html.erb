@@ -54,24 +54,27 @@
       </div>
     </div><!-- /card -->
 
-    <div class="card">
-      <div class="card-header">
-        <h2 class="card-title"><%= t('hyrax.base.show.relationships') %></h2>
+    <%# UOFL OVERRIDE: hide Items section from public/anonymous users, keep for staff who can edit the work %>
+      <% if can?(:edit, @presenter.id) %>
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title"><%= t('hyrax.base.show.relationships') %></h2>
+        </div>
+        <div class="card-body">
+          <%= render 'relationships', presenter: @presenter %>
+          <%= render 'related_items', presenter: @presenter %>
+        </div>
       </div>
-      <div class="card-body">
-        <%= render 'relationships', presenter: @presenter %>
-        <%= render 'related_items', presenter: @presenter %>
-      </div>
-    </div>
 
-    <div class="card">
-      <div class="card-header">
-        <h2 class="card-title"><%= t('.items') %></h2>
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title"><%= t('.items') %></h2>
+        </div>
+        <div class="card-body">
+          <%= render 'items', presenter: @presenter %>
+        </div>
       </div>
-      <div class="card-body">
-        <%= render 'items', presenter: @presenter %>
-      </div>
-    </div>
+    <% end %>
 
     <%# TODO: we may consider adding these partials in the future %>
     <%# = render 'sharing_with', presenter: @presenter %>
