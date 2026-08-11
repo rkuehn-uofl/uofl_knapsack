@@ -29,12 +29,25 @@
 #          active today will take over from it.
 #        - Dates are plain `YYYY-MM-DD`.
 #
-#   2. `images` - if no override is active today, the hero rotates through
-#      this list automatically, advancing once a week (the pick is based on
-#      the number of weeks since a fixed date, not the calendar week number,
-#      so it never skips/repeats around a year boundary). Add or remove
-#      images here any time; the rotation just adjusts to the new list
-#      length.
+#   2. `images` - if no override is active today, the hero picks from this
+#      list according to `rotation_mode` (see below). Add or remove images
+#      here any time; both modes just adjust to the new list.
+#
+# `rotation_mode` (top-level, set below just above `images:`) controls how
+# #2 above picks from `images` when no override is active. Only one of the
+# two lines below should be uncommented at a time - comment out the one
+# that's active and uncomment the other to switch:
+#   - `weekly` - deterministic: advances once a week for every visitor
+#     alike, based on the number of weeks since a fixed date (not the
+#     calendar week number, so it never skips/repeats around a year
+#     boundary). This is also what you get if the `rotation_mode` line is
+#     removed/commented out entirely.
+#   - `random` - each visitor's browser gets its own random pick from
+#     `images` that then stays the same for the rest of their session (so
+#     it won't change if they refresh or navigate around the site),
+#     independent of what any other visitor sees. A new session (e.g. a
+#     new/incognito browser) gets a fresh random pick.
+# An active override (see #1 above) always wins over either mode.
 #
 # Every entry (in both `images` and `overrides`) needs:
 #   `work_id`    - optional. The item's human-readable identifier (e.g.
@@ -65,81 +78,184 @@
 # confirm/correct each `work_id` against the real item before treating this
 # as production-ready data.
 
-images:
-  - work_id: ULUA 2006_003_008_024
-    image: themes/uofl/homepage/hero/ULUA_2006_003_008_024_1800x1200.jpg
-    image_alt: Hand-tinted postcard of a river lock and dam complex, with lockhouses and keepers' cottages along the canal (item ULUA 2006_003_008_024)
-    notes: "Was the hardcoded hero image before this rotation existed; alt text previously read \"creamery wagons\" and didn't match this photo at all. work_id guessed from filename, unverified."
+# rotation_mode: weekly
+rotation_mode: random
 
-  - work_id: ULPA 1981_008_005
-    image: themes/uofl/homepage/hero/ULPA_1981_008_005_1800x1200.jpg
-    image_alt: Horse-drawn Ewing's Creamery delivery wagons lined up with workers outside the storefront (item ULPA 1981_008_005)
-    notes: work_id guessed from filename, unverified.
+images:
+  - work_id: UOFL SONJ_64308
+    image: themes/uofl/homepage/hero/ULPA_SONJ_64308_1200x800_80.webp
+    image_alt: farmer with horse France 1950
+    notes: "Was the hardcoded hero image before this rotation existed"
 
   - work_id: ULPA 1982_001_735
-    image: themes/uofl/homepage/hero/ULPA_1982_001_735_1800x1200.jpg
-    image_alt: An early automobile parked at a river ferry landing, with a horse-drawn buggy waiting nearby (item ULPA 1982_001_735)
-    notes: work_id guessed from filename, unverified.
+    image: themes/uofl/homepage/hero/ULPA_1982_001_735_1200x800_80.webp
+    image_alt: Boy at the wheel of car by ferry dock
+    notes: 
+
+  - work_id: ULPA 1981_008_005
+    image: themes/uofl/homepage/hero/ULPA_1981_008_005_1200x800_80.webp
+    image_alt: Men with milk delivery wagons
+    notes: 
+
+  - work_id: ULPA CS_096447
+    image: themes/uofl/homepage/hero/ULPA_CS_096447_1200x800_80.webp
+    image_alt: Women working at Standard Printing Company 1928
+    notes:
+
+  - work_id: ULPA 1980_020_1415
+    image: themes/uofl/homepage/hero/ULPA_1980_020_1415_1200x800_80.webp
+    image_alt: girl in fencing costume
+    notes:
+
+  - work_id: ULPA 1994_018_0530
+    image: themes/uofl/homepage/hero/ULPA_1994_018_0530_1200x800_80.webp
+    image_alt: Barrels at OFC Distillery
+    notes:
+
+  - work_id: ULPA 1998_009_342
+    image: themes/uofl/homepage/hero/ULPA_1998_009_342_1200x800_80.webp
+    image_alt: court house
+    notes:
+
+  - work_id: ULPA 1998_009_471
+    image: themes/uofl/homepage/hero/ULPA_1998_009_471_1200x800_80.webp
+    image_alt: autos in front of central colored high school
+    notes:
 
   - work_id: ULPA CS_031568
-    image: themes/uofl/homepage/hero/ULPA_CS_031568_1800x1200.jpg
-    image_alt: A group of young men pose with saws and carpentry tools along a fence in front of the Loyal Order of Moose building (item ULPA CS_031568)
-    notes: work_id guessed from filename, unverified.
+    image: themes/uofl/homepage/hero/ULPA_CS_031568_1200x800_80.webp
+    image_alt: men with tools by fence
+    notes:
+
+  - work_id: ULPA CS_040540
+    image: themes/uofl/homepage/hero/ULPA_CS_040540_1200x800_80.webp
+    image_alt: Peoples Market 1922
+    notes:
+
+  - work_id: ULPA CS_096817
+    image: themes/uofl/homepage/hero/ULPA_CS_096817_1200x800_80.webp
+    image_alt: Tobacco barn 1928
+    notes:
 
   - work_id: ULPA CS_102694
-    image: themes/uofl/homepage/hero/ULPA_CS_102694_1800x1200.jpg
-    image_alt: A steel truss bridge spans the river as a paddle-wheel steamboat passes beneath (item ULPA CS_102694)
-    notes: work_id guessed from filename, unverified.
+    image: themes/uofl/homepage/hero/ULPA_CS_102694_1200x800_80.webp
+    image_alt: Big Four Bridge, Louisville, Kentucky, 1929.
+    notes:
 
-  - work_id: ULPA CS_160539
-    image: themes/uofl/homepage/hero/ULPA_CS_160539_1800x1200.jpg
-    image_alt: Men gather at radio microphones on the rear platform of a Baltimore & Ohio train car during a whistle-stop (item ULPA CS_160539)
-    notes: work_id guessed from filename, unverified.
+  - work_id: ULPA CS_127497
+    image: themes/uofl/homepage/hero/ULPA_CS_127497_1200x800_80.webp
+    image_alt: Palace Drugs, Louisville, Kentucky, 1933.
+    notes:
+
+  - work_id: ULPA CS_158617
+    image: themes/uofl/homepage/hero/ULPA_CS_158617_1200x800_80.webp
+    image_alt: Jefferson County Motorcycle squad at Short's Tire Service, Louisville, Kentucky, 1938.
+    notes:
+
+  - work_id: ULPA CS_223287
+    image: themes/uofl/homepage/hero/ULPA_CS_223287_1200x800_80.webp
+    image_alt: Hollywood steak house 1947
+    notes:
 
   - work_id: ULPA CS_260828
-    image: themes/uofl/homepage/hero/ULPA_CS_260828_1800x1200.jpg
-    image_alt: Churchill Downs' twin spires rise above a packed grandstand as horses round the track during a race (item ULPA CS_260828)
-    notes: work_id guessed from filename, unverified.
+    image: themes/uofl/homepage/hero/ULPA_CS_260828_1200x800_80.webp
+    image_alt: Kentucky Derby 1951
+    notes:
 
   - work_id: ULPA P_00481
-    image: themes/uofl/homepage/hero/ULPA_P_00481_1800x1200.jpg
-    image_alt: A young singer performs into a microphone before a densely packed crowd of fans (item ULPA P_00481)
-    notes: work_id guessed from filename, unverified.
+    image: themes/uofl/homepage/hero/ULPA_P_00481_1200x800_80.webp
+    image_alt: Frank Sinatra
+    notes:
 
-  - work_id: ULPA R_05196_07
-    image: themes/uofl/homepage/hero/ULPA_R_05196_07_1800x1200.jpg
-    image_alt: Crowds gather beneath a lit theater marquee for a movie's world premiere (item ULPA R_05196_07)
-    notes: work_id guessed from filename, unverified.
+  - work_id: ULPA R_09637_02
+    image: themes/uofl/homepage/hero/ULPA_R_09637_02_1200x800_80.webp
+    image_alt: U T L television studio
+    notes:
 
   - work_id: ULPA R_10321_02
-    image: themes/uofl/homepage/hero/ULPA_R_10321_02_1800x1200.jpg
-    image_alt: A musician behind a record store counter holds up a record for a crowd of young shoppers (item ULPA R_10321_02)
-    notes: work_id guessed from filename, unverified.
+    image: themes/uofl/homepage/hero/ULPA_R_10321_02_1200x800_80.webp
+    image_alt: Duke Ellington signing records at Variety Record Shop
+    notes:
+
+  - work_id: ULPA R_18596_00
+    image: themes/uofl/homepage/hero/ULPA_R_18596_00_1200x800_80.webp
+    image_alt: Night photos of long distance operators.
+    notes:
 
   - work_id: ULPA R_50065
-    image: themes/uofl/homepage/hero/ULPA_R_50065_1800x1200.jpg
-    image_alt: A reporter interviews two women holding a promotional card for a film screening (item ULPA R_50065)
-    notes: work_id guessed from filename, unverified.
+    image: themes/uofl/homepage/hero/ULPA_R_50065_1200x800_80.webp
+    image_alt: Crowd for opening of The Women 1939
+    notes:
 
   - work_id: ULPA SONJ_12092
-    image: themes/uofl/homepage/hero/ULPA_SONJ_12092_1800x1200.jpg
-    image_alt: A mare and foal stand tied outside a small-town saddle shop and cafe (item ULPA SONJ_12092)
-    notes: work_id guessed from filename, unverified.
+    image: themes/uofl/homepage/hero/ULPA_SONJ_12092_1200x800_80.webp
+    image_alt: Horses in front of saddle store 1944.
+    notes:
 
   - work_id: ULPA SONJ_13165
-    image: themes/uofl/homepage/hero/ULPA_SONJ_13165_1800x1200.jpg
-    image_alt: An Intermountain Lines bus parked outside a small-town cafe and bus depot (item ULPA SONJ_13165)
-    notes: work_id guessed from filename, unverified.
+    image: themes/uofl/homepage/hero/ULPA_SONJ_13165_1200x800_80.webp
+    image_alt: People boarding city bus Montana 1944
+    notes:
+
+  - work_id: ULPA SONJ_22251
+    image: themes/uofl/homepage/hero/ULPA_SONJ_22251_1200x800_80.webp
+    image_alt: Farm covered in snow, Lyndonville, Vermont, 1945.
+    notes:
 
   - work_id: ULPA SONJ_38549
-    image: themes/uofl/homepage/hero/ULPA_SONJ_38549_1800x1200.jpg
-    image_alt: A rancher on horseback surveys grazing cattle across an open range under a wide, cloud-filled sky (item ULPA SONJ_38549)
-    notes: work_id guessed from filename, unverified.
+    image: themes/uofl/homepage/hero/ULPA_SONJ_38549_1200x800_80.webp
+    image_alt: Gabriel Rodriguez on horseback
+    notes:
 
-  - work_id: ULAL Brecher_Dooin01
-    image: themes/uofl/homepage/hero/ULUA_2006_003_008_019_1800x1200.jpg
-    image_alt: A hand-tinted postcard view of an ornate brick building beside a canal, with two women strolling under a parasol (item ULUA 2006_003_008_019)
-    notes: work_id guessed from filename, unverified.
+  - work_id: ULPA SONJ_70464_m7
+    image: themes/uofl/homepage/hero/ULPA_SONJ_70464_m7_1200x800_80.webp
+    image_alt: People waiting for bus, Rome, Italy, 1952.
+    notes:
+
+  - work_id: ULPA SONJ_80700
+    image: themes/uofl/homepage/hero/ULPA_SONJ_80700_1200x800_80.webp
+    image_alt: horses resting in grass by beach in North Carolina
+    notes:
+
+  - work_id: ULPA SONJ_83534_m38
+    image: themes/uofl/homepage/hero/ULPA_SONJ_83534_m38_1200x800_80.webp
+    image_alt: Traffic by the Arc de Triumphe
+    notes:
+
+  - work_id: ULUA 2006_003_008_011
+    image: themes/uofl/homepage/hero/ULUA_2006_003_008_011_1200x800_80.webp
+    image_alt: Market Street postcard
+    notes:
+
+  - work_id: ULUA 2006_003_008_013
+    image: themes/uofl/homepage/hero/ULUA_2006_003_008_013_1200x800_80.webp
+    image_alt: Third Street postcard
+    notes:
+
+  - work_id: ULUA 2006_003_008_019
+    image: themes/uofl/homepage/hero/ULUA_2006_003_008_019_1200x800_80.webp
+    image_alt: Reservoir postcard
+    notes:
+
+  - work_id: ULUA 2006_003_008_021
+    image: themes/uofl/homepage/hero/ULUA_2006_003_008_021_1200x800_80.webp
+    image_alt: Big Four Bridge postcard
+    notes:
+
+  - work_id: ULUA 2006_003_008_024
+    image: themes/uofl/homepage/hero/ULUA_2006_003_008_024_1200x800_80.webp
+    image_alt: Canal locks postcard
+    notes:
+
+  - work_id: ULUA 2006_003_008_057
+    image: themes/uofl/homepage/hero/ULUA_2006_003_008_057_1200x800_80.webp
+    image_alt: Kentucky river postcard
+    notes:
+
+  - work_id: ULUA 2008_123_0968
+    image: themes/uofl/homepage/hero/ULUA_2008_123_0968_1200x800_80.webp
+    image_alt: u of l basketball team and plane
+    notes:
 
 overrides:
   # DEMO overrides for testing - covers all four date states the preview
@@ -152,38 +268,42 @@ overrides:
   #    #2's image is what actually shows on the homepage right now, even
   #    though #1 is listed first. Delete #2 (or wait until 2026-08-06) to
   #    see #1 take over instead.
-  - work_id: ULPA 1981_008_005
-    image: themes/uofl/homepage/hero/ULPA_1981_008_005_1800x1200.jpg
-    image_alt: Horse-drawn Ewing's Creamery delivery wagons lined up with workers outside the storefront (item ULPA 1981_008_005)
-    notes: "DEMO: no start_date/end_date - standing override, lowest precedence tier."
+  
+  #- work_id: ULPA 1981_008_005
+  #  image: themes/uofl/homepage/hero/ULPA_1981_008_005_1800x1200.jpg
+  #  image_alt: Horse-drawn Ewing's Creamery delivery wagons lined up with workers outside the storefront (item ULPA 1981_008_005)
+  #  notes: "DEMO: no start_date/end_date - standing override, lowest precedence tier."
 
   # 2. DATED override, window bracketing today (2026-07-30) - this is what
   #    actually shows on the homepage right now: a dated override always
   #    wins over #1's undated one, regardless of list order. Once
   #    2026-08-05 passes, this stops matching and #1 takes back over
   #    automatically.
-  - work_id: ULPA CS_260828
-    image: themes/uofl/homepage/hero/ULPA_CS_260828_1800x1200.jpg
-    image_alt: Churchill Downs' twin spires rise above a packed grandstand as horses round the track during a race (item ULPA CS_260828)
-    start_date: 2026-07-28
-    end_date: 2026-08-05
-    notes: "DEMO: dated window bracketing today - wins over #1's standing override by design; #1 resumes automatically after 2026-08-05."
+
+  #- work_id: ULPA CS_260828
+  #  image: themes/uofl/homepage/hero/ULPA_CS_260828_1800x1200.jpg
+  #  image_alt: Churchill Downs' twin spires rise above a packed grandstand as horses round the track during a race (item ULPA CS_260828)
+  #  start_date: 2026-07-28
+  #  end_date: 2026-08-05
+  #  notes: "DEMO: dated window bracketing today - wins over #1's standing override by design; #1 resumes automatically after 2026-08-05."
 
   # 3. UPCOMING - start_date hasn't arrived yet, so this shows as
   #    "upcoming" on the preview page but has no effect on the homepage
   #    until 2026-08-15.
-  - work_id: ULPA R_05196_07
-    image: themes/uofl/homepage/hero/ULPA_R_05196_07_1800x1200.jpg
-    image_alt: Crowds gather beneath a lit theater marquee for a movie's world premiere (item ULPA R_05196_07)
-    start_date: 2026-08-15
-    end_date: 2026-08-20
-    notes: "DEMO: future start_date - shows as \"upcoming\" on the preview page, inactive until 2026-08-15."
+
+  #- work_id: ULPA R_05196_07
+  #  image: themes/uofl/homepage/hero/ULPA_R_05196_07_1800x1200.jpg
+  #  image_alt: Crowds gather beneath a lit theater marquee for a movie's world premiere (item ULPA R_05196_07)
+  #  start_date: 2026-08-15
+  #  end_date: 2026-08-20
+  #  notes: "DEMO: future start_date - shows as \"upcoming\" on the preview page, inactive until 2026-08-15."
 
   # 4. EXPIRED - end_date already passed, so this shows as "expired" on the
   #    preview page and never affects the homepage again as written.
-  - work_id: ULPA SONJ_38549
-    image: themes/uofl/homepage/hero/ULPA_SONJ_38549_1800x1200.jpg
-    image_alt: A rancher on horseback surveys grazing cattle across an open range under a wide, cloud-filled sky (item ULPA SONJ_38549)
-    start_date: 2026-07-01
-    end_date: 2026-07-15
-    notes: "DEMO: end_date already passed - shows as \"expired\" on the preview page."
+  
+  #- work_id: ULPA SONJ_38549
+  #  image: themes/uofl/homepage/hero/ULPA_SONJ_38549_1800x1200.jpg
+  #  image_alt: A rancher on horseback surveys grazing cattle across an open range under a wide, cloud-filled sky (item ULPA SONJ_38549)
+  #  start_date: 2026-07-01
+  #  end_date: 2026-07-15
+  #  notes: "DEMO: end_date already passed - shows as \"expired\" on the preview page."

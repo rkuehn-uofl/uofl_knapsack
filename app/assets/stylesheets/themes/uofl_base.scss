@@ -620,7 +620,7 @@ body.uofl .search-form {
 			transition: opacity 300ms ease-in-out;
 		}
 
-		&:hover { background-color:$red!important;}
+		&:hover { color:$black!important;}
 		&:focus { outline:2px dashed $black; }
 
 		&:hover::before {
@@ -655,11 +655,12 @@ body.uofl .search-form {
 				left: calc(50% - (0.125rem / 2));
 				bottom: -0.6rem;
 			}
+			&:hover {
+				height:1rem;
+				width:1rem;
+			}
 		}
 	}
-button.search-submit-button:hover .search-icon { border-color:white!important;}
-
-button.search-submit-button:hover .search-icon::after {background-color:white!important;}
 	
 }
 body.uofl form#search-form-header:focus-within {

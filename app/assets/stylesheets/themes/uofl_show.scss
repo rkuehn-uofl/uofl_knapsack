@@ -182,6 +182,12 @@ body.public-facing .advanced-search-form {
   font-size: 1.05rem;
 }
 
+.collections-list .collection-search-and-filter .search:focus-within  {
+  outline:2px dashed black;
+  outline-offset: 2px;
+}
+
+
 .collections-list .collection-search-and-filter .search button {
   width: 38px;
   height: 38px;

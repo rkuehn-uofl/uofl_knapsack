@@ -16,8 +16,8 @@ class UoflHeroImages
   # the file itself is missing/unparseable) - the hero should never render
   # broken just because the config is misconfigured. Matches the image the
   # hero previously had hardcoded, before it became config-driven.
-  FALLBACK_IMAGE = 'themes/uofl/homepage/hero/ULUA_2006_003_008_024_1800x1200.jpg'
-  FALLBACK_ALT = 'creamery wagons'
+  FALLBACK_IMAGE = 'themes/uofl/homepage/hero/ULPA_R_18596_00_1200x800_80.webp'
+  FALLBACK_ALT = 'Night photos of long distance operators'
 
   # The rotation advances once per this many days, counted from a fixed
   # epoch rather than the calendar week number, so it never skips or
