@@ -38,7 +38,7 @@ module UoflHomepageHelper
   # elsewhere in the app); Hyrax's own ThumbnailPathService already falls
   # back to its default.png when a collection has no thumbnail set, so
   # thumbnail_url never returns blank here.
-  def uofl_homepage_collection_slides(limit: 4)
+  def uofl_homepage_collection_slides(limit: 3)
     featured_records = FeaturedCollection.all.to_a
 
     items =
