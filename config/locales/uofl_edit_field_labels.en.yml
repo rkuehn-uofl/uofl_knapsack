@@ -1,0 +1,18 @@
+en:
+  hyrax:
+    image_resource:
+      labels:
+        publisher: "Repository"
+    text:
+      labels:
+        publisher: "Repository"
+  simple_form:
+    labels:
+      defaults:
+        alternate_version_id: "Related Image"
+        source_identifier: "Item number"
+        abstract: "Photo Comment"
+        extent: "Duration"
+        people_represented: "People"
+        resource_query: "Query"
+        digitization_specification: "Digitization specifications"
