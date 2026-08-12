@@ -1,0 +1,16 @@
+<%# UOFL OVERRIDE: Hyrax's default partial also lists Zotero/Mendeley in
+    this dropdown alongside EndNote. We keep the dropdown (so more export
+    options can be added later) but drop the Zotero/Mendeley entries. %>
+<div class="citations">
+    <% if Hyrax.config.citations? %>
+      <%= link_to t(".citations"), hyrax.citations_work_path(presenter), id: 'citations', class: 'btn btn-secondary btn-sm mr-2' %>
+    <% end %>
+    <div class="btn-group">
+      <button type="button" class="btn btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <%= t('.header') %>
+      </button>
+      <ul class="dropdown-menu">
+        <li class="dropdown-item"><%= link_to t('.endnote'), polymorphic_path([main_app, presenter], format: 'endnote') %></li>
+      </ul>
+    </div>
+</div>
