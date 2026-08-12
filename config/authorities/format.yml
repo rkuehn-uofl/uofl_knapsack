@@ -1,0 +1,17 @@
+terms:
+  - id: application/pdf
+    term: application/pdf
+  - id: image/jp2
+    term: image/jp2
+  - id: image/jpeg
+    term: image/jpeg
+  - id: image/tiff
+    term: image/tiff
+  - id: video/flv
+    term: video/flv
+  - id: video/mp4
+    term: video/mp4
+  - id: video/mpeg
+    term: video/mpeg
+  - id: video/x-msvideo
+    term: video/x-msvideo
