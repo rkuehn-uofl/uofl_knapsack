@@ -627,6 +627,15 @@ body.uofl .search-form {
 			opacity: 1;
 		}
 
+		.fa-search { 
+			color:$greige;
+			font-size:1.3rem;
+			margin-right:1rem;
+		}
+		.fa-search:hover {
+			color:$gray2-hover;
+		}
+
 		label {
 			display: block;
 			opacity: 0;
@@ -635,31 +644,8 @@ body.uofl .search-form {
 			transition: width 200ms ease-in-out, opacity 100ms ease-in-out;
 		}
 
-		.search-icon {
-			position: absolute;
-			height: 0.875rem;
-			width: 0.875rem;
-			top: 20px;
-			left: 1.2rem;
-			border: 0.125rem solid $greige-dark;
-			border-radius: 50%;
-			box-sizing: border-box;
-			transform: rotate(-45deg);
 
-			&::after {
-				content: "";
-				position: absolute;
-				height: 0.5rem;
-				width: 0.125rem;
-				background: $greige-dark;
-				left: calc(50% - (0.125rem / 2));
-				bottom: -0.6rem;
-			}
-			&:hover {
-				height:1rem;
-				width:1rem;
-			}
-		}
+		
 	}
 	
 }
