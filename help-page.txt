@@ -1,0 +1,32 @@
+Help
+Search
+Search Digital Collections by typing in the box at the top of the page and clicking "Go." 
+
+The search assumes a Boolean "AND" — that is, it will identify records containing all words typed in the box. Enclose two or more terms in quotation marks to search them as a phrase, if the order or combination matters.
+
+The search results will include the typed term(s) as well as others with the same stem (e.g. dance will also retrieve danced, dancer, dances, and dancing).
+
+Exclude a term from the search with minus (-). For example, walnut -street returns results for walnut, but excludes any occurrence of the word street.
+
+Capitalization does not affect search.
+
+Sort and configure search results using the dropdown boxes above the records resulting from the search. Refine search results using faceted controlled vocabulary provided under "Browse Items" at left.
+
+Use Advanced Search to make multiple selections from the same facet, in combination with keywords.
+
+Browse
+Browse Digital Collections by people, places, decades, collections, repositories, object types, and subjects using the dropdown boxes (facets) at the left. Use multiple facets to narrow search results as needed.
+
+Navigate multiple pages
+When an object consists of more than one page, a search or browse will bring you to the "parent" record. From there, you can browse through the "children" by clicking on the thumbnail image in the panel on the left side of viewer or the right or left arrows within the large middle section of the viewer.
+
+Please note: Multi-page records can take awhile to load in the viewer. You will be unable to browse the record until all pages have loaded.
+
+Share
+Share a record using the Facebook, Twitter, or Tumblr icons beneath the viewer on the left side of the record.
+
+Cite
+Export a citation of the record using the Citations dropdown beneath the viewer on the left side of the record.
+
+Order
+See the Terms link in the menu at the top of the page for information about ordering reproductions of materials found in Digital Collections.
