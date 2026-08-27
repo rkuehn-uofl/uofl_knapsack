@@ -1,0 +1,356 @@
+{
+  "Bulkrax::CsvParser": {
+    "abstract": {
+      "from": [
+        "photo_comment"
+      ],
+      "split": true
+    },
+    "alt_text": {
+      "from": [
+        "alt_text"
+      ]
+    },
+    "alternative_title": {
+      "from": [
+        "alternative_title"
+      ],
+      "split": "\\|",
+      "generated": true
+    },
+    "bulkrax_identifier": {
+      "from": [
+        "source_identifier"
+      ],
+      "source_identifier": true,
+      "generated": true,
+      "search_field": "bulkrax_identifier_tesim"
+    },
+    "children": {
+      "from": [
+        "children"
+      ],
+      "related_children_field_mapping": true
+    },
+    "city": {
+      "from": [
+        "city"
+      ],
+      "split": "\\|"
+    },
+    "collection_information": {
+      "from": [
+        "collection_information"
+      ]
+    },
+    "contributor": {
+      "from": [
+        "contributor"
+      ],
+      "split": true
+    },
+    "contributor_role": {
+      "from": [
+        "contributor_role"
+      ],
+      "split": "\\|"
+    },
+    "county": {
+      "from": [
+        "county"
+      ],
+      "split": "\\|"
+    },
+    "creator": {
+      "from": [
+        "creator"
+      ],
+      "split": true
+    },
+    "creator_role": {
+      "from": [
+        "creator_role"
+      ],
+      "split": "\\|"
+    },
+    "date": {
+      "from": [
+        "date"
+      ],
+      "split": "\\|"
+    },
+    "date_created": {
+      "from": [
+        "date_created"
+      ],
+      "split": true
+    },
+    "date_digital": {
+      "from": [
+        "date_digital"
+      ]
+    },
+    "date_original": {
+      "from": [
+        "date_original"
+      ],
+      "split": true
+    },
+    "decade": {
+      "from": [
+        "decade"
+      ],
+      "split": "\\|"
+    },
+    "description": {
+      "from": [
+        "description"
+      ]
+    },
+    "digitization_specification": {
+      "from": [
+        "digitization_specification"
+      ],
+      "split": "\\|"
+    },
+    "extent": {
+      "from": [
+        "duration"
+      ],
+      "split": true
+    },
+    "file": {
+      "from": [
+        "file"
+      ],
+      "split": "(?-mix:\\s*[|]\\s*)"
+    },
+    "format": {
+      "from": [
+        "format"
+      ],
+      "split": "\\|"
+    },
+    "identifier": {
+      "from": [
+        "identifier"
+      ],
+      "split": true
+    },
+    "invoice_information": {
+      "from": [
+        "invoice_information"
+      ]
+    },
+    "keyword": {
+      "from": [
+        "keyword"
+      ],
+      "split": true
+    },
+    "language": {
+      "from": [
+        "language"
+      ],
+      "split": true
+    },
+    "language_script": {
+      "from": [
+        "language_script"
+      ]
+    },
+    "license": {
+      "from": [
+        "license"
+      ],
+      "split": "(?-mix:\\s*[|]\\s*)"
+    },
+    "location": {
+      "from": [
+        "location"
+      ],
+      "split": "\\|"
+    },
+    "material": {
+      "from": [
+        "material"
+      ],
+      "split": "\\|"
+    },
+    "resource_type": {
+      "from": [
+        "media_type"
+      ],
+      "split": "\\|"
+    },
+    "mesh": {
+      "from": [
+        "mesh"
+      ],
+      "split": "\\|"
+    },
+    "neighborhood": {
+      "from": [
+        "neighborhood"
+      ],
+      "split": "\\|"
+    },
+    "object_type": {
+      "from": [
+        "object_type"
+      ],
+      "split": "\\|"
+    },
+    "operating_area": {
+      "from": [
+        "operating_area"
+      ],
+      "split": "\\|"
+    },
+    "ordering_information": {
+      "from": [
+        "ordering_information"
+      ]
+    },
+    "ornamentation": {
+      "from": [
+        "ornamentation"
+      ],
+      "split": "\\|"
+    },
+    "parents": {
+      "from": [
+        "parents"
+      ],
+      "related_parents_field_mapping": true
+    },
+    "people_represented": {
+      "from": [
+        "people_represented"
+      ],
+      "split": "\\|"
+    },
+    "place_original": {
+      "from": [
+        "place_original"
+      ],
+      "split": "\\|"
+    },
+    "production": {
+      "from": [
+        "production"
+      ],
+      "split": "\\|"
+    },
+    "publisher": {
+      "from": [
+        "repository"
+      ],
+      "split": true
+    },
+    "region": {
+      "from": [
+        "region"
+      ]
+    },
+    "related_resource": {
+      "from": [
+        "related_resource"
+      ],
+      "split": "\\|"
+    },
+    "resource_query": {
+      "from": [
+        "resource_query"
+      ],
+      "split": "\\|"
+    },
+    "rights_statement": {
+      "from": [
+        "rights",
+        "rights_statement"
+      ],
+      "split": "\\|",
+      "generated": true
+    },
+    "series": {
+      "from": [
+        "series"
+      ]
+    },
+    "source": {
+      "from": [
+        "source"
+      ],
+      "split": true
+    },
+    "story": {
+      "from": [
+        "story"
+      ]
+    },
+    "street": {
+      "from": [
+        "street"
+      ],
+      "split": "\\|"
+    },
+    "style": {
+      "from": [
+        "style"
+      ],
+      "split": "\\|"
+    },
+    "subject": {
+      "from": [
+        "subject"
+      ],
+      "split": true
+    },
+    "tab_heading": {
+      "from": [
+        "tab_heading"
+      ]
+    },
+    "technique": {
+      "from": [
+        "technique"
+      ],
+      "split": "\\|"
+    },
+    "title": {
+      "from": [
+        "title"
+      ],
+      "split": "(?-mix:\\s*[|]\\s*)"
+    },
+    "transcription_translation": {
+      "from": [
+        "transcription_translation"
+      ]
+    },
+    "alternate_version_id": {
+      "from": [
+        "alternate_version_id"
+      ],
+      "split": "\\|"
+    },
+    "building_date": {
+      "from": [
+        "building_date"
+      ],
+      "split": "\\|"
+    },
+    "code": {
+      "from": [
+        "code"
+      ],
+      "split": "\\|"
+    },
+    "cultural_context": {
+      "from": [
+        "cultural_context"
+      ]
+    }
+  }
+}
