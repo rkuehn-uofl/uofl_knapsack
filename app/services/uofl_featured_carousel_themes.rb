@@ -94,5 +94,4 @@ class UoflFeaturedCarouselThemes
 
     Date.parse(value.to_s)
   end
-  private_class_method :parse_date
 end

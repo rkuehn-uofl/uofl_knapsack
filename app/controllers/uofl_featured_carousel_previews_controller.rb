@@ -44,8 +44,8 @@ class UoflFeaturedCarouselPreviewsController < ApplicationController
 
   def schedule_status(group)
     today = Time.zone.today
-    start_date = group[:start_date]
-    end_date = group[:end_date]
+    start_date = UoflFeaturedCarouselThemes.parse_date(group[:start_date])
+    end_date = UoflFeaturedCarouselThemes.parse_date(group[:end_date])
 
     return 'upcoming' if start_date && today < start_date
     return 'expired' if end_date && today > end_date

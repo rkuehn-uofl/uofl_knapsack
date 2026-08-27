@@ -43,7 +43,7 @@
   </section>
 
   <% if slides.size > 1 %>
-    <script type="application/json" id="<%= carousel_id %>-data"><%== slides.to_json %></script>
+    <script type="application/json" id="<%= carousel_id %>-data"><%== json_escape(slides.to_json) %></script>
     <script>
       (function () {
         const dataEl = document.getElementById('<%= carousel_id %>-data');

@@ -124,7 +124,7 @@ module UoflHomepageHelper
     theme = group ? UoflFeaturedCarouselThemes.for_group(group) : UoflFeaturedCarouselThemes.all
     return [] unless theme
 
-    Array(theme[:pictures]).first(limit).filter_map do |picture|
+    Array(theme[:pictures]).filter_map do |picture|
       solr_document = uofl_find_by_item_number(picture[:work_id])
 
       unless solr_document
@@ -144,7 +144,7 @@ module UoflHomepageHelper
         image_src: picture[:image].present? ? image_path(picture[:image]) : thumbnail_url(solr_document),
         image_alt: picture[:image_alt].presence || "#{work_title} (item #{item_number})"
       }
-    end
+    end.first(limit)
   end
 
   # Resolved image/link data for the homepage hero banner (see

@@ -8,7 +8,7 @@ be added to the main project README.
 ## Bulkrax FileSet Alt Text
 
 The file
-[app/factories/bulkrax/bulkrax_file_set_alt_text_decorator.rb](/Users/daisy/Documents/GitHub/uofl_knapsack/app/factories/bulkrax/bulkrax_file_set_alt_text_decorator.rb)
+[app/factories/bulkrax/bulkrax_file_set_alt_text_decorator.rb](app/factories/bulkrax/bulkrax_file_set_alt_text_decorator.rb)
 adds per-file `alt_text` values to FileSets during Bulkrax imports and
 importer reruns.
 

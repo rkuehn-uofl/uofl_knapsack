@@ -42,8 +42,8 @@ class UoflHeroImagesPreviewsController < ApplicationController
 
   def override_status(override)
     today = Time.zone.today
-    start_date = override[:start_date]
-    end_date = override[:end_date]
+    start_date = UoflHeroImages.parse_date(override[:start_date])
+    end_date = UoflHeroImages.parse_date(override[:end_date])
 
     return 'upcoming' if start_date && today < start_date
     return 'expired' if end_date && today > end_date

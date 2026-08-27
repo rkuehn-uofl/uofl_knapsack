@@ -25,7 +25,7 @@
       <%= t('hyrax.footer.copyright_html', current_year: current_year) %><br>
       <%= t('hyrax.background_attribution_html') %><br>
       Hyku v<%= Hyku::VERSION %> with Hyrax v<%= Hyrax::VERSION %><br>
-      <%= t('hyrax.footer.service_html') %> <%= ENV.fetch('HYKU_FOOTER_EXTRA', '').html_safe %>
+      <%= t('hyrax.footer.service_html') %> <%= ENV.fetch('HYKU_FOOTER_EXTRA', '') %>
     </p>
     <%# admin_util_links/user_util_links render a <ul> (block content), which
         an enclosing <p> can't legally contain - the browser would silently
