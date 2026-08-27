@@ -4,11 +4,14 @@
 #
 # Signed-in-only page that renders every configured "Featured Theme"
 # carousel group (see config/uofl_featured_carousel_themes.yml) side by
-# side, so a curator can check how a new group looks before flipping
-# `active_group` to make it live on the homepage. This whole feature only
-# makes sense for the uofl theme (it previews uofl's featured-carousel
-# config), so its view lives under app/views/themes/uofl like every other
-# uofl-specific view in this app, rather than in the generic views root.
+# side, along with each scheduled group's resolved status (active today /
+# upcoming / expired), so a curator can check how a new group looks - or
+# check a new schedule before its date arrives - before it goes live on
+# the homepage. Mirrors UoflHeroImagesPreviewsController's approach for
+# the hero banner. This whole feature only makes sense for the uofl theme
+# (it previews uofl's featured-carousel config), so its view lives under
+# app/views/themes/uofl like every other uofl-specific view in this app,
+# rather than in the generic views root.
 class UoflFeaturedCarouselPreviewsController < ApplicationController
   # Same concern Hyrax::HomepageController uses for all_collections/show -
   # prepends app/views/themes/uofl to the view_paths for this request, which
@@ -30,5 +33,23 @@ class UoflFeaturedCarouselPreviewsController < ApplicationController
   def show
     @group_names = UoflFeaturedCarouselThemes.group_names
     @active_group = UoflFeaturedCarouselThemes.active_group
+    @active_group_name = UoflFeaturedCarouselThemes.active_group_name
+    @group_statuses = @group_names.index_with do |name|
+      group = UoflFeaturedCarouselThemes.for_group(name)
+      UoflFeaturedCarouselThemes.scheduled?(group) ? schedule_status(group) : nil
+    end
+  end
+
+  private
+
+  def schedule_status(group)
+    today = Time.zone.today
+    start_date = group[:start_date]
+    end_date = group[:end_date]
+
+    return 'upcoming' if start_date && today < start_date
+    return 'expired' if end_date && today > end_date
+
+    'active'
   end
 end

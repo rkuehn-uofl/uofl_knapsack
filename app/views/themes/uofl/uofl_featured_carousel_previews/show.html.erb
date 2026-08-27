@@ -18,12 +18,20 @@
 <div class="collections-list">
   <section>
     <h1>Featured Carousel Preview</h1>
-    <p>Live on homepage: <strong><%= @active_group %></strong></p>
+    <p>Live on homepage: <strong><%= @active_group_name %></strong>
+      <% if @active_group_name.to_s != @active_group.to_s %>
+        &mdash; scheduled for today, showing instead of the configured <code>active_group</code> (<%= @active_group %>)
+      <% end %>
+    </p>
 
     <% @group_names.each do |group_name| %>
       <h2>
         <%= group_name %>
-        <%= '(currently live on homepage)' if group_name == @active_group&.to_sym %>
+        <% status = @group_statuses[group_name] %>
+        <% if status %>
+          (scheduled &mdash; <%= status %>)
+        <% end %>
+        <%= '(currently live on homepage)' if group_name == @active_group_name&.to_sym %>
       </h2>
       <%= render 'themes/uofl/hyrax/homepage/featured_carousel',
                  slides: uofl_featured_carousel_slides(group: group_name),

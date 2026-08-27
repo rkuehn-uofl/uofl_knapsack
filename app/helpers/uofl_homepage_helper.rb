@@ -99,22 +99,26 @@ module UoflHomepageHelper
   end
 
   # Slide data for the homepage's curated "Featured Theme" carousel (see
-  # UoflFeaturedCarouselThemes for the config format). A group's
-  # title/description/search link are hand-written by a curator and shared
-  # by every slide; only each picture's item number and the link to its own
-  # work record are looked up live (from that picture's `work_id`, which is
-  # the item's human-readable identifier, e.g. "ULPA 1981_008_004" - not a
-  # system-generated id), so those two details can't drift out of sync with
-  # the actual record. A picture is silently skipped, with a logged
-  # warning, if its work_id no longer resolves to a real work. `notes` is
-  # ignored here - it's a plain YAML field for curators, not read by any
-  # code.
+  # UoflFeaturedCarouselThemes for the config format). Without an explicit
+  # `group:`, the rendered group is whichever one is effective today - a
+  # group scheduled for today via its own `start_date`/`end_date` if one
+  # matches, otherwise the configured `active_group` (see
+  # UoflFeaturedCarouselThemes.active_group_name).
+  # A group's title/description/search link are hand-written by a curator
+  # and shared by every slide; only each picture's item number and the
+  # link to its own work record are looked up live (from that picture's
+  # `work_id`, which is the item's human-readable identifier, e.g.
+  # "ULPA 1981_008_004" - not a system-generated id), so those two details
+  # can't drift out of sync with the actual record. A picture is silently
+  # skipped, with a logged warning, if its work_id no longer resolves to a
+  # real work. `notes` is ignored here - it's a plain YAML field for
+  # curators, not read by any code.
   #
   # A picture's `image`/`image_alt` are optional: without them the work's
   # own thumbnail and title stand in, so a picture is never missing an
   # image just because no one has hand-cropped a hero image for it yet.
   #
-  # `group:` resolves a specific named group instead of the active one -
+  # `group:` resolves a specific named group instead of the effective one -
   # used by the carousel preview page to render every configured group.
   def uofl_featured_carousel_slides(limit: 4, group: nil)
     theme = group ? UoflFeaturedCarouselThemes.for_group(group) : UoflFeaturedCarouselThemes.all

@@ -2,8 +2,12 @@
 
 <%# Only rendered from the homepage (unlike facets, not shared via the
     masthead drawer), and driven entirely by collection/work data rather
-    than anything visitor-specific, so it's always safe to cache here. %>
-<% cache "homepage-content", expires_in: 5.minutes do %>
+    than anything visitor-specific, so it's always safe to cache here.
+    UoflFeaturedCarouselThemes.active_group_name is in the cache key (not
+    just a plain string) so a scheduled group taking over - or handing
+    back - busts this fragment immediately instead of waiting up to
+    5.minutes for it to expire on its own. %>
+<% cache ['homepage-content', UoflFeaturedCarouselThemes.active_group_name], expires_in: 5.minutes do %>
   <%= render 'hyrax/homepage/featured_carousel',
              slides: uofl_featured_carousel_slides,
              carousel_id: 'featured-carousel' %>
