@@ -8,10 +8,14 @@ module TurnstileProtectedPublicPage
     /api
     /assets
     /authorities
+    /downloads
+    /images
     /pdf.js
     /rails
     /status
     /turnstile
+    /users/sign_in
+    /users/sign_out
     /uv
     /v2
   ].freeze
@@ -81,8 +85,15 @@ module TurnstileProtectedPublicPage
   end
 
   def turnstile_exempt_path?
-    TURNSTILE_EXEMPT_PATH_PREFIXES.any? { |prefix| request.path.start_with?(prefix) } ||
+    TURNSTILE_EXEMPT_PATH_PREFIXES.any? { |prefix| exempt_path_prefix_match?(prefix) } ||
       TURNSTILE_EXEMPT_PATH_SUFFIXES.any? { |suffix| request.path.end_with?(suffix) }
+  end
+
+  # Boundary-aware prefix match so e.g. "/status" doesn't also exempt a
+  # future "/statuses" route - only the exact path or a "/"-delimited
+  # sub-path of it counts as a match.
+  def exempt_path_prefix_match?(prefix)
+    request.path == prefix || request.path.start_with?("#{prefix}/")
   end
 
   def turnstile_exempt_signed_in_user?
