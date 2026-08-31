@@ -4,8 +4,8 @@
 #
 # Signed-in-only page that renders every configured "Featured Theme"
 # carousel group (see config/uofl_featured_carousel_themes.yml) side by
-# side, along with each scheduled group's resolved status (active today /
-# upcoming / expired), so a curator can check how a new group looks - or
+# side, along with each scheduled group's configured window (start/end
+# date), so a curator can check how a new group looks - or
 # check a new schedule before its date arrives - before it goes live on
 # the homepage. Mirrors UoflHeroImagesPreviewsController's approach for
 # the hero banner. This whole feature only makes sense for the uofl theme
@@ -34,22 +34,11 @@ class UoflFeaturedCarouselPreviewsController < ApplicationController
     @group_names = UoflFeaturedCarouselThemes.group_names
     @active_group = UoflFeaturedCarouselThemes.active_group
     @active_group_name = UoflFeaturedCarouselThemes.active_group_name
-    @group_statuses = @group_names.index_with do |name|
+    @group_schedules = @group_names.index_with do |name|
       group = UoflFeaturedCarouselThemes.for_group(name)
-      UoflFeaturedCarouselThemes.scheduled?(group) ? schedule_status(group) : nil
+      next nil unless UoflFeaturedCarouselThemes.scheduled?(group)
+
+      { start_date: group[:start_date], end_date: group[:end_date] }
     end
-  end
-
-  private
-
-  def schedule_status(group)
-    today = Time.zone.today
-    start_date = UoflFeaturedCarouselThemes.parse_date(group[:start_date])
-    end_date = UoflFeaturedCarouselThemes.parse_date(group[:end_date])
-
-    return 'upcoming' if start_date && today < start_date
-    return 'expired' if end_date && today > end_date
-
-    'active'
   end
 end

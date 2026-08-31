@@ -27,11 +27,11 @@
     <% @group_names.each do |group_name| %>
       <h2>
         <%= group_name %>
-        <% status = @group_statuses[group_name] %>
-        <% if status %>
-          (scheduled &mdash; <%= status %>)
+        <% schedule = @group_schedules[group_name] %>
+        <%= '- currently live on homepage' if group_name == @active_group_name&.to_sym %>
+        <% if schedule %>
+          <br>scheduled: <%= schedule[:start_date] || 'no start date' %> thru <%= schedule[:end_date] || 'no end date' %>
         <% end %>
-        <%= '(currently live on homepage)' if group_name == @active_group_name&.to_sym %>
       </h2>
       <%= render 'themes/uofl/hyrax/homepage/featured_carousel',
                  slides: uofl_featured_carousel_slides(group: group_name),
