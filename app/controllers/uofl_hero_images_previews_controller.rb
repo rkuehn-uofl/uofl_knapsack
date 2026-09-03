@@ -22,7 +22,11 @@ class UoflHeroImagesPreviewsController < ApplicationController
   # gets; action name `show` avoids that branch's `index` special-case.
   layout 'homepage'
 
-  before_action :authenticate_user!
+  before_action :ensure_admin!
+
+  def ensure_admin!
+    authorize! :read, :admin_dashboard
+  end
 
   def show
     # Reads (but doesn't write) the same session key
