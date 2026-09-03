@@ -3,3 +3,5 @@ en:
     search:
       collection_sort:
         label_html: 'Sort<span class="d-none d-sm-inline"> by %{field}</span>'
+      collection_per_page:
+        label_html: '%{field}<span class="d-none d-sm-inline"> per page</span>'

@@ -45,7 +45,7 @@
   </section>
 
   <section class="number-and-sort">
-    <div class="number-of-collections"><%= pluralize(@collections.size, 'collection') %></div>
+    <div class="number-of-collections"><%= pluralize(@total_collections_count, 'collection') %></div>
     <div class="sort-collections">
       <%# UOFL OVERRIDE: use Blacklight's own sort dropdown component -- the same
           button + dropdown-menu widget /catalog uses -- instead of a bare <select>
@@ -69,6 +69,22 @@
            )
          end %>
       <%= render collection_sort_dropdown %>
+
+      <%# Same dropdown component as sort, for the per-page count. %>
+      <% collection_per_page_dropdown = Blacklight::System::DropdownComponent.new(
+           param: 'collection_per_page',
+           choices: Hyrax::HomepageControllerDecorator::PER_PAGE_OPTIONS.map { |value| [value.to_s, value] },
+           search_state: nil,
+           selected: @selected_per_page
+         )
+         Hyrax::HomepageControllerDecorator::PER_PAGE_OPTIONS.each do |value|
+           collection_per_page_dropdown.with_option(
+             text: value.to_s,
+             url: main_app.all_collections_path(collection_letter: @selected_collection_letter.presence, collection_description_query: @collection_description_query.presence, collection_sort: @selected_sort, collection_per_page: value),
+             selected: @selected_per_page == value
+           )
+         end %>
+      <%= render collection_per_page_dropdown %>
     </div>
   </section>
 
@@ -87,7 +103,7 @@
               <% Array(collection.description).compact_blank.each do |description| %>
                 <p><%= markdown(description) %></p>
               <% end %>
-              <span class="item-count"><i class="fa-solid fa-images" aria-hidden="true"></i> <%= uofl_item_count_label(uofl_collection_item_count(collection.id)) %></span>
+              <span class="item-count"><i class="fa-solid fa-images" aria-hidden="true"></i> <%= uofl_item_count_label(@collection_item_counts[collection.id.to_s]) %></span>
               <div class="coll-link">
                 <%= link_to [hyrax, collection], class: 'btn btn-right-arrow' do %>
                   View Collection <span class="sr-only">[<%= collection.title_or_label %>]</span>
@@ -98,6 +114,31 @@
           </article>
         <% end %>
       </div>
+      <%# UOFL OVERRIDE: build page links directly with the named route helper
+          (same pattern as every other control on this page - the letter nav,
+          sort dropdown, per-page dropdown) instead of Kaminari's `paginate`
+          helper. Kaminari's own link generation goes through Hyrax's
+          kaminari_engine_patch.rb, which calls url_for with a bare
+          controller/action hash - that raises ActionController::UrlGenerationError
+          for this route regardless of param_name (confirmed: fails identically
+          with the default :page). Named route helpers don't have that problem. %>
+      <% if @collections.total_pages > 1 %>
+        <nav class="row record-padding col-md-9" aria-label="Collections pages">
+          <% @collections.total_pages.times do |index| %>
+            <% page_number = index + 1 %>
+            <%= link_to page_number,
+                        main_app.all_collections_path(
+                          collection_letter: @selected_collection_letter.presence,
+                          collection_description_query: @collection_description_query.presence,
+                          collection_sort: @selected_sort,
+                          collection_per_page: @selected_per_page,
+                          Hyrax::HomepageControllerDecorator::PAGE_PARAM_NAME => page_number
+                        ),
+                        class: "page-link #{'active' if page_number == @collections.current_page}",
+                        aria: (page_number == @collections.current_page ? { current: 'page' } : {}) %>
+          <% end %>
+        </nav>
+      <% end %>
     <% else %>
       <p>No collections match the current filters.</p>
     <% end %>

@@ -9,14 +9,30 @@ module Hyrax
       'za' => { label: 'Collection name (Z-A)', solr: 'title_ssi desc' }
     }.freeze
 
+    PER_PAGE_OPTIONS = [10, 20, 50].freeze
+    DEFAULT_PER_PAGE = 10
+
+    # Custom param name (rather than Kaminari's default :page) so paginating
+    # this grid can't collide with the :page param Blacklight's own
+    # search_service reads below for the unrelated header facets drawer.
+    PAGE_PARAM_NAME = :collection_page
+
     def all_collections
       @selected_sort = SORT_OPTIONS.key?(params[:collection_sort]) ? params[:collection_sort] : 'az'
+      @selected_per_page = PER_PAGE_OPTIONS.include?(params[:collection_per_page].to_i) ? params[:collection_per_page].to_i : DEFAULT_PER_PAGE
       load_shared_info
       @collection_letters = collection_letters(@collections)
       @selected_collection_letter = normalized_collection_letter
       @collection_description_query = params[:collection_description_query].to_s.strip
       @collections = filtered_collections(@collections)
       @collections = resort_collections(@collections)
+      @total_collections_count = @collections.size
+      @collections = Kaminari.paginate_array(@collections, total_count: @total_collections_count)
+                              .page(params[PAGE_PARAM_NAME]).per(@selected_per_page)
+      # One batched Solr facet query for every collection on the current page's
+      # item counts, instead of one query per collection card (see
+      # UoflHomepageHelper#uofl_collection_item_counts).
+      @collection_item_counts = helpers.uofl_collection_item_counts(@collections.map(&:id))
       # Populate @response so the header's facets drawer (has_facet_values?,
       # render_facet_partials) has data here too, same as the homepage index action.
       (@response, @document_list) = search_service.search_results

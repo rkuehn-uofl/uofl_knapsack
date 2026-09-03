@@ -25,6 +25,30 @@ module UoflHomepageHelper
                             .count
   end
 
+  # Item counts for several collections in a single Solr facet query, instead
+  # of one #uofl_collection_item_count query per collection - used by the
+  # Browse Collections grid, which can otherwise issue one query per card on
+  # every page load. Returns a Hash of collection id (String) => count
+  # (Integer); a collection with no members is omitted, so look up with a
+  # default (`counts.fetch(id, 0)` or `counts[id].to_i`).
+  def uofl_collection_item_counts(collection_ids)
+    ids = collection_ids.map(&:to_s)
+    return {} if ids.empty?
+
+    response = Hyrax::SolrService.get(
+      '*:*',
+      rows: 0,
+      'facet' => true,
+      'facet.field' => 'member_of_collection_ids_ssim',
+      'facet.limit' => -1,
+      'facet.mincount' => 1
+    )
+    facet_pairs = response.dig('facet_counts', 'facet_fields', 'member_of_collection_ids_ssim') || []
+    counts = facet_pairs.each_slice(2).to_h
+
+    ids.index_with { |id| counts.fetch(id, 0).to_i }
+  end
+
   def uofl_item_count_label(count)
     "#{number_with_delimiter(count)} #{'item'.pluralize(count)}"
   end
