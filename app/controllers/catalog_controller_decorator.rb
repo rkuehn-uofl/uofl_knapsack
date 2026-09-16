@@ -88,6 +88,51 @@ module CatalogControllerDecorator
         end
       end
 
+      # The M3 profile's `subject` property (metadata-profile-main.yml) sets
+      # view.search_field to the raw Solr field name "subject_tesim" -- per
+      # Samvera's Flexible Metadata docs that's the correct/expected value
+      # (see view.search_field: date_created_tesim in their own example), and
+      # Hyrax::Renderers::LinkedAttributeRenderer#search_path passes it
+      # straight through as the `search_field` URL param unchanged. It is
+      # NOT meant to reference the "subject" key registered above (which has
+      # its own solr_local_parameters for the /advanced UI).
+      #
+      # Since nothing registers a Blacklight search_field keyed exactly
+      # "subject_tesim", Blacklight can't find a label for it when rendering
+      # the "Filtering by:" constraint on /catalog and falls back to
+      # humanizing the raw key -- "Subject Tesim" instead of "Subject".
+      #
+      # Deliberately no solr_parameters/solr_local_parameters here: adding
+      # any would change how the query is actually run. Confirmed via a
+      # live A/B test (search_field=subject_tesim vs. a label-only
+      # registration of the same key) that omitting them keeps result counts
+      # identical -- this key exists solely so Blacklight has a label to
+      # display, not to scope the search.
+      unless config.search_fields.key?('subject_tesim')
+        config.add_search_field('subject_tesim', label: 'Subject', include_in_advanced_search: false)
+      end
+
+      # Same label-only fix as subject_tesim above, for every other M3
+      # property whose view.search_field is a raw Solr field name with no
+      # matching Blacklight search_fields key. Each maps to that property's
+      # display_label in metadata-profile-main.yml. No solr_parameters/
+      # solr_local_parameters on any of these -- see the comment above.
+      {
+        'source_identifier_tesim' => 'Item number',
+        'volume_tesim' => 'Volume',
+        'contributor_tesim' => 'Contributor',
+        'people_represented_tesim' => 'People',
+        'object_type_tesim' => 'Object type',
+        'collection_information_sim' => 'Collection information',
+        'resource_query_tesim' => 'Query',
+        'identifier_tesim' => 'Identifier',
+        'keyword_tesim' => 'Keyword'
+      }.each do |key, label|
+        next if config.search_fields.key?(key)
+
+        config.add_search_field(key, label: label, include_in_advanced_search: false)
+      end
+
       config.search_fields.each do |key, field|
         field.include_in_advanced_search = ADVANCED_SEARCH_FIELDS.include?(key)
       end
