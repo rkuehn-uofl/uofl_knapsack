@@ -18,7 +18,10 @@
       <% index_fields(document).each do |field_name, field| -%>
       <% next unless uofl_index_fields.include?(field_name) %>
       <% field_value = doc_presenter.field_value(field) %>
-        <% if should_render_index_field?(document, field) && field_value.present? %>
+        <%# field_value is HTML (Hyrax wraps it in a <span itemprop="..."> for microdata), so an empty
+            value still yields a non-blank string like <span itemprop="date_original"></span>; strip
+            tags before checking presence so fields with no visible text are skipped. %>
+        <% if should_render_index_field?(document, field) && strip_tags(field_value).present? %>
           <div class="row">
             <dt class="col-4" data-solr-field-name="<%= field_name %>">
               <%= uofl_index_field_labels.fetch(field_name) { render_index_field_label document, field: field_name } %>
