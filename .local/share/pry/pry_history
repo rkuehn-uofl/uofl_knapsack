@@ -1,0 +1,28 @@
+AccountElevator.switch!('your-tenant.example.com') do
+  Hyrax.query_service.find_all.each do |resource|
+    Hyrax.index_adapter.save(resource: resource)
+  rescue => e
+    Rails.logger.error("Reindex failed for #{resource.id}: #{e.message}")
+  end
+end
+tenant_list
+AccountElevator.switch!('hyku-dev') do
+  Hyrax.query_service.find_all.each do |resource|
+    Hyrax.index_adapter.save(resource: resource)
+  rescue => e
+    Rails.logger.error("Reindex failed for #{resource.id}: #{e.message}")
+  end
+end
+AccountElevator.switch!('hyku-dev')
+Hyrax.query_service.find_all.each do |resource|
+  Hyrax.index_adapter.save(resource: resource)
+rescue => e
+  Rails.logger.error("Reindex failed for #{resource.id}: #{e.message}")
+end
+AccountElevator.switch!('hyku-dev')
+Hyrax.query_service.find_all.each do |resource|
+  next unless resource.is_a?(Hyrax::Resource)
+  Hyrax.index_adapter.save(resource: resource)
+rescue => e
+  Rails.logger.error("Reindex failed for #{resource.id}: #{e.message}")
+end

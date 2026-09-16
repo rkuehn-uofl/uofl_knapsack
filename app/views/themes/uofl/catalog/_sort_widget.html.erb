@@ -1,0 +1,20 @@
+<%# UOFL OVERRIDE: replace Blacklight's default catalog/_sort_widget.html.erb.
+    The default renders one dropdown row per registered sort_field, which
+    would mean two rows each for Title/Date Uploaded/Date Modified (asc and
+    desc). UoflCatalogSortHelper#uofl_sort_choices collapses each pair into a
+    single toggle row instead -- see app/helpers/uofl_catalog_sort_helper.rb. %>
+<% if show_sort_and_per_page? %>
+  <div id="sort-dropdown" class="btn-group sort-dropdown">
+    <button type="button" class="btn btn-outline-secondary dropdown-toggle" aria-expanded="false" data-toggle="dropdown" data-bs-toggle="dropdown">
+      <%= uofl_current_sort_label %><span class="caret"></span>
+    </button>
+    <div class="dropdown-menu" role="menu">
+      <% uofl_sort_choices.each do |label, value, active| %>
+        <%= link_to label, url_for(search_state.params_for_search('sort' => value)),
+                    class: "dropdown-item#{' active' if active}",
+                    role: 'menuitem',
+                    aria: (active ? { current: 'page' } : {}) %>
+      <% end %>
+    </div>
+  </div>
+<% end %>
