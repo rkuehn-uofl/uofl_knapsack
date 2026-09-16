@@ -1,11 +1,11 @@
 ---
 m3_version: 1.0.beta2
 profile:
-  date_modified: '2026-08-27'
+  date_modified: '2026-09-09'
   responsibility: https://samvera.org
   responsibility_statement: Hyku Initial Profile
   type: Hyku Initial Profile
-  version: 17
+  version: 22
 classes:
   GenericWorkResource:
     display_label: Generic Work
@@ -261,6 +261,7 @@ properties:
     indexing:
     - series_sim
     - series_tesim
+    - facetable
     form:
       required: false
       primary: false
@@ -271,7 +272,7 @@ properties:
     - Base ball series 400 designs, Piedmont
     - Volume Number 029
     view:
-      render_as: linked
+      render_as: faceted
       html_dl: true
   story:
     available_on:
@@ -291,6 +292,7 @@ properties:
     indexing:
     - story_sim
     - story_tesim
+    - facetable
     form:
       required: false
       primary: false
@@ -301,7 +303,7 @@ properties:
     - Bus Story
     - NY Harbor
     view:
-      render_as: linked
+      render_as: faceted
       html_dl: true
   creator:
     available_on:
@@ -593,6 +595,7 @@ properties:
     indexing:
     - code_sim
     - code_tesim
+    - facetable
     form:
       required: false
       primary: false
@@ -604,7 +607,7 @@ properties:
     - Set number T205
     - Way number 3267
     view:
-      render_as: linked
+      render_as: faceted
       html_dl: true
   location:
     available_on:
@@ -935,6 +938,7 @@ properties:
     indexing:
     - style_sim
     - style_tesim
+    - facetable
     form:
       required: false
       primary: false
@@ -946,7 +950,7 @@ properties:
     - miniature book
     - lift-the-flap book
     view:
-      render_as: linked
+      render_as: faceted
       html_dl: true
   technique:
     available_on:
@@ -965,6 +969,7 @@ properties:
     indexing:
     - technique_sim
     - technique_tesim
+    - facetable
     form:
       required: false
       primary: false
@@ -976,7 +981,7 @@ properties:
     - linocut
     - letterpress print
     view:
-      render_as: linked
+      render_as: faceted
       html_dl: true
   material:
     available_on:
@@ -995,6 +1000,7 @@ properties:
     indexing:
     - material_sim
     - material_tesim
+    - facetable
     form:
       required: false
       primary: false
@@ -1008,7 +1014,7 @@ properties:
     - ink
     - handmade paper
     view:
-      render_as: linked
+      render_as: faceted
       html_dl: true
   ornamentation:
     available_on:
@@ -1089,6 +1095,7 @@ properties:
     indexing:
     - tab_heading_sim
     - tab_heading_tesim
+    - facetable
     form:
       required: false
       primary: false
@@ -1099,7 +1106,7 @@ properties:
     - Passengers Aboard Bus
     - Quarter Boat
     view:
-      render_as: linked
+      render_as: faceted
       html_dl: true
   searchable_text:
     available_on:

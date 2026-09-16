@@ -109,8 +109,36 @@ module CatalogControllerSearchFieldsDecorator
         config.add_facet_field 'location_sim', label: 'Location', limit: 5, if: ->(*) { false }
       end
 
-      unless config.facet_fields.key?('region_sim')
-        config.add_facet_field 'region_sim', label: 'Region', limit: 5, if: ->(*) { false }
+      unless config.facet_fields.key?('series_sim')
+        config.add_facet_field 'series_sim', label: 'Series', limit: 5, if: ->(*) { false }
+      end
+
+      unless config.facet_fields.key?('volume_sim')
+        config.add_facet_field 'volume_sim', label: 'Volume', limit: 5, if: ->(*) { false }
+      end
+
+      unless config.facet_fields.key?('story_sim')
+        config.add_facet_field 'story_sim', label: 'Story', limit: 5, if: ->(*) { false }
+      end
+
+      unless config.facet_fields.key?('code_sim')
+        config.add_facet_field 'code_sim', label: 'Code', limit: 5, if: ->(*) { false }
+      end
+
+      unless config.facet_fields.key?('tab_heading_sim')
+        config.add_facet_field 'tab_heading_sim', label: 'Tab Heading', limit: 5, if: ->(*) { false }
+      end
+
+      unless config.facet_fields.key?('style_sim')
+        config.add_facet_field 'style_sim', label: 'Style', limit: 5, if: ->(*) { false }
+      end
+
+      unless config.facet_fields.key?('technique_sim')
+        config.add_facet_field 'technique_sim', label: 'Technique', limit: 5, if: ->(*) { false }
+      end
+
+      unless config.facet_fields.key?('material_sim')
+        config.add_facet_field 'material_sim', label: 'Material', limit: 5, if: ->(*) { false }
       end
 
       # NOTE: as of app/helpers/advanced_helper_behavior_decorator.rb, this

@@ -15,7 +15,8 @@ module CatalogControllerDecorator
     ['creator_sim', { label: 'Creator', limit: 5 }],
     ['contributor_sim', { label: 'Contributor', limit: 5 }],
     ['object_type_sim', { label: 'Object type', limit: 5 }],
-    ['resource_type_sim', { label: 'Resource type', limit: 5 }]
+    ['resource_type_sim', { label: 'Resource type', limit: 5 }],
+    ['region_sim', { label: 'Region', limit: 5 }]
   ].freeze
 
   # NOTE: this constant and the loop that reads it (in #configure_uofl_facets

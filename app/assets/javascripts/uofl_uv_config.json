@@ -16,6 +16,11 @@
         "printEnabled": false,
         "shareEnabled": false
       }
+    },
+    "moreInfoRightPanel": {
+      "options": {
+        "manifestExclude": "Date modified"
+      }
     }
   }
 }
