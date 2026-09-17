@@ -15,8 +15,7 @@ module CatalogControllerDecorator
     ['creator_sim', { label: 'Creator', limit: 5 }],
     ['contributor_sim', { label: 'Contributor', limit: 5 }],
     ['object_type_sim', { label: 'Object type', limit: 5 }],
-    ['resource_type_sim', { label: 'Resource type', limit: 5 }],
-    ['region_sim', { label: 'Region', limit: 5 }]
+    ['resource_type_sim', { label: 'Resource type', limit: 5 }]
   ].freeze
 
   # NOTE: this constant and the loop that reads it (in #configure_uofl_facets
@@ -130,6 +129,10 @@ module CatalogControllerDecorator
         end
       end
 
+      unless config.facet_fields.key?('region_sim')
+        config.add_facet_field 'region_sim', label: 'Region', limit: 5, if: ->(*) { false }
+      end
+      
       # Same label fix as subject_tesim above, for every other M3 property
       # whose view.search_field is a raw Solr field name with no matching
       # Blacklight search_fields key. Each maps to that property's
