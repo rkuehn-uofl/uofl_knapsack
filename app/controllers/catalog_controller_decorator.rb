@@ -102,21 +102,49 @@ module CatalogControllerDecorator
       # the "Filtering by:" constraint on /catalog and falls back to
       # humanizing the raw key -- "Subject Tesim" instead of "Subject".
       #
-      # Deliberately no solr_parameters/solr_local_parameters here: adding
-      # any would change how the query is actually run. Confirmed via a
-      # live A/B test (search_field=subject_tesim vs. a label-only
-      # registration of the same key) that omitting them keeps result counts
-      # identical -- this key exists solely so Blacklight has a label to
-      # display, not to scope the search.
+      # A qf override IS needed here, despite the above: without one,
+      # Blacklight sends no qf of its own, so the query falls through to
+      # config.default_solr_params[:qf] -- CatalogController's global
+      # keyword-search field list, which includes all_text_tsimv (full OCR
+      # text) among ~20 other fields. That made clicking a subject link run
+      # a full-text search for the word rather than a subject-only one --
+      # e.g. clicking "People" on a record pulled in an unrelated medical
+      # lecture whose Subject is "Medical education" etc., matched only
+      # because its scanned-text OCR happens to contain the word "people".
+      # Restricting qf to subject_tesim alone fixes that while keeping the
+      # "Subject" label above.
+      #
+      # Uses solr_parameters (a top-level Solr request param), not
+      # solr_local_parameters (the `{!qf=...}` LocalParams syntax the
+      # people_represented/story fields above use) -- verified directly
+      # against this app's Solr that nesting `{!qf=subject_tesim}` inside
+      # `q` here silently zeroes out every result. The nested parser
+      # collides with the "search" request handler's own defaults in
+      # solrconfig.xml (global mm/pf), which the plain top-level qf/pf
+      # override doesn't run into.
       unless config.search_fields.key?('subject_tesim')
-        config.add_search_field('subject_tesim', label: 'Subject', include_in_advanced_search: false)
+        config.add_search_field('subject_tesim') do |field|
+          field.label = 'Subject'
+          field.include_in_advanced_search = false
+          field.solr_parameters = { qf: 'subject_tesim', pf: 'subject_tesim' }
+        end
       end
 
-      # Same label-only fix as subject_tesim above, for every other M3
-      # property whose view.search_field is a raw Solr field name with no
-      # matching Blacklight search_fields key. Each maps to that property's
-      # display_label in metadata-profile-main.yml. No solr_parameters/
-      # solr_local_parameters on any of these -- see the comment above.
+      # Same label fix as subject_tesim above, for every other M3 property
+      # whose view.search_field is a raw Solr field name with no matching
+      # Blacklight search_fields key. Each maps to that property's
+      # display_label in metadata-profile-main.yml.
+      #
+      # Also gets the same qf/pf restriction as subject_tesim above, for the
+      # same reason: without one, the query falls through to
+      # config.default_solr_params[:qf], which includes all_text_tsimv (full
+      # OCR text) among ~20 other fields -- so clicking e.g. a "People"
+      # (people_represented_tesim) link would keyword-match unrelated
+      # scanned documents whose OCR text happens to contain the word,
+      # instead of only records that actually have that field value. Uses
+      # solr_parameters (top-level), not solr_local_parameters -- see the
+      # comment on subject_tesim above for why the LocalParams form breaks
+      # here.
       {
         'source_identifier_tesim' => 'Item number',
         'volume_tesim' => 'Volume',
@@ -130,7 +158,11 @@ module CatalogControllerDecorator
       }.each do |key, label|
         next if config.search_fields.key?(key)
 
-        config.add_search_field(key, label: label, include_in_advanced_search: false)
+        config.add_search_field(key) do |field|
+          field.label = label
+          field.include_in_advanced_search = false
+          field.solr_parameters = { qf: key, pf: key }
+        end
       end
 
       config.search_fields.each do |key, field|
