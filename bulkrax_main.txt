@@ -4,12 +4,19 @@
       "from": [
         "photo_comment"
       ],
-      "split": true
+      "split": false
     },
     "alt_text": {
       "from": [
         "alt_text"
-      ]
+      ],
+      "split": false
+    },
+    "alternate_version_id": {
+      "from": [
+        "alternate_version_id"
+      ],
+      "split": "\\|"
     },
     "alternative_title": {
       "from": [
@@ -17,6 +24,12 @@
       ],
       "split": ";",
       "generated": true
+    },
+    "building_date": {
+      "from": [
+        "building_date"
+      ],
+      "split": ";"
     },
     "bulkrax_identifier": {
       "from": [
@@ -35,6 +48,12 @@
     "city": {
       "from": [
         "city"
+      ],
+      "split": ";"
+    },
+    "code": {
+      "from": [
+        "code"
       ],
       "split": ";"
     },
@@ -74,6 +93,12 @@
       ],
       "split": ";"
     },
+    "cultural_context": {
+      "from": [
+        "cultural_context"
+      ],
+      "split": false
+    },
     "date": {
       "from": [
         "date"
@@ -89,13 +114,14 @@
     "date_digital": {
       "from": [
         "date_digital"
-      ]
+      ],
+      "split": false
     },
     "date_original": {
       "from": [
         "date_original"
       ],
-      "split": true
+      "split": ";"
     },
     "decade": {
       "from": [
@@ -119,13 +145,13 @@
       "from": [
         "duration"
       ],
-      "split": true
+      "split": false
     },
     "file": {
       "from": [
         "file"
       ],
-      "split": ";"
+      "split": "\\|"
     },
     "format": {
       "from": [
@@ -142,13 +168,14 @@
     "invoice_information": {
       "from": [
         "invoice_information"
-      ]
-    },
-    "keyword": {
-      "from": [
-        "keyword"
       ],
-      "split": ";"
+      "split": false
+    },
+    "issue": {
+      "from": [
+        "issue"
+      ],
+      "split": false
     },
     "language": {
       "from": [
@@ -159,13 +186,14 @@
     "language_script": {
       "from": [
         "language_script"
-      ]
+      ],
+      "split": false
     },
     "license": {
       "from": [
         "license"
       ],
-      "split": "(?-mix:\\s*[|]\\s*)"
+      "split": false
     },
     "location": {
       "from": [
@@ -181,15 +209,9 @@
     },
     "resource_type": {
       "from": [
-        "media_type"
+        "resource_type"
       ],
       "split": ";"
-    },
-    "mesh": {
-      "from": [
-        "mesh"
-      ],
-      "split": "\\|"
     },
     "neighborhood": {
       "from": [
@@ -212,7 +234,8 @@
     "ordering_information": {
       "from": [
         "ordering_information"
-      ]
+      ],
+      "split": false
     },
     "ornamentation": {
       "from": [
@@ -224,7 +247,7 @@
       "from": [
         "parents"
       ],
-      "split": ";",
+      "split": ";|\\|",
       "related_parents_field_mapping": true
     },
     "people_represented": {
@@ -254,7 +277,8 @@
     "region": {
       "from": [
         "region"
-      ]
+      ],
+      "split": false
     },
     "related_image": {
       "from": [
@@ -279,13 +303,20 @@
         "rights",
         "rights_statement"
       ],
-      "split": "\\|",
+      "split": false,
       "generated": true
+    },
+    "searchable_text": {
+      "from": [
+        "searchable_text"
+      ],
+      "split": false
     },
     "series": {
       "from": [
         "series"
-      ]
+      ],
+      "split": false
     },
     "source": {
       "from": [
@@ -296,7 +327,8 @@
     "story": {
       "from": [
         "story"
-      ]
+      ],
+      "split": false
     },
     "street": {
       "from": [
@@ -319,7 +351,14 @@
     "tab_heading": {
       "from": [
         "tab_heading"
-      ]
+      ],
+      "split": false
+    },
+    "table_of_contents": {
+      "from": [
+        "table_of_contents"
+      ],
+      "split": false
     },
     "technique": {
       "from": [
@@ -331,35 +370,19 @@
       "from": [
         "title"
       ],
-      "split": "(?-mix:\\s*[|]\\s*)"
+      "split": false
     },
     "transcription_translation": {
       "from": [
         "transcription_translation"
-      ]
-    },
-    "alternate_version_id": {
-      "from": [
-        "alternate_version_id"
       ],
-      "split": "\\|"
+      "split": false
     },
-    "building_date": {
+    "volume": {
       "from": [
-        "building_date"
+        "volume"
       ],
-      "split": ";"
-    },
-    "code": {
-      "from": [
-        "code"
-      ],
-      "split": ";"
-    },
-    "cultural_context": {
-      "from": [
-        "cultural_context"
-      ]
+      "split": false
     }
   }
 }
