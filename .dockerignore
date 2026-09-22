@@ -30,3 +30,19 @@ pg/*
 fits.log
 ImageMagick*
 .DS_Store
+
+# hyrax-webapp is a submodule (samvera/hyku) — these are runtime/generated
+# data, not tracked source, and are excluded from hyrax-webapp's own
+# .gitignore too. They're bind-mounted or volume-mounted at runtime, so
+# excluding them here only avoids wastefully copying them into the build
+# context/image (previously 100GB+ on the server).
+hyrax-webapp/.git
+hyrax-webapp/.bundle
+hyrax-webapp/node_modules
+hyrax-webapp/storage
+hyrax-webapp/tmp
+hyrax-webapp/log
+hyrax-webapp/public/assets
+hyrax-webapp/public/uploads
+hyrax-webapp/public/packs
+hyrax-webapp/public/system
