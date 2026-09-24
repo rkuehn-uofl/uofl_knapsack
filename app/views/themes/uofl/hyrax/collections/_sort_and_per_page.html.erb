@@ -16,11 +16,8 @@
     <%= render 'view_type_group' %>
     <fieldset class="float-left">
       <legend class="sr-only"><%= t('hyrax.sort_label') %></legend>
-      <%= render Blacklight::Response::SortComponent.new(
-                   search_state: search_state,
-                   choices: collection_member_sort_fields.map { |key, field| [field.label, key] },
-                   selected: params[:sort]
-                 ) %>
+      <%# Same collapsed asc/desc toggle dropdown /catalog uses (UoflCatalogSortHelper) %>
+      <%= render 'catalog/sort_widget' %>
       <span class="sr-only"><%= t('blacklight.search.per_page.title') %></span>
       <%= render Blacklight::System::DropdownComponent.new(
                    param: 'per_page',
