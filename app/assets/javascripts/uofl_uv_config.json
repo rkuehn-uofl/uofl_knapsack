@@ -3,6 +3,16 @@
     "searchWithinEnabled": false
   },
   "modules": {
+    "downloadDialogue": {
+      "options": {
+        "downloadCurrentViewEnabled": false,
+        "downloadWholeImageHighResEnabled": false,
+        "downloadWholeImageLowResEnabled": true
+      },
+      "content": {
+        "wholeImageLowResAsJpg": "Image, {0} by {1} pixels (JPG, opens in new tab)"
+      }
+    },
     "footerPanel": {
       "options": {
         "bookmarkEnabled": false,

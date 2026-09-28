@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 # UOFL OVERRIDE: Points the Universal Viewer iframe at UofL's own uv.html
-# (app/views/uofl_uv_viewer/show.html.erb - CSS-hides the download/share
-# footer buttons that uv-config.json can't reach) and its ?config= param at
+# (app/views/uofl_uv_viewer/show.html.erb - CSS-hides the share footer
+# button and header buttons that uv-config.json can't reach) and its ?config= param at
 # UofL's own uv-config.json (served through the asset pipeline - see
 # config/initializers/assets.rb) instead of hyrax-webapp's
 # public/uv/{uv.html,uv-config.json}.

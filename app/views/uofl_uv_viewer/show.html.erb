@@ -1,12 +1,14 @@
 <!--
     UOFL OVERRIDE NEW FILE: Copy of hyrax-webapp/public/uv/uv.html (the
     Universal Viewer iframe entry point) with one addition - a <style> block
-    that force-hides the footer download/share buttons and the header
-    gallery/settings buttons.
+    that force-hides the footer share button and the header gallery/settings
+    buttons. (The footer download button stays visible; which options its
+    dialog offers is set in uofl_uv_config.json's modules.downloadDialogue,
+    which UV reads each time the dialog opens.)
 
-    None of these four can be turned off through uv-config.json like the
+    None of these three can be turned off through uv-config.json like the
     other UofL toggles (uofl_uv_config.json's modules.footerPanel.options.
-    downloadEnabled/shareEnabled do reach UV's config object - see
+    shareEnabled does reach UV's config object - see
     Hyrax::IiifHelperDecorator#universal_viewer_config_url - but the
     imageBtn-classed widgets (footer AND header) never re-sync their own
     rendered options from that async-fetched config, so the buttons stay
@@ -33,11 +35,29 @@
         overflow: hidden;
       }
 
-      .imageBtn.download,
       .imageBtn.share,
       .imageBtn.gallery,
       .imageBtn.settings {
         display: none !important;
+      }
+
+      /* Download dialog's "Individual Pages" subheading - UV always renders
+         it, so the dialog reads "Download / Individual Pages". */
+      .overlay.download .content > h2:first-of-type {
+        display: none;
+      }
+
+      /* Download dialog options/Close at 16px (UV default 12px). */
+      .overlay.download .options button,
+      .overlay.download .close {
+        font-size: 16px;
+      }
+
+      /* Download dialog options in the site's link blue instead of UV's
+         teal. #uv outranks UV's identical selector, which UV injects at
+         runtime after this block. */
+      #uv .overlay.download .middle .content ol.options li button {
+        color: #2e74b2;
       }
     </style>
   </head>
