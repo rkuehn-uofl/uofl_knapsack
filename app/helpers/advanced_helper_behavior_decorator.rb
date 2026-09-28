@@ -22,9 +22,31 @@ module AdvancedHelperBehaviorDecorator
     publisher_sim
   ].freeze
 
+  # ADVANCED_SEARCH_FACET_ORDER decides which facets appear; they're then
+  # displayed alphabetically by their visible label.
   def facet_field_names_for_advanced_search
     @facet_field_names_for_advanced_search ||=
-      ADVANCED_SEARCH_FACET_ORDER.select { |key| blacklight_config.facet_fields.key?(key) }
+      ADVANCED_SEARCH_FACET_ORDER
+      .select { |key| blacklight_config.facet_fields.key?(key) }
+      .sort_by { |key| advanced_search_facet_label(key).to_s.downcase }
+  end
+
+  # Label for an attribute on /advanced. publisher_sim is shown as
+  # "Repository"; ConfigurationHelperBehaviorDecorator#facet_field_label is
+  # meant to do this but doesn't take effect on this page (it still renders
+  # the hyrax-webapp locale's "Publisher"), so it's applied here directly.
+  def advanced_search_facet_label(key)
+    return 'Repository' if key.to_s == 'publisher_sim'
+
+    facet_field_label(key)
+  end
+
+  # "Find items that match ... of" field list: same fields the gem selects
+  # (see CatalogControllerSearchFieldsDecorator::SEARCH_FIELD_KEYS), shown
+  # alphabetically by visible label instead of config registration order.
+  def search_fields_for_advanced_search
+    @search_fields_for_advanced_search ||=
+      super.sort_by { |key, _field| label_for_search_field(key).to_s.downcase }.to_h
   end
 
   # UOFL OVERRIDE: the <select name="op"> rendered here has no associated
