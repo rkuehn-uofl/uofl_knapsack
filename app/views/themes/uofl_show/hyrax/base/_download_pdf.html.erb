@@ -1,0 +1,17 @@
+<%# UOFL OVERRIDE: point the download button at the uploaded .txt file set when one exists, otherwise the PDF %>
+<% text_file_set = presenter.file_set_presenters.find { |fs| fs.mime_type == 'text/plain' } %>
+<% download_target = text_file_set || presenter.representative_presenter %>
+<% if download_target && can?(:download, download_target.id) %>
+  <div class="download-pdf-controls">
+    <% if presenter.file_set_presenters.any?(&:pdf?) %>
+      <%= button_tag type: 'button',
+                     id: "file_download",
+                     data: { label: download_target.id,
+                             path: hyrax.download_path(download_target) },
+                     class: "btn btn-success btn-block file_download center-block",
+                     onclick: "window.open(this.dataset.path, '_blank');" do %>
+        <%= text_file_set ? 'Download Text' : 'Download PDF' %>
+      <% end %>
+    <% end %>
+  </div>
+<% end %>
