@@ -15,7 +15,7 @@
     <% if display_facet.items.present? %>
         <div class="form-group advanced-search-facet">
             <%= label_tag display_facet.name.parameterize, :class => "col-sm-3 control-label" do %>
-                <%= facet_field_label(display_facet.name) %>
+                <%= advanced_search_facet_label(display_facet.name) %>
             <% end %>
 
             <div class="col-sm-9">
