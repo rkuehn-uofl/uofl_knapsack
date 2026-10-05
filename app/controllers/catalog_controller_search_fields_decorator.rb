@@ -150,13 +150,30 @@ module CatalogControllerSearchFieldsDecorator
       # read include_in_advanced_search at all. The loop below still runs
       # and still only flips this flag on facets that already exist (so it
       # remains harmless everywhere else facet_fields gets rendered), but it
-      # has no live effect on /advanced today. Kept as-is (not removed)
-      # since FACET_FIELD_KEYS may still document prior intent worth
-      # preserving -- see app/helpers/advanced_helper_behavior_decorator.rb
-      # for the list that's actually authoritative now.
+      # has no live effect on /advanced today. FACET_FIELD_KEYS itself is
+      # still live, though: it drives the facet.limit override below. See
+      # app/helpers/advanced_helper_behavior_decorator.rb for the list that
+      # decides which attributes appear.
       config.facet_fields.each do |key, field|
         field.include_in_advanced_search = FACET_FIELD_KEYS.include?(key)
       end
+
+      # Every facet above is registered with `limit: 5`, which Blacklight
+      # sends to Solr as f.<field>.facet.limit=6 -- so each /advanced
+      # select box only ever listed the 6 most common values. Lift that
+      # cap for the /advanced form only: form_solr_parameters is merged by
+      # AdvSearchBuilder#facets_for_advanced_search_form, which only
+      # AdvancedController appends (after the limit is set), so /catalog's
+      # sidebar limits are untouched.
+      #
+      # FACET_FIELD_KEYS (not AdvancedHelperBehaviorDecorator::
+      # ADVANCED_SEARCH_FACET_ORDER) because decorators are loaded in
+      # sorted order outside Zeitwerk, and app/helpers hasn't loaded yet
+      # at this point -- keep the two lists in sync.
+      config.advanced_search[:form_solr_parameters] =
+        (config.advanced_search[:form_solr_parameters] || {}).merge(
+          FACET_FIELD_KEYS.to_h { |key| ["f.#{key}.facet.limit", -1] }
+        )
     end
   end
 end
