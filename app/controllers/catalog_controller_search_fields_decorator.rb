@@ -26,8 +26,8 @@ module CatalogControllerSearchFieldsDecorator
     people_represented story
   ].freeze
 
-  # Attribute pulldown shown on /advanced. See the comment on
-  # app/views/themes/uofl/advanced/_advanced_search_facets_as_select.html.erb
+  # Attribute accordion shown on /advanced. See the comment on
+  # app/views/themes/uofl/advanced/_advanced_search_facets_as_checkboxes.html.erb
   # -- it calls facet_field_names_for_advanced_search (filtered by this flag)
   # instead of the unfiltered facet_field_names, so this list -- and only
   # this list -- controls what shows there.

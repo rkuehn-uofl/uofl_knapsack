@@ -1,0 +1,62 @@
+<%# UOFL OVERRIDE: UofL Theme %>
+<%# Renders the "AND have these attributes" facets on /advanced as a
+    collapsible accordion of checkbox lists (one panel per attribute),
+    matching the legacy digital.library.louisville.edu advanced search.
+    Replaces the multi-select boxes from advanced_search_facets_as_select;
+    the submitted params (f_inclusive[field][]) are unchanged.
+
+    Logic taken from facets_helper_behavior.rb, #render_facet_partials and
+    #render_facet_limit. %>
+
+<div class="advanced-search-facets-accordion" id="advanced-search-facets-accordion">
+  <%# UOFL OVERRIDE: use the advanced-search-filtered field list (respects
+      config.facet_fields[...].include_in_advanced_search) instead of the
+      unfiltered facet_field_names. %>
+  <% facets_from_request(facet_field_names_for_advanced_search).each do |display_facet| %>
+    <% next if display_facet.items.blank? %>
+    <% field_id = "advanced-facet-#{display_facet.name.parameterize}" %>
+    <%# Start expanded when one of its values is already selected (e.g.
+        returning here from a search via "Edit search"). %>
+    <% expanded = display_facet.items.any? { |item| facet_value_checked?(display_facet.name, item.value) } %>
+
+    <div class="card advanced-search-facet">
+      <div class="card-header" id="<%= field_id %>-heading">
+        <h4 class="mb-0">
+          <button type="button"
+                  class="btn btn-link advanced-search-facet-toggle<%= ' collapsed' unless expanded %>"
+                  data-toggle="collapse"
+                  data-target="#<%= field_id %>"
+                  aria-expanded="<%= expanded %>"
+                  aria-controls="<%= field_id %>">
+            <%= advanced_search_facet_label(display_facet.name) %>
+          </button>
+        </h4>
+      </div>
+
+      <div id="<%= field_id %>"
+           class="collapse<%= ' show' if expanded %>"
+           aria-labelledby="<%= field_id %>-heading">
+        <fieldset class="card-body">
+          <legend class="sr-only"><%= advanced_search_facet_label(display_facet.name) %></legend>
+          <ul class="list-unstyled advanced-search-facet-values">
+            <%# UOFL OVERRIDE: list options alphabetically by label
+                instead of Solr's default hit-count order. %>
+            <% display_facet.items.sort_by { |item| item.label.to_s.downcase }.each_with_index do |facet_item, index| %>
+              <% checkbox_id = "#{field_id}-#{index}" %>
+              <li>
+                <%= check_box_tag "f_inclusive[#{display_facet.name}][]",
+                                  facet_item.value,
+                                  facet_value_checked?(display_facet.name, facet_item.value),
+                                  id: checkbox_id %>
+                <label for="<%= checkbox_id %>">
+                  <span class="facet-label"><%= facet_item.label %></span>
+                  <span class="facet-count"><%= number_with_delimiter facet_item.hits %></span>
+                </label>
+              </li>
+            <% end %>
+          </ul>
+        </fieldset>
+      </div>
+    </div>
+  <% end %>
+</div>
