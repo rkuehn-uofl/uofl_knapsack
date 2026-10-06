@@ -8,6 +8,11 @@
     previously allow-listed to just those two, which silently dropped it from
     collection show, work show, and the advanced search page. %>
 <% show_header_facets = !params[:controller].to_s.match?(/\Aproprietor/) %>
+<%# The advanced search page has its own attribute accordion, and on that page
+    the drawer would render from AdvancedController's unlimited-facet response
+    (every value of every attribute, built a second time). Leave out the
+    Browse button, the drawer, and the (self-referencing) Advanced link there. %>
+<% advanced_search_page = controller_name == 'advanced' %>
 <%# "Filter" only makes sense as a label on the search-results page (you're
     refining an existing result set); everywhere else (homepage, collection
     show, work show, advanced search, ...) this opens the same drawer to
@@ -51,6 +56,7 @@
 
   <% end %> 
 
+  <% unless advanced_search_page %>
   <div id="filters-adv">
     <% if show_header_facets %>
       <button class="openbtn2" type="button" aria-haspopup="dialog" aria-controls="mySidebar2" aria-expanded="false" onclick="openNav(this)"><i class="fa-solid fa-arrow-down-wide-short"></i> <%= search_results_page ? 'Filter' : 'Browse' %> </button>
@@ -58,12 +64,15 @@
 
     <a class="btn" id="advanced-search-link2" href="/advanced"><i class="fa-solid fa-up-right-from-square"></i> Advanced <span class="sr-only">search page</span></a>
 </div>
+  <% end %>
 
 <%# #mySidebar2 renders on every page (not gated by show_header_facets) - the
     homepage hero's own "Browse Items" button calls openNav() directly and
     needs the dialog to exist regardless of whether the compact header
     button above is shown. hyrax/homepage/facets self-guards on
-    has_facet_values?, so this is an empty shell on pages with no facets. %>
+    has_facet_values?, so this is an empty shell on pages with no facets.
+    Skipped on the advanced search page (see advanced_search_page above). %>
+<% unless advanced_search_page %>
 <dialog id="mySidebar2" class="filter-drawer" aria-labelledby="filter-title">
   <div class="drawer-panel filter-panel">
     <button class="drawer-close" type="button" onclick="closeNav()" aria-label="Close filters"></button>
@@ -73,6 +82,7 @@
     <%= render 'hyrax/homepage/facets' %>
   </div>
 </dialog>
+<% end %>
 
 
 <script>
