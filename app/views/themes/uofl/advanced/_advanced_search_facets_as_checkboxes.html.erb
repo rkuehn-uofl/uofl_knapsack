@@ -8,6 +8,12 @@
     Logic taken from facets_helper_behavior.rb, #render_facet_partials and
     #render_facet_limit. %>
 
+<%# Keyboard hint for screen reader users; the Escape handling is in the
+    script at the bottom of this partial. %>
+<p id="advanced-search-facets-hint" class="sr-only">
+  Press Escape while inside an open list to close it and return to its heading.
+</p>
+
 <div class="advanced-search-facets-accordion" id="advanced-search-facets-accordion">
   <%# UOFL OVERRIDE: use the advanced-search-filtered field list (respects
       config.facet_fields[...].include_in_advanced_search) instead of the
@@ -27,7 +33,8 @@
                   data-toggle="collapse"
                   data-target="#<%= field_id %>"
                   aria-expanded="<%= expanded %>"
-                  aria-controls="<%= field_id %>">
+                  aria-controls="<%= field_id %>"
+                  aria-describedby="advanced-search-facets-hint">
             <%= advanced_search_facet_label(display_facet.name) %>
           </button>
         </h4>
@@ -60,3 +67,34 @@
     </div>
   <% end %>
 </div>
+
+<script>
+(function () {
+  // WCAG 2.1.1 / 2.4.1: long checkbox lists otherwise force keyboard users to
+  // tab through every option to get past them. Escape anywhere inside an
+  // open panel collapses it and returns focus to that panel's toggle.
+  var accordion = document.getElementById("advanced-search-facets-accordion");
+  if (!accordion) return;
+
+  accordion.addEventListener("keydown", function (event) {
+    if (event.key !== "Escape" && event.key !== "Esc") return;
+
+    var panel = event.target.closest(".collapse.show");
+    if (!panel || !accordion.contains(panel)) return;
+
+    var toggle = accordion.querySelector('[aria-controls="' + panel.id + '"]');
+    event.preventDefault();
+
+    if (window.jQuery && window.jQuery.fn.collapse) {
+      window.jQuery(panel).collapse("hide");
+    } else {
+      panel.classList.remove("show");
+      if (toggle) {
+        toggle.classList.add("collapsed");
+        toggle.setAttribute("aria-expanded", "false");
+      }
+    }
+    if (toggle) toggle.focus();
+  });
+})();
+</script>
