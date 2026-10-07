@@ -102,6 +102,7 @@ RSpec.describe Bulkrax::BulkraxFileSetAltTextDecorator do
       BULKRAX_FILESET_ALT_TEXT_FIELDS
       BULKRAX_FILESET_ALT_TEXT_SEPARATOR
       BULKRAX_FILESET_ALT_TEXT_SUFFIX
+      BULKRAX_FILESET_ALT_TEXT_FORCE_REGENERATE
     ]
   end
 
@@ -174,6 +175,13 @@ RSpec.describe Bulkrax::BulkraxFileSetAltTextDecorator do
       expect(file_set_params).to eq(base_params)
     end
 
+    it 'does not generate alt text when the import row has an alt_text value' do
+      ENV['BULKRAX_FILESET_ALT_TEXT_ENABLED'] = 'true'
+      attributes['alt_text'] = ['Alt text from CSV']
+
+      expect(file_set_params).to eq(base_params)
+    end
+
     %w[true TRUE 1 yes on].each do |enabled_value|
       it "generates FileSet alt text when enabled is #{enabled_value.inspect}" do
         ENV['BULKRAX_FILESET_ALT_TEXT_ENABLED'] = enabled_value
@@ -207,8 +215,40 @@ RSpec.describe Bulkrax::BulkraxFileSetAltTextDecorator do
       expect(factory_class.indexed_resources).to be_empty
     end
 
-    it 'updates persisted FileSet alt text from the configured formula' do
+    it 'does not overwrite alt text already saved on the FileSet' do
       ENV['BULKRAX_FILESET_ALT_TEXT_ENABLED'] = 'true'
+
+      factory.run!
+
+      expect(file_sets.first.alt_text).to eq(['Old alt text'])
+      expect(factory_class.saved_resources).to be_empty
+      expect(factory_class.indexed_resources).to be_empty
+    end
+
+    it 'fills in a FileSet that has no saved alt text' do
+      ENV['BULKRAX_FILESET_ALT_TEXT_ENABLED'] = 'true'
+      file_sets.first.alt_text = ['']
+
+      factory.run!
+
+      expect(file_sets.first.alt_text).to eq(['rhino1.jpg'])
+      expect(factory_class.indexed_resources).to eq([resource])
+    end
+
+    it 'does not touch FileSets when the import row has an alt_text value, even when forced' do
+      ENV['BULKRAX_FILESET_ALT_TEXT_ENABLED'] = 'true'
+      ENV['BULKRAX_FILESET_ALT_TEXT_FORCE_REGENERATE'] = 'true'
+      attributes['alt_text'] = ['Alt text from CSV']
+
+      factory.run!
+
+      expect(file_sets.first.alt_text).to eq(['Old alt text'])
+      expect(factory_class.saved_resources).to be_empty
+    end
+
+    it 'overwrites saved FileSet alt text from the configured formula when forced' do
+      ENV['BULKRAX_FILESET_ALT_TEXT_ENABLED'] = 'true'
+      ENV['BULKRAX_FILESET_ALT_TEXT_FORCE_REGENERATE'] = 'true'
       ENV['BULKRAX_FILESET_ALT_TEXT_FIELDS'] = 'resource_type,file_name_without_extension'
       ENV['BULKRAX_FILESET_ALT_TEXT_SEPARATOR'] = ' '
       ENV['BULKRAX_FILESET_ALT_TEXT_SUFFIX'] = 'Detailed description follows.'
@@ -224,6 +264,7 @@ RSpec.describe Bulkrax::BulkraxFileSetAltTextDecorator do
       ENV['BULKRAX_FILESET_ALT_TEXT_ENABLED'] = 'true'
       ENV['BULKRAX_FILESET_ALT_TEXT_FIELDS'] = 'file_name_without_extension'
       ENV['BULKRAX_FILESET_ALT_TEXT_SUFFIX'] = 'Detailed description follows.'
+      ENV['BULKRAX_FILESET_ALT_TEXT_FORCE_REGENERATE'] = 'true'
       attributes.delete('file')
 
       factory.run!

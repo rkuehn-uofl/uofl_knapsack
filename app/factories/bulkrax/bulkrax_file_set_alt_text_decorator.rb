@@ -20,8 +20,12 @@ module Bulkrax
     # - BULKRAX_FILESET_ALT_TEXT_FIELDS: comma-separated fields used to build alt text
     # - BULKRAX_FILESET_ALT_TEXT_SEPARATOR: text placed between field values
     # - BULKRAX_FILESET_ALT_TEXT_SUFFIX: optional phrase appended to generated alt text
+    # - BULKRAX_FILESET_ALT_TEXT_FORCE_REGENERATE: set to true, 1, yes, or on to
+    #   overwrite alt text already saved on a FileSet. Alt text supplied in the
+    #   import row itself is never overwritten.
     def file_set_params_for(uploads:, files:)
       return super unless file_set_alt_text_enabled?
+      return super if import_row_alt_text_present?
 
       super.map.with_index do |params, index|
         next params if file_set_alt_text_present?(params)
@@ -39,6 +43,7 @@ module Bulkrax
       return unless file_set_alt_text_enabled?
       return if resource.blank?
       return if resource.class == Bulkrax.collection_model_class
+      return if import_row_alt_text_present?
 
       updated_file_sets = persisted_file_sets_for(resource).each_with_index.filter_map do |file_set, index|
         sync_persisted_file_set_alt_text_for(file_set, index)
@@ -57,6 +62,7 @@ module Bulkrax
 
     def sync_persisted_file_set_alt_text_for(file_set, index)
       return unless file_set.respond_to?(:alt_text=)
+      return if persisted_alt_text_present?(file_set) && !force_regenerate_alt_text?
 
       file_name = persisted_file_set_name(file_set, index)
       file_alt_text = generated_alt_text(file_name:)
@@ -97,12 +103,26 @@ module Bulkrax
       truthy_env?('BULKRAX_FILESET_ALT_TEXT_ENABLED')
     end
 
+    def force_regenerate_alt_text?
+      truthy_env?('BULKRAX_FILESET_ALT_TEXT_FORCE_REGENERATE')
+    end
+
     def truthy_env?(key)
       %w[true 1 yes on].include?(ENV.fetch(key, '').to_s.strip.downcase)
     end
 
     def file_set_alt_text_present?(params)
       Array.wrap(params.with_indifferent_access[:alt_text]).any?(&:present?)
+    end
+
+    # The import row (work or FileSet) has its own alt_text value, e.g. from a
+    # CSV alt_text column. That value wins over anything generated.
+    def import_row_alt_text_present?
+      direct_attribute_value_for('alt_text').present?
+    end
+
+    def persisted_alt_text_present?(file_set)
+      Array.wrap(file_set.try(:alt_text)).any?(&:present?)
     end
 
     def alt_text_fields
