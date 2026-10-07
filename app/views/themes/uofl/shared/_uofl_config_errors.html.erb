@@ -1,0 +1,16 @@
+<%# UOFL OVERRIDE: UofL Theme - notice on the signed-in preview pages when a
+    curator-edited uofl_*.yml file can't be read (missing, or a YAML
+    mistake). The public pages quietly fall back to defaults in that case
+    (see UoflYamlConfig), so this is where a curator finds out their edit
+    didn't take. `errors` is a Hash of label => message (nil = file OK). %>
+<% errors = errors.compact %>
+<% if errors.any? %>
+  <div class="alert alert-danger" role="alert">
+    <p><strong>A config file couldn't be read, so the live site is using defaults for it until it's fixed:</strong></p>
+    <ul>
+      <% errors.each do |label, message| %>
+        <li><strong><%= label %>:</strong> <code><%= message %></code></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>

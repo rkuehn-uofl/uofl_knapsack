@@ -18,6 +18,7 @@
 <div class="collections-list">
   <section>
     <h1>Featured Carousel Preview</h1>
+    <%= render 'themes/uofl/shared/uofl_config_errors', errors: @config_errors %>
     <p>Live on homepage: <strong><%= @active_group_name %></strong>
       <% if @active_group_name.to_s != @active_group.to_s %>
         &mdash; scheduled for today, showing instead of the configured <code>active_group</code> (<%= @active_group %>)

@@ -55,8 +55,15 @@ class UoflFeaturedCarouselThemes
     group[:start_date].present? || group[:end_date].present?
   end
 
+  # A missing or malformed file loads as an empty config (see UoflYamlConfig).
   def self.config
-    YAML.safe_load_file(CONFIG_PATH, permitted_classes: [Date], symbolize_names: true) || {}
+    UoflYamlConfig.load(CONFIG_PATH, permitted_classes: [Date])
+  end
+
+  # nil if the config file loads fine, otherwise what's wrong with it - for
+  # the preview page.
+  def self.config_error
+    UoflYamlConfig.error(CONFIG_PATH, permitted_classes: [Date])
   end
 
   # The name of whichever scheduled group's window covers today, if any -

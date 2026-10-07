@@ -40,5 +40,11 @@ class UoflFeaturedCarouselPreviewsController < ApplicationController
 
       { start_date: group[:start_date], end_date: group[:end_date] }
     end
+    # Popular Collections has no preview page of its own, so its config
+    # problems are surfaced here too.
+    @config_errors = {
+      'config/uofl_featured_carousel_themes.yml' => UoflFeaturedCarouselThemes.config_error,
+      'config/uofl_popular_collections.yml' => UoflPopularCollections.config_error
+    }
   end
 end

@@ -33,17 +33,10 @@
 		  <img alt="boy reading with bookmobile behind him" src="<%= image_path('themes/uofl/header/ULPA_SONJ_51793_250x250.png') %>">
 		  <div>
 			  <p class="eyebrow">Popular Collections</p>
-			  <a href="fake.html">Caufield &amp; Shook Collection</a>
-			  <a href="fake.html">Standard Oil (New Jersey) Collection</a>
-			  <a href="fake.html">Louisville Leader Collection</a>
-			  <a href="fake.html">Royal Photo Company Collection</a>
-			  
-			  <!--
-    <% uofl_navbar_collections = uofl_top_collections %>
-    <% uofl_navbar_collections.each do |collection| %>
-      <%= link_to markdown(collection.title_or_label), hyrax.collection_path(collection.id) %>
-    <% end %>
-    -->
+			  <%# Curated in config/uofl_popular_collections.yml %>
+			  <% uofl_popular_collections.each do |title, path| %>
+			    <%= link_to markdown(title), path %>
+			  <% end %>
 		  </div>
 		  
 		  <div>

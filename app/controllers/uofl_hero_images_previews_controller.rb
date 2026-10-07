@@ -40,6 +40,12 @@ class UoflHeroImagesPreviewsController < ApplicationController
     @rotation_mode = UoflHeroImages.rotation_mode
     @images = UoflHeroImages.images
     @overrides = UoflHeroImages.overrides.map { |override| override.merge(status: override_status(override)) }
+    # Popular Collections has no preview page of its own, so its config
+    # problems are surfaced here too.
+    @config_errors = {
+      'config/uofl_hero_images.yml' => UoflHeroImages.config_error,
+      'config/uofl_popular_collections.yml' => UoflPopularCollections.config_error
+    }
   end
 
   private

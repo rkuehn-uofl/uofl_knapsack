@@ -1,0 +1,52 @@
+# UOFL OVERRIDE: UofL Theme
+#
+# Curated "Popular Collections" list in the masthead's Collections
+# mega-menu (see app/views/themes/uofl/_masthead.html.erb and
+# UoflHomepageHelper#uofl_popular_collections). No restart is needed to
+# change any of this - the file is re-read on every request.
+#
+# Collections are shown in the order they're listed below. Each entry links
+# to its collection's own page, looked up live from its `collection_id` at
+# render time, so the link always stays accurate even if the record
+# changes.
+#
+# `collection_id` is the collection's human-readable item number (e.g.
+# "ULPA 1981_008"), not a system-generated id - copy it from the
+# collection itself (its item number, or "source_identifier" field), not
+# from the URL of its collection page. Matching is exact but
+# case-insensitive.
+#
+# `collection_name` is optional: when set, it's shown as the link text
+# instead of the collection's own title (e.g. to shorten a long title so it
+# fits the menu). Leave it blank to use the collection's live title.
+#
+# `notes` is optional free text for curators (e.g. why a collection was
+# chosen, a reminder to swap it out later). It isn't read by any code -
+# purely for humans reading/editing this file.
+#
+# An entry whose `collection_id` doesn't match a collection the visitor can
+# see (wrong item number, deleted, or private) is silently skipped, with a
+# logged warning. If none of them match, the menu falls back to the first
+# few collections alphabetically, so it's never empty.
+#
+# To add a collection:
+#   1. Find the collection and copy its item number into `collection_id`.
+#   2. Optional: set `collection_name` to override the link text.
+#   3. Move the entry to where it should appear in the list.
+
+collections:
+  - collection_id: ULPA 1981_008
+    collection_name:
+    notes: Ewing Dairy Collection.
+
+  - collection_id: ULPA 2009_027
+    collection_name: Louisville Storefronts & Saloons
+    notes: Shortened from "Louisville Storefronts & Saloons Album" to fit the menu.
+
+  - collection_id: ULPA 2019_199
+    collection_name:
+    notes: Ghost Signs of Louisville.
+
+  - collection_id: ULUA Burt
+    collection_name:
+    notes: "Burt: The Official Burt the Cat Fanclub Newsletter."

@@ -19,6 +19,55 @@ module UoflHomepageHelper
     []
   end
 
+  # The masthead's "Popular Collections" list: the collections configured in
+  # config/uofl_popular_collections.yml (see UoflPopularCollections), in the
+  # order listed there, as [link text, path] pairs. Each entry's
+  # `collection_id` is the collection's human-readable item number
+  # (`source_identifier`, e.g. "ULPA 1981_008"), looked up the same way as
+  # #uofl_find_by_item_number - exact but case-insensitive - but for all
+  # entries in a single query. The link text is the entry's
+  # `collection_name` if set, otherwise the collection's live title.
+  # Going through Hyrax::CollectionsService, like #uofl_top_collections,
+  # limits this to collections the current visitor can see, so a private
+  # collection never shows up in the public nav. An entry with no match is
+  # skipped with a logged warning; if none match, falls back to
+  # #uofl_top_collections so the menu is never empty.
+  def uofl_popular_collections(limit: 4)
+    entries = UoflPopularCollections.all
+    item_numbers = entries.map { |entry| entry[:collection_id] }
+
+    documents =
+      if item_numbers.present?
+        Hyrax::CollectionsService.new(controller).search_results do |builder|
+          builder.where('source_identifier_tesim' => item_numbers)
+          builder.rows(item_numbers.length * 2)
+        end
+      else
+        []
+      end
+
+    # The analyzed _tesim query can over-match, so keep only exact
+    # (case-insensitive) item-number matches.
+    documents_by_item_number = documents.index_by { |document| document['source_identifier_ssi'].to_s.downcase }
+
+    links = entries.filter_map do |entry|
+      document = documents_by_item_number[entry[:collection_id].downcase]
+
+      unless document
+        Rails.logger.warn("UofL popular collections: item number #{entry[:collection_id]} not found, skipping")
+        next
+      end
+
+      [entry[:collection_name] || document.title_or_label, hyrax.collection_path(document.id)]
+    end
+
+    links = uofl_top_collections(rows: limit).map { |document| [document.title_or_label, hyrax.collection_path(document.id)] } if links.empty?
+
+    links.first(limit)
+  rescue Blacklight::Exceptions::ECONNREFUSED, Blacklight::Exceptions::InvalidRequest
+    []
+  end
+
   def uofl_collection_item_count(collection_id)
     Hyrax::SolrQueryService.new
                             .with_field_pairs(field_pairs: { 'member_of_collection_ids_ssim' => collection_id.to_s })

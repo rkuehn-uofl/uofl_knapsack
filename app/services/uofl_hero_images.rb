@@ -101,8 +101,15 @@ class UoflHeroImages
     { image: FALLBACK_IMAGE, image_alt: FALLBACK_ALT, work_id: nil }
   end
 
+  # A missing or malformed file loads as an empty config (see UoflYamlConfig).
   def self.config
-    YAML.safe_load_file(CONFIG_PATH, permitted_classes: [Date], symbolize_names: true) || {}
+    UoflYamlConfig.load(CONFIG_PATH, permitted_classes: [Date])
+  end
+
+  # nil if the config file loads fine, otherwise what's wrong with it - for
+  # the preview page.
+  def self.config_error
+    UoflYamlConfig.error(CONFIG_PATH, permitted_classes: [Date])
   end
 
   def self.override_active_on?(override, date)
