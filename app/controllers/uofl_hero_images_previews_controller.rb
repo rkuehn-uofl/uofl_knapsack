@@ -29,14 +29,15 @@ class UoflHeroImagesPreviewsController < ApplicationController
   end
 
   def show
-    # Reads (but doesn't write) the same session key
+    # Reads (but doesn't write) the same session keys
     # UoflHomepageHelper#uofl_hero_image uses, so in random
     # mode this shows the same picture this browser would already get on
-    # the actual homepage - unless this is the first hero-related page
-    # visited this session, in which case neither has picked/stored one
-    # yet and this preview's random pick won't be the one the homepage
-    # independently picks afterward.
-    @current_image = UoflHeroImages.current(remembered_image: session[:uofl_hero_image])
+    # the actual homepage - unless this browser's current visit has no
+    # pick yet (or it has timed out), in which case this preview's random
+    # pick won't be the one the homepage independently picks afterward.
+    @current_image = UoflHeroImages.current(remembered_image: session[:uofl_hero_image],
+                                            remembered_at: session[:uofl_hero_image_at])
+    @visit_timeout_minutes = UoflHeroImages.visit_timeout_minutes
     @rotation_mode = UoflHeroImages.rotation_mode
     @images = UoflHeroImages.images
     @overrides = UoflHeroImages.overrides.map { |override| override.merge(status: override_status(override)) }

@@ -4,7 +4,8 @@
 #
 # Resolves which single image to show in the homepage hero banner, from
 # config/uofl_hero_images.yml: a date-scoped `overrides` entry if one is
-# active today, otherwise an automatic weekly rotation through `images`.
+# active today, otherwise the configured rotation through `images` (weekly,
+# or random per visit).
 # See that file for the full format and how curators are meant to edit it;
 # see UoflHomepageHelper#uofl_hero_image for how the picked entry is turned
 # into rendered image/link data (including resolving its optional
@@ -28,20 +29,33 @@ class UoflHeroImages
   ROTATION_MODES = %w[weekly random].freeze
   DEFAULT_ROTATION_MODE = 'weekly'
 
+  # In `random` mode, how long a visitor keeps the same picture after they
+  # last saw the hero before the next homepage view counts as a new visit
+  # and gets a different one. 0 means a new picture on every page load.
+  DEFAULT_VISIT_TIMEOUT_MINUTES = 30
+
   # `remembered_image` is the `image` path of whatever picture this same
-  # visitor was already shown, if any (in `random` mode, the
-  # caller is expected to have read this back out of its own session
-  # storage - see UoflHomepageHelper#uofl_hero_image). It's ignored
-  # entirely in `weekly` mode, so callers that don't pass it (or that don't
-  # have a session, like a Rails console) still get the same deterministic
-  # weekly pick as always.
-  def self.current(remembered_image: nil)
-    active_override || pick_image(remembered_image) || fallback_image
+  # visitor was already shown, if any, and `remembered_at` is when (epoch
+  # seconds) they last saw it (in `random` mode, the caller is expected to
+  # have read both back out of its own session storage - see
+  # UoflHomepageHelper#uofl_hero_image). Both are ignored entirely in
+  # `weekly` mode, so callers that don't pass them (or that don't have a
+  # session, like a Rails console) still get the same deterministic weekly
+  # pick as always.
+  def self.current(remembered_image: nil, remembered_at: nil)
+    active_override || pick_image(remembered_image, remembered_at) || fallback_image
   end
 
   def self.rotation_mode
     mode = config[:rotation_mode].to_s
     ROTATION_MODES.include?(mode) ? mode : DEFAULT_ROTATION_MODE
+  end
+
+  # A missing, non-integer, or negative value falls back to the default
+  # rather than breaking the hero.
+  def self.visit_timeout_minutes
+    minutes = Integer(config[:visit_timeout_minutes], exception: false)
+    minutes.nil? || minutes.negative? ? DEFAULT_VISIT_TIMEOUT_MINUTES : minutes
   end
 
   def self.images
@@ -76,10 +90,10 @@ class UoflHeroImages
     tier.first
   end
 
-  def self.pick_image(remembered_image)
+  def self.pick_image(remembered_image, remembered_at)
     return nil if images.empty?
 
-    rotation_mode == 'random' ? random_image(remembered_image) : rotated_image
+    rotation_mode == 'random' ? random_image(remembered_image, remembered_at) : rotated_image
   end
 
   def self.rotated_image
@@ -87,14 +101,28 @@ class UoflHeroImages
     images[weeks_elapsed % images.size]
   end
 
-  # Sticks with `remembered_image` for the rest of the visitor's session if
-  # it's still a valid picture (so refreshing/navigating around the site
-  # doesn't change the hero mid-visit); otherwise picks a fresh random one
-  # for the caller to remember from here on. Matching on `image` (always
-  # present) rather than `work_id` (optional) or list position (would
-  # silently pick a different photo if a curator reorders the list).
-  def self.random_image(remembered_image)
-    images.find { |image| image[:image] == remembered_image } || images.sample
+  # Sticks with `remembered_image` while the visitor is still within the
+  # same visit (so refreshing/navigating back to the homepage doesn't
+  # change the hero mid-visit) and it's still a valid picture; otherwise
+  # picks a fresh random one for the caller to remember from here on,
+  # never the one they just saw (when there's more than one to choose
+  # from). Matching on `image` (always present) rather than `work_id`
+  # (optional) or list position (would silently pick a different photo if
+  # a curator reorders the list).
+  def self.random_image(remembered_image, remembered_at)
+    remembered = images.find { |image| image[:image] == remembered_image }
+    return remembered if remembered && same_visit?(remembered_at)
+
+    candidates = images.reject { |image| image[:image] == remembered_image }
+    (candidates.presence || images).sample
+  end
+
+  # A missing timestamp (e.g. a session from before visit tracking existed)
+  # counts as a new visit.
+  def self.same_visit?(remembered_at)
+    return false if remembered_at.blank?
+
+    Time.current.to_i - remembered_at.to_i < visit_timeout_minutes * 60
   end
 
   def self.fallback_image

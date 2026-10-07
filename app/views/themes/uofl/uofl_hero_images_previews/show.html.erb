@@ -15,7 +15,13 @@
     <h2>Currently live</h2>
     <p>Rotation mode: <strong><%= @rotation_mode %></strong>
       <% if @rotation_mode == 'random' %>
-        &mdash; every visitor's browser gets its own random pick that sticks for their session. The image below is <em>this browser's</em> pick, not a single global "current" image; if this is the first hero-related page you've visited this session, it may not match what you see if you then load the homepage, since neither has picked/stored one yet.
+        &mdash; every visitor's browser gets its own random pick that sticks
+        <% if @visit_timeout_minutes.zero? %>
+          for a single page load (visit_timeout_minutes is 0).
+        <% else %>
+          until they go <%= @visit_timeout_minutes %> minutes without seeing the homepage, then changes on their next visit.
+        <% end %>
+        The image below is <em>this browser's</em> pick, not a single global "current" image; if this browser has no pick for its current visit yet, it may not match what you see if you then load the homepage, since neither has picked/stored one yet.
       <% end %>
     </p>
     <figure>

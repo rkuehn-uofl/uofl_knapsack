@@ -224,22 +224,22 @@ module UoflHomepageHelper
   # app/views/themes/uofl/hyrax/homepage/_hero.html.erb for the markup and
   # UoflHeroImages for how the picture itself is picked - an active
   # config/uofl_hero_images.yml override, or the configured rotation:
-  # deterministic weekly, or random per session). In `random` mode this
-  # reads/writes session[:uofl_hero_image] so the same visitor
-  # keeps seeing the same picture for the rest of their session instead of
-  # it changing on every request; an active override always wins and is
-  # never written to the session, so a visitor's earlier random pick (if
-  # any) resumes once the override's window ends. The hero's lower-right
+  # deterministic weekly, or random per visit). In `random` mode this
+  # reads/writes session[:uofl_hero_image] and session[:uofl_hero_image_at]
+  # so the same visitor keeps seeing the same picture until they go
+  # UoflHeroImages.visit_timeout_minutes without seeing the hero, instead
+  # of it changing on every request; each view restarts that clock. An
+  # active override always wins and is never written to the session, so a
+  # visitor's earlier random pick (if any, and still within its visit)
+  # resumes once the override's window ends. The hero's lower-right
   # item-number button is optional: a picture only gets one if it has a
   # `work_id` AND that work_id resolves to a real work; otherwise
   # item_number/item_url come back nil and the view hides the button
   # rather than linking to nothing.
   def uofl_hero_image
-    picture = UoflHeroImages.current(remembered_image: session[:uofl_hero_image])
-
-    if UoflHeroImages.rotation_mode == 'random' && UoflHeroImages.active_override.blank?
-      session[:uofl_hero_image] = picture[:image]
-    end
+    picture = UoflHeroImages.current(remembered_image: session[:uofl_hero_image],
+                                     remembered_at: session[:uofl_hero_image_at])
+    uofl_remember_hero_image(picture)
 
     solr_document = picture[:work_id].present? ? uofl_find_by_item_number(picture[:work_id]) : nil
 
@@ -253,6 +253,15 @@ module UoflHomepageHelper
       item_number: solr_document && Array(solr_document[:source_identifier_tesim]).first,
       item_url: solr_document && polymorphic_path([main_app, solr_document])
     }
+  end
+
+  # Saves the random pick and restarts its visit clock. Overrides and weekly
+  # picks are deterministic, so they're never saved.
+  def uofl_remember_hero_image(picture)
+    return unless UoflHeroImages.rotation_mode == 'random' && UoflHeroImages.active_override.blank?
+
+    session[:uofl_hero_image] = picture[:image]
+    session[:uofl_hero_image_at] = Time.current.to_i
   end
 
   # Looks up a work by its human-readable item number (`source_identifier`,
