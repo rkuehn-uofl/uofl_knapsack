@@ -1,16 +1,26 @@
-<%# UOFL OVERRIDE: point the download button at the uploaded .txt file set when one exists, otherwise the PDF %>
+<%# UOFL OVERRIDE: offer a Download PDF button and, when an uploaded .txt file set exists, a Download Text button alongside it %>
+<% pdf_file_set = presenter.file_set_presenters.find(&:pdf?) %>
 <% text_file_set = presenter.file_set_presenters.find { |fs| fs.mime_type == 'text/plain' } %>
-<% download_target = text_file_set || presenter.representative_presenter %>
-<% if download_target && can?(:download, download_target.id) %>
+<% if pdf_file_set %>
   <div class="download-pdf-controls">
-    <% if presenter.file_set_presenters.any?(&:pdf?) %>
+    <% if can?(:download, pdf_file_set.id) %>
       <%= button_tag type: 'button',
                      id: "file_download",
-                     data: { label: download_target.id,
-                             path: hyrax.download_path(download_target) },
+                     data: { label: pdf_file_set.id,
+                             path: hyrax.download_path(pdf_file_set) },
                      class: "btn btn-success btn-block file_download center-block",
                      onclick: "window.open(this.dataset.path, '_blank');" do %>
-        <%= text_file_set ? 'Download Text' : 'Download PDF' %>
+        Download PDF
+      <% end %>
+    <% end %>
+    <% if text_file_set && can?(:download, text_file_set.id) %>
+      <%= button_tag type: 'button',
+                     id: "file_download_text",
+                     data: { label: text_file_set.id,
+                             path: hyrax.download_path(text_file_set) },
+                     class: "btn btn-success btn-block file_download center-block",
+                     onclick: "window.open(this.dataset.path, '_blank');" do %>
+        Download Text
       <% end %>
     <% end %>
   </div>
