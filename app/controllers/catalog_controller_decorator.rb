@@ -262,6 +262,39 @@ module CatalogControllerDecorator
       config.max_per_page = 50
     end
   end
+
+  # Blacklight's email/SMS record tools (/catalog/:id/email, /catalog/:id/sms)
+  # aren't linked from any Hyku page, but anyone can POST to them and have the
+  # app mail a citation plus free-text message to an arbitrary address or
+  # carrier SMS gateway. Remove the show-page buttons and the nav links for
+  # bookmarks/search history (disabled in their own controller decorators).
+  #
+  # Removing the config entries alone doesn't kill the routes: Blacklight's
+  # ActionBuilder already defined #email and #sms on CatalogController when
+  # catalog_controller.rb ran add_show_tools_partial, so
+  # DisabledRecordTools 404s those actions as well.
+  def self.configure_uofl_disabled_tools(klass)
+    klass.configure_blacklight do |config|
+      config.show.document_actions.delete(:email)
+      config.show.document_actions.delete(:sms)
+      config.navbar.partials.delete(:bookmark)
+      config.navbar.partials.delete(:search_history)
+    end
+  end
+
+  module DisabledRecordTools
+    extend ActiveSupport::Concern
+
+    included do
+      prepend_before_action :uofl_disable_record_tools, only: %i[email sms]
+    end
+
+    private
+
+    def uofl_disable_record_tools
+      raise ActionController::RoutingError, 'Not Found'
+    end
+  end
 end
 
 # Catalog pages need the active home theme in their view path so shared partials
@@ -276,3 +309,5 @@ CatalogControllerDecorator.configure_uofl_solr_highlighting(CatalogController)
 CatalogControllerDecorator.configure_uofl_solr_highlighting(Hyrax::CollectionsController)
 CatalogControllerDecorator.configure_uofl_per_page(CatalogController)
 CatalogControllerDecorator.configure_uofl_per_page(Hyrax::CollectionsController)
+CatalogControllerDecorator.configure_uofl_disabled_tools(CatalogController)
+CatalogController.include(CatalogControllerDecorator::DisabledRecordTools) unless CatalogController < CatalogControllerDecorator::DisabledRecordTools
