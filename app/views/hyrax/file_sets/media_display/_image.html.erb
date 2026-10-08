@@ -1,0 +1,35 @@
+<%# OVERRIDE Hyrax 5.2.0 app/views/hyrax/file_sets/media_display/_image.html.erb %>
+<%# UOFL OVERRIDE: for users who can't edit the FileSet, "Download image"
+    gives a 600px-max JPEG from the IIIF image server (same limit as the
+    Universal Viewer's download dialog) instead of the full-size original.
+    See UoflImageDownloadHelper. Editors keep the original download. %>
+<% if display_media_download_link?(file_set: file_set) %>
+    <div>
+      <h2 class="sr-only"><%= t('hyrax.file_set.show.downloadable_content.heading') %></h2>
+      <%= document_presenter(file_set)&.thumbnail&.thumbnail_tag(
+                    class: "representative-media",
+                    alt: file_set.alt_text_for_view,
+                    role: "presentation") %>
+      <% small_image_url = uofl_small_image_download_url(file_set) unless @presenter.editor? %>
+      <% if small_image_url %>
+        <%= link_to t('hyrax.file_set.show.downloadable_content.image_link'),
+                    small_image_url,
+                    data: { label: file_set.id, work_id: @presenter.id, collection_ids: @presenter.member_of_collection_ids },
+                    download: uofl_small_image_download_filename(file_set),
+                    id: "file_download" %>
+      <% else %>
+        <%= link_to t('hyrax.file_set.show.downloadable_content.image_link'),
+                    hyrax.download_path(file_set),
+                    data: { label: file_set.id, work_id: @presenter.id, collection_ids: @presenter.member_of_collection_ids },
+                    target: :_blank,
+                    id: "file_download" %>
+      <% end %>
+    </div>
+<% else %>
+    <div>
+      <%= document_presenter(file_set)&.thumbnail&.thumbnail_tag(
+                    class: "representative-media",
+                    alt: file_set&.alt_text_for_view,
+                    role: "presentation") %>
+    </div>
+<% end %>

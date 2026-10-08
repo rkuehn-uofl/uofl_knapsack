@@ -1,0 +1,34 @@
+<%# OVERRIDE Hyrax 5.2.0 app/views/hyrax/file_sets/_show_details.html.erb %>
+<%# UOFL OVERRIDE: only show the Depositor row (the depositor's email address,
+    linked to their profile) to users who can edit the FileSet. %>
+<h2><%= t(".file_details") %></h2>
+<dl class="file-show-term file-show-details">
+  <% if @presenter.editor? %>
+  <div class="row">
+    <dt class="col-5"><%= t(".depositor") %></dt>
+    <dd class="col-7" itemprop="accountablePerson" itemscope itemtype="http://schema.org/Person"><span itemprop="name"><%= link_to_profile @presenter.depositor %></span></dd>
+  </div>
+  <% end %>
+  <div class="row">
+    <dt class="col-5"><%= t(".date_uploaded") %></dt>
+    <dd class="col-7" itemprop="datePublished"><%= @presenter.date_uploaded %></dd>
+  </div>
+  <div class="row">
+    <dt class="col-5"><%= t(".date_modified") %></dt>
+    <dd class="col-7" itemprop="dateModified"><%= @presenter.date_modified %></dd>
+  </div>
+  <div class="row">
+    <dt class="col-5"><%= t(".fixity_check") %></dt>
+    <dd class="col-7"><%= @presenter.fixity_check_status %></dd>
+  </div>
+  <div class="row">
+    <dt class="col-5"><%= t(".characterization") %></dt>
+    <dd class="col-7">
+      <% if @presenter.characterized? %>
+        <%= render 'show_characterization_details' %>
+      <% else %>
+        <%= t(".not_yet_characterized") %>
+      <% end %>
+    </dd>
+  </div>
+</dl>
