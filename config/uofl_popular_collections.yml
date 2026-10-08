@@ -35,18 +35,22 @@
 #   3. Move the entry to where it should appear in the list.
 
 collections:
-  - collection_id: ULPA 1981_008
-    collection_name:
-    notes: Ewing Dairy Collection.
+  - collection_id: ULPA CS
+    collection_name: Caufield & Shook
+    notes: needs real collection_id
 
-  - collection_id: ULPA 2009_027
-    collection_name: Louisville Storefronts & Saloons
-    notes: Shortened from "Louisville Storefronts & Saloons Album" to fit the menu.
+  - collection_id: ULUA 
+    collection_name: Louisville Leader Collection
+    notes: needs real collection_id
 
-  - collection_id: ULPA 2019_199
-    collection_name:
-    notes: Ghost Signs of Louisville.
+  - collection_id: ULASC_Maps_Atlases
+    collection_name: Map & Atlas Collection
+    notes: needs test
 
-  - collection_id: ULUA Burt
-    collection_name:
-    notes: "Burt: The Official Burt the Cat Fanclub Newsletter."
+  - collection_id: ULPA Royal
+    collection_name: Royal Photo Company Collection
+    notes: needs real collection_id
+
+  - collection_id: ULPA SONJ
+    collection_name: Standard Oil (New Jersey) Collection
+    notes: needs -test

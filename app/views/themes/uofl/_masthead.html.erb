@@ -30,8 +30,11 @@
     <div class="nav-item">
       <button class="nav-trigger" type="button" aria-haspopup="true" aria-expanded="false" data-menu="collections">Collections <i class="fa-solid fa-chevron-down"></i></button>
       <div class="mega-menu collections" data-panel="collections" aria-hidden="true">
-		  <img alt="boy reading with bookmobile behind him" src="<%= image_path('themes/uofl/header/ULPA_SONJ_51793_250x250.png') %>">
-		  <div>
+        <div>
+  		    <img alt="boy reading with bookmobile behind him" src="<%= image_path('themes/uofl/header/ULPA_SONJ_51793_250x250.png') %>">
+          <div class="mega-menu-img-number">ULPA SONJ_51793</div>
+        </div>
+      <div id="pop-coll">
 			  <p class="eyebrow">Popular Collections</p>
 			  <%# Curated in config/uofl_popular_collections.yml %>
 			  <% uofl_popular_collections.each do |title, path| %>
@@ -49,16 +52,20 @@
 	<div class="nav-item">
 		<button class="nav-trigger" type="button" aria-haspopup="true" aria-expanded="false" data-menu="repositories">Repositories <i class="fa-solid fa-chevron-down"></i></button>
 		<div class="mega-menu repositories" data-panel="repositories" aria-hidden="true">
-			<img alt="two women talking 1920" src="<%= image_path('themes/uofl/header/ULPA_CS_033312_c_250x250.png') %>">
+          <div>
+      			<img alt="two women talking 1920" src="<%= image_path('themes/uofl/header/ULPA_CS_033312_c_250x250.png') %>">
+            <div class="mega-menu-img-number">ULPA CS_033312_c</div>
+          </div>
 			<div>
     <p class="eyebrow">Repositories</p>
-    <a href="/catalog?f%5Bpublisher_sim%5D%5B%5D=University+of+Louisville+Photographic+Archives">ASC Photographic Archives</a>
-    <a href="/catalog?f%5Bpublisher_sim%5D%5B%5D=University+of+Louisville+Rare+Books">ASC Rare Books</a>
-    <a href="/catalog?f%5Bpublisher_sim%5D%5B%5D=University+of+Louisville+Archives+and+Records+Center">ASC University Archives &amp; Records Center</a>
-    <a href="/catalog?f%5Bpublisher_sim%5D%5B%5D=University+of+Louisville+Margaret+M.+Bridwell+Art+Library">Bridwell Art Library</a>
-			</div>
+    <a href="/catalog?f%5Bpublisher_sim%5D%5B%5D=University+of+Louisville+Archives+and+Records+Center">Archives &amp; Special Collections</a>
+    <a class="indent" href="/catalog?f%5Bpublisher_sim%5D%5B%5D=University+of+Louisville+Photographic+Archives">Photographic Archives</a>
+    <a class="indent" href="/catalog?f%5Bpublisher_sim%5D%5B%5D=University+of+Louisville+Rare+Books">Rare Books</a>
+    <a class="indent" href="/catalog?f%5Bpublisher_sim%5D%5B%5D=University+of+Louisville+Archives+and+Records+Center">University Archives &amp; Records Center</a>
+ 			</div>
 			<div>
 				<p class="eyebrow spacer">&nbsp;</p>
+        <a href="/catalog?f%5Bpublisher_sim%5D%5B%5D=University+of+Louisville+Margaret+M.+Bridwell+Art+Library">Margaret M. Bridwell Art Library</a>
 				<a href="/catalog?f%5Bpublisher_sim%5D%5B%5D=University+of+Louisville+Dwight+Anderson+Music+Library">Dwight Anderson Memorial Music Library</a>
 				<a href="/catalog?f%5Bpublisher_sim%5D%5B%5D=University+of+Louisville+Kornhauser+Health+Sciences+Library">Kornhauser Health Sciences Library</a>
 				<a href="/catalog?f%5Bpublisher_sim%5D%5B%5D=Law+Library+of+the+Louis+D.+Brandeis+School+of+Law%2C+University+of+Louisville">Law Library, Louis D. Brandeis School of Law</a>
@@ -70,9 +77,12 @@
 	  <div class="nav-item">
       <button class="nav-trigger" type="button" aria-haspopup="true" aria-expanded="false" data-menu="explore">Explore <i class="fa-solid fa-chevron-down"></i></button>
 		  <div class="mega-menu explore" data-panel="explore" aria-hidden="true">
-			  <img alt="camels" src="<%= image_path('themes/uofl/header/ULPA_SONJ_58546_250x250.png') %>">
+          <div>
+          			  <img alt="camels" src="<%= image_path('themes/uofl/header/ULPA_SONJ_58546_250x250.png') %>">
+                  <div class="mega-menu-img-number">ULPA SONJ_58546</div>
+          </div>
 			  <div>
-				  <p class="eyebrow">Explore By Type</p>
+				  <p class="eyebrow">Explore By Object Type</p>
 				  <a href="/catalog?f_inclusive%5Bobject_type_sim%5D%5B%5D=Photographic+prints&f_inclusive%5Bobject_type_sim%5D%5B%5D=Albumen+prints&f_inclusive%5Bobject_type_sim%5D%5B%5D=Boudoir+card+photographs&f_inclusive%5Bobject_type_sim%5D%5B%5D=Cabinet+photographs&f_inclusive%5Bobject_type_sim%5D%5B%5D=Cabinet+photographs&f_inclusive%5Bobject_type_sim%5D%5B%5D=Carbon+prints&f_inclusive%5Bobject_type_sim%5D%5B%5D=Cartes+de+visite&f_inclusive%5Bobject_type_sim%5D%5B%5D=Contact+prints&f_inclusive%5Bobject_type_sim%5D%5B%5D=Contact+sheets&f_inclusive%5Bobject_type_sim%5D%5B%5D=Digital+images&f_inclusive%5Bobject_type_sim%5D%5B%5D=Dye+coupler+negatives&f_inclusive%5Bobject_type_sim%5D%5B%5D=Film+negatives&f_inclusive%5Bobject_type_sim%5D%5B%5D=Gelatin+silver+printing-out+paper+prints&f_inclusive%5Bobject_type_sim%5D%5B%5D=Gelatin+silver+prints&f_inclusive%5Bobject_type_sim%5D%5B%5D=Glass+negatives&f_inclusive%5Bobject_type_sim%5D%5B%5D=Halftone+photomechanical+prints&f_inclusive%5Bobject_type_sim%5D%5B%5D=Imperial+card+photographs&f_inclusive%5Bobject_type_sim%5D%5B%5D=Negatives&f_inclusive%5Bobject_type_sim%5D%5B%5D=Nitrate+negatives&f_inclusive%5Bobject_type_sim%5D%5B%5D=Panel+card+photographs&f_inclusive%5Bobject_type_sim%5D%5B%5D=Photographic+postcards&f_inclusive%5Bobject_type_sim%5D%5B%5D=Photographic+prints&f_inclusive%5Bobject_type_sim%5D%5B%5D=Photogravures&f_inclusive%5Bobject_type_sim%5D%5B%5D=Photomechanical+prints&f_inclusive%5Bobject_type_sim%5D%5B%5D=Planographic+prints&f_inclusive%5Bobject_type_sim%5D%5B%5D=Platinum+prints&f_inclusive%5Bobject_type_sim%5D%5B%5D=Promenade+card+photographs&f_inclusive%5Bobject_type_sim%5D%5B%5D=Safety+film+negatives&f_inclusive%5Bobject_type_sim%5D%5B%5D=Silver+printing-out+paper+prints&f_inclusive%5Bobject_type_sim%5D%5B%5D=Slides&f_inclusive%5Bobject_type_sim%5D%5B%5D=Stereographs&f_inclusive%5Bobject_type_sim%5D%5B%5D=Tintypes&sort=score+desc%2C+system_create_dtsi+desc">Photographs</a>
 				  <a href="/catalog?
 f_inclusive%5Bmember_of_collections_ssim%5D%5B%5D=Illuminated+Manuscript+Collections&sort=score+desc%2C+system_create_dtsi+desc&search_field=advanced&commit=Search">Illuminated Manuscripts</a>
@@ -91,7 +101,10 @@ f_inclusive%5Bmember_of_collections_ssim%5D%5B%5D=Illuminated+Manuscript+Collect
 	  <div class="nav-item">
 		  <button class="nav-trigger" type="button" aria-haspopup="true" aria-expanded="false" data-menu="help">Help <i class="fa-solid fa-chevron-down"></i></button>
 		  <div class="mega-menu help" data-panel="help" aria-hidden="true">
-			  <img alt="librarian helping students in the University Library" src="<%= image_path('themes/uofl/header/ULUA_001_0435_250x250.png') %>">
+          <div>
+            <img alt="librarian helping students in the University Library" src="<%= image_path('themes/uofl/header/ULUA_001_0435_250x250.png') %>">
+            <div class="mega-menu-img-number">ULUA 001_0435</div>
+          </div>
 			  <div>
 				  <p class="eyebrow">Help</p>
 				  <a href="/help#help-search">Search the Digital Collections</a>

@@ -68,6 +68,7 @@ $border-radius-tabs: 4px;
 
 #search-results a { text-decoration:underline;}
 
+.search-result-wrapper .list-thumbnail { justify-content: flex-start;}
 
 .metadata-field {
   display:grid;
@@ -511,8 +512,8 @@ body.public-facing #uofl_show-hyrax-base_show {
   .uv .centerPanel .title { padding-left:20px; display:none;}
   
   .download-pdf-controls { margin-top:1rem;}
-  #file_download { background-color:$red;}
-  #file_download:hover { background-color:$red-hover;}
+  .download-pdf-controls .file_download { background-color:$red;}
+  .download-pdf-controls .file_download:hover { background-color:$red-hover;}
 
   @media (min-width:992px) {
     dl.work-show {
