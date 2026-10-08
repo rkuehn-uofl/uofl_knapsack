@@ -16,4 +16,8 @@ RSpec.describe 'public theme controller wiring' do
 
     expect(controllers).to all(be < Hyrax::WorksHomeThemeDecorator)
   end
+
+  it 'loads the active home theme for citation pages' do
+    expect(Hyrax::CitationsController).to be < Hyrax::CitationsHomeThemeDecorator
+  end
 end
