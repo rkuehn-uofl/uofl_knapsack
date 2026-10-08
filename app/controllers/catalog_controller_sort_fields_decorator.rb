@@ -36,13 +36,12 @@ module CatalogControllerSortFieldsDecorator
       config.sort_fields.clear
 
       config.add_sort_field "score desc, #{CatalogController.uploaded_field} desc", label: "Relevance"
-      config.add_sort_field "#{CatalogController.title_field} desc", label: "Title ▼"
-      config.add_sort_field "#{CatalogController.title_field} asc", label: "Title ▲"
-      config.add_sort_field "#{CatalogController.uploaded_field} desc", label: "Date Uploaded ▼"
-      config.add_sort_field "#{CatalogController.uploaded_field} asc", label: "Date Uploaded ▲"
-      config.add_sort_field "#{CatalogController.modified_field} desc", label: "Date Modified ▼"
-      config.add_sort_field "#{CatalogController.modified_field} asc", label: "Date Modified ▲"
-      config.add_sort_field "source_identifier_ssi asc", label: "Item Number"
+      config.add_sort_field "#{CatalogController.title_field} asc", label: "Title (A-Z)"
+      config.add_sort_field "#{CatalogController.title_field} desc", label: "Title (Z-A)"
+      config.add_sort_field "#{CatalogController.uploaded_field} desc", label: "Date added (most recent-oldest)"
+      config.add_sort_field "#{CatalogController.uploaded_field} asc", label: "Date added (oldest-most recent)"
+      config.add_sort_field "source_identifier_ssi asc", label: "Item Number (A-Z)"
+      config.add_sort_field "source_identifier_ssi desc", label: "Item Number (Z-A)"
     end
   end
 end
