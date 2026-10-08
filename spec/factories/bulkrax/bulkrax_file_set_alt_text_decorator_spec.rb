@@ -37,6 +37,7 @@ end
 require_relative '../../../app/factories/bulkrax/bulkrax_file_set_alt_text_decorator'
 
 FileSetAltTextDecoratorSpecFileSet = Struct.new(:title, :alt_text, :original_filename, keyword_init: true)
+FileSetAltTextDecoratorSpecEntry = Struct.new(:raw_metadata, keyword_init: true)
 
 RSpec.describe Bulkrax::BulkraxFileSetAltTextDecorator do
   subject(:factory) { factory_class.new(attributes:, base_params:, resource:, file_sets:) }
@@ -96,6 +97,9 @@ RSpec.describe Bulkrax::BulkraxFileSetAltTextDecorator do
   let(:uploads) { [nil] }
   let(:resource) { nil }
   let(:file_sets) { [] }
+  # The entry's raw CSV row. Bulkrax drops alt_text from a work row's parsed
+  # attributes, so a work row's CSV value only exists here.
+  let(:raw_metadata) { {} }
   let(:env_keys) do
     %w[
       BULKRAX_FILESET_ALT_TEXT_ENABLED
@@ -104,6 +108,10 @@ RSpec.describe Bulkrax::BulkraxFileSetAltTextDecorator do
       BULKRAX_FILESET_ALT_TEXT_SUFFIX
       BULKRAX_FILESET_ALT_TEXT_FORCE_REGENERATE
     ]
+  end
+
+  before do
+    allow(factory).to receive(:import_entry).and_return(FileSetAltTextDecoratorSpecEntry.new(raw_metadata:))
   end
 
   around do |example|
@@ -175,11 +183,40 @@ RSpec.describe Bulkrax::BulkraxFileSetAltTextDecorator do
       expect(file_set_params).to eq(base_params)
     end
 
-    it 'does not generate alt text when the import row has an alt_text value' do
+    it "uses a work row's CSV alt_text value instead of generating" do
+      ENV['BULKRAX_FILESET_ALT_TEXT_ENABLED'] = 'true'
+      raw_metadata['alt_text'] = 'Alt text from CSV'
+
+      expect(file_set_params).to eq([{ alt_text: ['Alt text from CSV'] }])
+    end
+
+    it "uses a FileSet row's parsed alt_text value instead of generating" do
       ENV['BULKRAX_FILESET_ALT_TEXT_ENABLED'] = 'true'
       attributes['alt_text'] = ['Alt text from CSV']
 
-      expect(file_set_params).to eq(base_params)
+      expect(file_set_params).to eq([{ alt_text: ['Alt text from CSV'] }])
+    end
+
+    it 'generates alt text over the CSV value when force regenerate is on' do
+      ENV['BULKRAX_FILESET_ALT_TEXT_ENABLED'] = 'true'
+      ENV['BULKRAX_FILESET_ALT_TEXT_FORCE_REGENERATE'] = 'true'
+      raw_metadata['alt_text'] = 'Alt text from CSV'
+      base_params.first['alt_text'] = ['Alt text from import mapping']
+
+      expect(file_set_params).to eq([{ alt_text: ['rhino1.jpg'] }])
+    end
+
+    it 'loads the CSV value when the feature is disabled' do
+      raw_metadata['alt_text'] = 'Alt text from CSV'
+
+      expect(file_set_params).to eq([{ alt_text: ['Alt text from CSV'] }])
+    end
+
+    it 'ignores force regenerate when the feature is disabled' do
+      ENV['BULKRAX_FILESET_ALT_TEXT_FORCE_REGENERATE'] = 'true'
+      raw_metadata['alt_text'] = 'Alt text from CSV'
+
+      expect(file_set_params).to eq([{ alt_text: ['Alt text from CSV'] }])
     end
 
     %w[true TRUE 1 yes on].each do |enabled_value|
@@ -215,14 +252,21 @@ RSpec.describe Bulkrax::BulkraxFileSetAltTextDecorator do
       expect(factory_class.indexed_resources).to be_empty
     end
 
-    it 'does not overwrite alt text already saved on the FileSet' do
+    it 'replaces saved FileSet alt text with generated alt text when the CSV value is blank' do
       ENV['BULKRAX_FILESET_ALT_TEXT_ENABLED'] = 'true'
 
       factory.run!
 
-      expect(file_sets.first.alt_text).to eq(['Old alt text'])
-      expect(factory_class.saved_resources).to be_empty
-      expect(factory_class.indexed_resources).to be_empty
+      expect(file_sets.first.alt_text).to eq(['rhino1.jpg'])
+      expect(factory_class.indexed_resources).to eq([resource])
+    end
+
+    it 'replaces saved FileSet alt text with the CSV value when the feature is disabled' do
+      raw_metadata['alt_text'] = 'Alt text from CSV'
+
+      factory.run!
+
+      expect(file_sets.first.alt_text).to eq(['Alt text from CSV'])
     end
 
     it 'fills in a FileSet that has no saved alt text' do
@@ -235,15 +279,34 @@ RSpec.describe Bulkrax::BulkraxFileSetAltTextDecorator do
       expect(factory_class.indexed_resources).to eq([resource])
     end
 
-    it 'does not touch FileSets when the import row has an alt_text value, even when forced' do
+    it "replaces saved FileSet alt text with the work row's CSV value" do
       ENV['BULKRAX_FILESET_ALT_TEXT_ENABLED'] = 'true'
-      ENV['BULKRAX_FILESET_ALT_TEXT_FORCE_REGENERATE'] = 'true'
-      attributes['alt_text'] = ['Alt text from CSV']
+      raw_metadata['alt_text'] = 'Alt text from CSV'
 
       factory.run!
 
-      expect(file_sets.first.alt_text).to eq(['Old alt text'])
-      expect(factory_class.saved_resources).to be_empty
+      expect(file_sets.first.alt_text).to eq(['Alt text from CSV'])
+      expect(factory_class.indexed_resources).to eq([resource])
+    end
+
+    it "applies the work row's CSV value to every FileSet on the row" do
+      ENV['BULKRAX_FILESET_ALT_TEXT_ENABLED'] = 'true'
+      raw_metadata['alt_text'] = 'Alt text from CSV'
+      file_sets << FileSetAltTextDecoratorSpecFileSet.new(title: ['rhino2.jpg'], alt_text: [])
+
+      factory.run!
+
+      expect(file_sets.map(&:alt_text)).to eq([['Alt text from CSV'], ['Alt text from CSV']])
+    end
+
+    it 'generates alt text over the CSV value when force regenerate is on' do
+      ENV['BULKRAX_FILESET_ALT_TEXT_ENABLED'] = 'true'
+      ENV['BULKRAX_FILESET_ALT_TEXT_FORCE_REGENERATE'] = 'true'
+      raw_metadata['alt_text'] = 'Alt text from CSV'
+
+      factory.run!
+
+      expect(file_sets.first.alt_text).to eq(['rhino1.jpg'])
     end
 
     it 'overwrites saved FileSet alt text from the configured formula when forced' do

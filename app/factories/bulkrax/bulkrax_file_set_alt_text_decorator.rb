@@ -16,34 +16,38 @@ module Bulkrax
     # change the formula without changing code.
     #
     # Supported env vars:
-    # - BULKRAX_FILESET_ALT_TEXT_ENABLED: set to true, 1, yes, or on to populate alt text
+    # - BULKRAX_FILESET_ALT_TEXT_ENABLED: set to true, 1, yes, or on to generate alt text
     # - BULKRAX_FILESET_ALT_TEXT_FIELDS: comma-separated fields used to build alt text
     # - BULKRAX_FILESET_ALT_TEXT_SEPARATOR: text placed between field values
     # - BULKRAX_FILESET_ALT_TEXT_SUFFIX: optional phrase appended to generated alt text
     # - BULKRAX_FILESET_ALT_TEXT_FORCE_REGENERATE: set to true, 1, yes, or on to
-    #   overwrite alt text already saved on a FileSet. Alt text supplied in the
-    #   import row itself is never overwritten.
+    #   use generated alt text even when the import row has an alt_text value.
+    #   Only applies when BULKRAX_FILESET_ALT_TEXT_ENABLED is on.
+    #
+    # Each FileSet gets:
+    # - generated alt text, when enabled and force regenerate is on
+    # - otherwise the import row's alt_text value, when it has one
+    # - otherwise generated alt text, when enabled (replacing any saved value)
+    # - otherwise its alt text is left unchanged
     def file_set_params_for(uploads:, files:)
-      return super unless file_set_alt_text_enabled?
-      return super if import_row_alt_text_present?
+      return super unless file_set_alt_text_enabled? || import_row_alt_text.present?
 
       super.map.with_index do |params, index|
-        next params if file_set_alt_text_present?(params)
+        next params if file_set_alt_text_present?(params) && !force_regenerate_alt_text?
 
         file_name = file_name_from_sources(params, files[index], uploads[index])
-        file_alt_text = generated_alt_text(file_name:)
+        file_alt_text = alt_text_for_file_set { generated_alt_text(file_name:) }
 
         next params if file_alt_text.blank?
 
-        params.merge(alt_text: [file_alt_text])
+        params.except('alt_text', :alt_text).merge(alt_text: [file_alt_text])
       end
     end
 
     def sync_persisted_file_set_alt_text(resource)
-      return unless file_set_alt_text_enabled?
       return if resource.blank?
       return if resource.class == Bulkrax.collection_model_class
-      return if import_row_alt_text_present?
+      return unless file_set_alt_text_enabled? || import_row_alt_text.present?
 
       updated_file_sets = persisted_file_sets_for(resource).each_with_index.filter_map do |file_set, index|
         sync_persisted_file_set_alt_text_for(file_set, index)
@@ -62,16 +66,25 @@ module Bulkrax
 
     def sync_persisted_file_set_alt_text_for(file_set, index)
       return unless file_set.respond_to?(:alt_text=)
-      return if persisted_alt_text_present?(file_set) && !force_regenerate_alt_text?
 
-      file_name = persisted_file_set_name(file_set, index)
-      file_alt_text = generated_alt_text(file_name:)
+      file_alt_text = alt_text_for_file_set do
+        generated_alt_text(file_name: persisted_file_set_name(file_set, index))
+      end
 
       return if file_alt_text.blank?
       return if Array.wrap(file_set.try(:alt_text)) == [file_alt_text]
 
       file_set.alt_text = [file_alt_text]
       self.class.save!(resource: file_set, user:)
+    end
+
+    # The block generates alt text for this FileSet. Returns nil when the
+    # FileSet's alt text should be left unchanged.
+    def alt_text_for_file_set
+      return yield if force_regenerate_alt_text?
+      return import_row_alt_text if import_row_alt_text.present?
+
+      yield if file_set_alt_text_enabled?
     end
 
     def persisted_file_set_name(file_set, index)
@@ -104,7 +117,7 @@ module Bulkrax
     end
 
     def force_regenerate_alt_text?
-      truthy_env?('BULKRAX_FILESET_ALT_TEXT_FORCE_REGENERATE')
+      file_set_alt_text_enabled? && truthy_env?('BULKRAX_FILESET_ALT_TEXT_FORCE_REGENERATE')
     end
 
     def truthy_env?(key)
@@ -115,14 +128,41 @@ module Bulkrax
       Array.wrap(params.with_indifferent_access[:alt_text]).any?(&:present?)
     end
 
-    # The import row (work or FileSet) has its own alt_text value, e.g. from a
-    # CSV alt_text column. That value wins over anything generated.
-    def import_row_alt_text_present?
-      direct_attribute_value_for('alt_text').present?
+    # The import row's alt_text value, e.g. from a CSV alt_text column. FileSet
+    # rows carry it in the parsed attributes. Work rows don't: Bulkrax drops
+    # alt_text there because works have no alt_text property, so read it from
+    # the entry's raw CSV row instead. The value is applied as-is to every
+    # FileSet on the row.
+    def import_row_alt_text
+      return @import_row_alt_text if defined?(@import_row_alt_text)
+
+      @import_row_alt_text = direct_attribute_value_for('alt_text').presence || raw_import_row_alt_text
     end
 
-    def persisted_alt_text_present?(file_set)
-      Array.wrap(file_set.try(:alt_text)).any?(&:present?)
+    def raw_import_row_alt_text
+      raw_metadata = import_entry&.raw_metadata
+      return if raw_metadata.blank?
+
+      raw_metadata = raw_metadata.to_h.with_indifferent_access
+      alt_text_source_columns.lazy.map { |column| raw_metadata[column] }.find(&:present?)&.to_s&.strip.presence
+    end
+
+    # CSV columns mapped to alt_text in the Bulkrax field mappings, plus the
+    # default alt_text column.
+    def alt_text_source_columns
+      mapped_columns = bulkrax_field_mappings.values.flat_map do |parser_mapping|
+        Array.wrap(parser_mapping.try(:dig, 'alt_text', 'from'))
+      end
+
+      (mapped_columns.map(&:to_s) + ['alt_text']).uniq
+    end
+
+    def import_entry
+      importer_run_id = try(:importer_run_id)
+      return if importer_run_id.blank? || try(:source_identifier_value).blank?
+
+      importer = Bulkrax::ImporterRun.find_by(id: importer_run_id)&.importer
+      importer&.entries&.find_by(identifier: source_identifier_value)
     end
 
     def alt_text_fields
