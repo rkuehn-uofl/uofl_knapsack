@@ -44,7 +44,7 @@
     </div>
   </section>
 
-  <section class="number-and-sort">
+  <section class="number-and-sort" id="collection-sort">
     <div class="number-of-collections"><%= pluralize(@total_collections_count, 'collection') %></div>
     <div class="sort-collections">
       <%# UOFL OVERRIDE: use Blacklight's own sort dropdown component -- the same
@@ -64,7 +64,7 @@
          Hyrax::HomepageControllerDecorator::SORT_OPTIONS.each do |value, opts|
            collection_sort_dropdown.with_option(
              text: opts[:label],
-             url: main_app.all_collections_path(collection_letter: @selected_collection_letter.presence, collection_description_query: @collection_description_query.presence, collection_sort: value),
+             url: main_app.all_collections_path(collection_letter: @selected_collection_letter.presence, collection_description_query: @collection_description_query.presence, collection_sort: value, anchor: 'collection-sort'),
              selected: @selected_sort == value
            )
          end %>
@@ -80,7 +80,7 @@
          Hyrax::HomepageControllerDecorator::PER_PAGE_OPTIONS.each do |value|
            collection_per_page_dropdown.with_option(
              text: value.to_s,
-             url: main_app.all_collections_path(collection_letter: @selected_collection_letter.presence, collection_description_query: @collection_description_query.presence, collection_sort: @selected_sort, collection_per_page: value),
+             url: main_app.all_collections_path(collection_letter: @selected_collection_letter.presence, collection_description_query: @collection_description_query.presence, collection_sort: @selected_sort, collection_per_page: value, anchor: 'collection-sort'),
              selected: @selected_per_page == value
            )
          end %>
