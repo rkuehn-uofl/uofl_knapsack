@@ -16,7 +16,7 @@
     <%= render 'view_type_group' %>
     <fieldset class="float-left">
       <legend class="sr-only"><%= t('hyrax.sort_label') %></legend>
-      <%# Same collapsed asc/desc toggle dropdown /catalog uses (UoflCatalogSortHelper) %>
+      <%# Blacklight's stock sort dropdown, same one /catalog uses; options come from CatalogControllerSortFieldsDecorator %>
       <%= render 'catalog/sort_widget' %>
       <span class="sr-only"><%= t('blacklight.search.per_page.title') %></span>
       <%= render Blacklight::System::DropdownComponent.new(
