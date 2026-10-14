@@ -2,6 +2,9 @@
 <%
   collection_browse_title = 'Browse by Collection'
   collection_browse_title += " - Letter #{@selected_collection_letter}" if @selected_collection_letter.present?
+  # Carried on every link/form below so changing sort, letter, or search keeps the
+  # visitor's per-page choice. nil (left out of the URL) when it's the default.
+  collection_per_page = @selected_per_page unless @selected_per_page == Hyrax::HomepageControllerDecorator::DEFAULT_PER_PAGE
 %>
 <% provide :page_title, construct_page_title(uofl_page_title_with_page(collection_browse_title)) %>
 <div class="home-collections-browse">
@@ -11,6 +14,7 @@
       <%= form_with url: main_app.all_collections_path, method: :get, local: true, class: 'search' do |form| %>
         <%= hidden_field_tag :collection_letter, @selected_collection_letter if @selected_collection_letter.present? %>
         <%= hidden_field_tag :collection_sort, @selected_sort, id: nil if @selected_sort.present? %>
+        <%= hidden_field_tag :collection_per_page, collection_per_page, id: nil if collection_per_page %>
         <h2 class="sr-only"><%= form.label :collection_description_query, 'Search collection titles and descriptions' %></h2>
         <%= form.search_field :collection_description_query,
                               value: @collection_description_query,
@@ -19,7 +23,7 @@
         <button type="submit" aria-label="Search"><i class="fa-solid fa-magnifying-glass"></i></button>
       <% end %>
       <% if @collection_description_query.present? %>
-        <%= link_to 'Clear search', main_app.all_collections_path(collection_letter: @selected_collection_letter.presence, collection_sort: @selected_sort), class: 'plain-link' %>
+        <%= link_to 'Clear search', main_app.all_collections_path(collection_letter: @selected_collection_letter.presence, collection_sort: @selected_sort, collection_per_page:), class: 'plain-link' %>
       <% end %>
     </div>
   </section>
@@ -29,12 +33,12 @@
       <div><strong>Browse by name</strong></div>
       <nav class="alpha-nav" aria-label="Filter collections by first letter">
         <%= link_to 'All',
-                    main_app.all_collections_path(collection_description_query: @collection_description_query.presence, collection_sort: @selected_sort),
+                    main_app.all_collections_path(collection_description_query: @collection_description_query.presence, collection_sort: @selected_sort, collection_per_page:),
                     class: @selected_collection_letter.blank? ? 'active' : nil %>
         <% ('A'..'Z').each do |letter| %>
           <% if @collection_letters.include?(letter) %>
             <%= link_to letter,
-                        main_app.all_collections_path(collection_letter: letter, collection_description_query: @collection_description_query.presence, collection_sort: @selected_sort),
+                        main_app.all_collections_path(collection_letter: letter, collection_description_query: @collection_description_query.presence, collection_sort: @selected_sort, collection_per_page:),
                         class: @selected_collection_letter == letter ? 'active' : nil %>
           <% else %>
             <span class="disabled" aria-disabled="true"><%= letter %></span>
@@ -64,7 +68,7 @@
          Hyrax::HomepageControllerDecorator::SORT_OPTIONS.each do |value, opts|
            collection_sort_dropdown.with_option(
              text: opts[:label],
-             url: main_app.all_collections_path(collection_letter: @selected_collection_letter.presence, collection_description_query: @collection_description_query.presence, collection_sort: value, anchor: 'collection-sort'),
+             url: main_app.all_collections_path(collection_letter: @selected_collection_letter.presence, collection_description_query: @collection_description_query.presence, collection_sort: value, collection_per_page:, anchor: 'collection-sort'),
              selected: @selected_sort == value
            )
          end %>
