@@ -17,20 +17,21 @@
 # config.facet_fields sees the real UofL facet set, not the pre-decorator
 # hyrax-webapp defaults.
 module CatalogControllerSearchFieldsDecorator
-  # Field pulldown shown on /advanced (BlacklightAdvancedSearch's
-  # #search_fields_for_advanced_search, used by
-  # app/views/themes/uofl/advanced/_advanced_search_fields.html.erb, which
-  # already calls that filtered helper).
+  # Search fields shown on /advanced: BlacklightAdvancedSearch's
+  # #search_fields_for_advanced_search keeps only fields flagged
+  # include_in_advanced_search, and this list sets that flag (see the loop in
+  # #configure_uofl_advanced_search). people_represented and story are defined
+  # in catalog_controller_decorator.rb, which loads first.
   SEARCH_FIELD_KEYS = %w[
     all_fields contributor creator title description subject
     people_represented story
   ].freeze
 
-  # Attribute accordion shown on /advanced. See the comment on
-  # app/views/themes/uofl/advanced/_advanced_search_facets_as_checkboxes.html.erb
-  # -- it calls facet_field_names_for_advanced_search (filtered by this flag)
-  # instead of the unfiltered facet_field_names, so this list -- and only
-  # this list -- controls what shows there.
+  # Facets flagged include_in_advanced_search, and the facets whose /advanced
+  # value lists are uncapped (form_solr_parameters below). Which attributes
+  # actually appear on /advanced, and in what order, is decided by
+  # AdvancedHelperBehaviorDecorator::ADVANCED_SEARCH_FACET_ORDER -- keep the
+  # two lists in sync.
   FACET_FIELD_KEYS = %w[
     member_of_collections_ssim county_sim city_sim neighborhood_sim
     street_sim region_sim location_sim object_type_sim resource_type_sim
@@ -39,25 +40,6 @@ module CatalogControllerSearchFieldsDecorator
 
   def configure_uofl_advanced_search
     configure_blacklight do |config|
-      # Guarded because in development this file is reloaded (not just
-      # required once) on every request; add_search_field/add_facet_field
-      # raise if the key is already registered.
-      unless config.search_fields.key?('people_represented')
-        config.add_search_field('people_represented') do |field|
-          field.label = 'People'
-          solr_name = 'people_represented_tesim'
-          field.solr_local_parameters = { qf: solr_name, pf: solr_name }
-        end
-      end
-
-      unless config.search_fields.key?('story')
-        config.add_search_field('story') do |field|
-          field.label = 'Story'
-          solr_name = 'story_tesim'
-          field.solr_local_parameters = { qf: solr_name, pf: solr_name }
-        end
-      end
-
       config.search_fields.each do |key, field|
         field.include_in_advanced_search = SEARCH_FIELD_KEYS.include?(key)
       end

@@ -18,35 +18,9 @@ module CatalogControllerDecorator
     ['resource_type_sim', { label: 'Resource type', limit: 5 }]
   ].freeze
 
-  # NOTE: this constant and the loop that reads it (in #configure_uofl_facets
-  # below) no longer decide what shows in the "Attribute" pulldown on
-  # /advanced. That used to be true of the unmodified
-  # blacklight_advanced_search gem's #facet_field_names_for_advanced_search,
-  # which does key off facet_fields[...].include_in_advanced_search -- but
-  # app/helpers/advanced_helper_behavior_decorator.rb replaces that method
-  # wholesale (never calls super) and derives the pulldown from its own
-  # ADVANCED_SEARCH_FACET_ORDER constant instead, filtered only by whether
-  # the facet exists. Everything in FACETS still renders as a sidebar facet
-  # on regular search/browse regardless of this flag either way. Kept as-is
-  # (not removed) since it may still document prior intent worth preserving
-  # -- see app/helpers/advanced_helper_behavior_decorator.rb for the list
-  # that's actually authoritative now.
-  ADVANCED_SEARCH_FACETS = %w[
-    member_of_collections_ssim county_sim city_sim neighborhood_sim
-    street_sim region_sim location_sim object_type_sim resource_type_sim
-  ].freeze
-
-  # Which config.search_fields show up in the field pulldown on /advanced
-  # (BlacklightAdvancedSearch#search_fields_for_advanced_search, same
-  # include_in_advanced_search mechanism as facets above). Order here is the
-  # display order, since Blacklight renders the pulldown in config insertion
-  # order and CatalogController#configure_blacklight defines all_fields,
-  # contributor, creator, title, description, subject in that order already;
-  # people_represented and story are new fields added below.
-  ADVANCED_SEARCH_FIELDS = %w[
-    all_fields contributor creator title description subject
-    people_represented story
-  ].freeze
+  # Which fields/facets appear on /advanced (include_in_advanced_search) is set
+  # in catalog_controller_search_fields_decorator.rb, which loads after this
+  # file and is the single place for it.
 
   def configure_uofl_facets
     configure_blacklight do |config|
@@ -54,10 +28,6 @@ module CatalogControllerDecorator
 
       FACETS.each do |field, options|
         config.add_facet_field field, **options
-      end
-
-      config.facet_fields.each do |key, field|
-        field.include_in_advanced_search = ADVANCED_SEARCH_FACETS.include?(key)
       end
 
       config.add_facet_fields_to_solr_request!
@@ -68,6 +38,8 @@ module CatalogControllerDecorator
     configure_blacklight do |config|
       # Not defined by CatalogController's own configure_blacklight block --
       # add them so they can appear in the advanced search field pulldown.
+      # Defined here (not in catalog_controller_search_fields_decorator.rb) so
+      # they keep their place in config.search_fields order.
       # Guarded because in development this file is reloaded (not just
       # required once) on every request; add_search_field raises if the key
       # is already registered.
@@ -124,7 +96,6 @@ module CatalogControllerDecorator
       unless config.search_fields.key?('subject_tesim')
         config.add_search_field('subject_tesim') do |field|
           field.label = 'Subject'
-          field.include_in_advanced_search = false
           field.solr_parameters = { qf: 'subject_tesim', pf: 'subject_tesim' }
         end
       end
@@ -163,13 +134,8 @@ module CatalogControllerDecorator
 
         config.add_search_field(key) do |field|
           field.label = label
-          field.include_in_advanced_search = false
           field.solr_parameters = { qf: key, pf: key }
         end
-      end
-
-      config.search_fields.each do |key, field|
-        field.include_in_advanced_search = ADVANCED_SEARCH_FIELDS.include?(key)
       end
     end
   end
