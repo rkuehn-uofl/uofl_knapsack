@@ -1,16 +1,17 @@
-<%# UOFL OVERRIDE: offer a Download PDF button and, when an uploaded .txt file set exists, a Download Text button alongside it %>
-<% pdf_file_set = presenter.file_set_presenters.find(&:pdf?) %>
+<%# UOFL OVERRIDE: Hyku 7.2.0 hyrax/base/_download_pdf.html.erb, plus a Download Text button when an uploaded .txt file set exists %>
+<%# Like Hyku, the PDF button prefers the work's representative PDF (the one the PDF viewer shows) among PDFs the visitor can download. %>
+<% pdf = pdf_file_set_presenter(presenter, downloadable: true) %>
 <% text_file_set = presenter.file_set_presenters.find { |fs| fs.mime_type == 'text/plain' } %>
-<% if pdf_file_set %>
+<% if presenter.file_set_presenters.any?(&:pdf?) %>
   <div class="download-pdf-controls">
-    <% if can?(:download, pdf_file_set.id) %>
+    <% if pdf.present? %>
       <%= button_tag type: 'button',
                      id: "file_download",
-                     data: { label: pdf_file_set.id,
-                             path: hyrax.download_path(pdf_file_set) },
+                     data: { label: pdf.id,
+                             path: hyrax.download_path(pdf) },
                      class: "btn btn-success btn-block file_download center-block",
-                     onclick: "window.open(this.dataset.path, '_blank');" do %>
-        Download PDF
+                     onclick: "window.open(this.dataset.path, '_blank', 'noopener,noreferrer');" do %>
+        <%= t('hyrax.base.download_pdf') %>
       <% end %>
     <% end %>
     <% if text_file_set && can?(:download, text_file_set.id) %>
@@ -19,7 +20,7 @@
                      data: { label: text_file_set.id,
                              path: hyrax.download_path(text_file_set) },
                      class: "btn btn-success btn-block file_download center-block",
-                     onclick: "window.open(this.dataset.path, '_blank');" do %>
+                     onclick: "window.open(this.dataset.path, '_blank', 'noopener,noreferrer');" do %>
         Download Text
       <% end %>
     <% end %>
