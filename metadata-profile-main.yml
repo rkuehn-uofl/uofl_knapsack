@@ -1,11 +1,11 @@
 ---
 m3_version: 1.0.beta2
 profile:
-  date_modified: '2026-09-23'
+  date_modified: '2026-10-13'
   responsibility: https://samvera.org
   responsibility_statement: Hyku Initial Profile
   type: Hyku Initial Profile
-  version: 23
+  version: 26
 classes:
   GenericWorkResource:
     display_label: Generic Work
@@ -1613,7 +1613,7 @@ properties:
     sample_values:
     - http://creativecommons.org/licenses/by/3.0/us/
     view:
-      render_as: external_link
+      render_as: linked
       html_dl: true
   related_resource:
     available_on:
@@ -2143,7 +2143,7 @@ properties:
     sample_values:
     - http://example.com/resource1
     view:
-      render_as: external_link
+      render_as: linked
       html_dl: true
   relative_path:
     available_on:
@@ -2976,4 +2976,29 @@ properties:
     view:
       render_as: linked
       search_field: keyword_tesim
+      html_dl: true
+  redirects:
+    available_on:
+      class:
+      - GenericWorkResource
+      - ImageResource
+      - OerResource
+      - EtdResource
+      - Text
+      - CollectionResource
+    cardinality:
+      minimum: 0
+    display_label:
+      default: Redirects
+    type: hash
+    multiple: true
+    form:
+      display: false
+    indexing:
+    - editor_only
+    property_uri: http://samvera.org/ns/hyku/redirects
+    range: http://www.w3.org/2001/XMLSchema#string
+    view:
+      render_term: redirects_path
+      render_as: redirects_label
       html_dl: true

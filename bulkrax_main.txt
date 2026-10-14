@@ -1,5 +1,19 @@
 {
   "Bulkrax::CsvParser": {
+    "path": {
+      "from": [
+        "redirect_path"
+      ],
+      "object": "redirects",
+      "nested_attributes": true
+    },
+    "is_display_url": {
+      "from": [
+        "redirect_is_display_url"
+      ],
+      "object": "redirects",
+      "nested_attributes": true
+    },
     "abstract": {
       "from": [
         "photo_comment"
