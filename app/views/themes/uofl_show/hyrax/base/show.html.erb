@@ -6,6 +6,10 @@
 <%# UOFL OVERRIDE: UofL Theme %>
 <% content_for(:extra_body_classes, 'works-show ') %>
 <% provide :page_title, @presenter.page_title %>
+<%# Mirror Hyrax 5.3: canonical URL (the record's display-URL alias when it has one) %>
+<% content_for :canonical_url do %>
+  <link rel="canonical" href="<%= canonical_url_for(@presenter) %>" />
+<% end %>
 
 <div id="uofl_show-hyrax-base_show">
 <%= render 'shared/citations' %>

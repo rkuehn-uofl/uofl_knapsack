@@ -13,6 +13,12 @@ scholarly_show:
 community_show:
   name: Community Show Page
   notes: This show page features a dual-column layout for the metadata section, and a citation modal.
+practice_research_show:
+  name: Practice Research Show Page
+  notes: A narrative-first show page with a tabbed body (context statement, additional information, items, files) and a metadata sidebar with contributors, relationships, rights, and citation cards.
+heritage_show:
+  name: Heritage Show Page
+  notes: Viewer, description, and a two-column metadata table in the main column, with a 320px rail carrying the citation panel and Files and Child works panels that paginate in place at ten entries.
 uofl_show:
   name: UofL Show Page
   notes: University of Louisville branded work show page theme.
