@@ -118,6 +118,11 @@
     </div>
   </div>
 
+  <%# Mirror Hyku 7.2: compound metadata cards as their own band, after the
+      collection metadata and before the member listing (renders nothing until
+      the profile uses `view: { display: card }`). %>
+  <%= render_compound_cards(@presenter) %>
+
   <!-- Search results label -->
   <% if @members_count > 0 || @presenter.subcollection_count > 0 %>
     <div class="hyc-blacklight hyc-bl-title" id="collection-results-anchor">

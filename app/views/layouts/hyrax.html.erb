@@ -14,6 +14,8 @@
     <div class="skip-to-content">
       <%= link_to "Skip to Content", "#skip-to-content" %>
     </div>
+    <%# Mirror Hyku 7.2: renders only for public demo tenants %>
+    <%= render 'shared/demo_banner' %>
     <%= render '/masthead', placement_class: nil %>
     <%= content_for(:navbar) %>
     <%= content_for(:precontainer_content) %>

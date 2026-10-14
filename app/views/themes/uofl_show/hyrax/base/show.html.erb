@@ -22,6 +22,8 @@
   <div itemscope itemtype="http://schema.org/CreativeWork" class="col-12">
     <%= render 'work_title', presenter: @presenter %>
     <%= render 'show_actions', presenter: @presenter %>
+    <%# Mirror Hyku 7.2: fields with `view: { position: featured }` (renders nothing until the profile uses it) %>
+    <%= render 'featured_attributes', presenter: @presenter %>
     <div class="card">
       <div class="card-body">
         <div class="row">
@@ -57,6 +59,11 @@
         </div>
       </div>
     </div><!-- /card -->
+
+    <%# Mirror Hyku 7.2: compounds declared `view: { display: card }` render as their
+        own cards (renders nothing until the profile uses it). Kept outside the
+        editors-only block below so they stay public like the rest of the metadata. %>
+    <%= render_compound_cards(@presenter) %>
 
     <%# UOFL OVERRIDE: hide Items section from public/anonymous users, keep for staff who can edit the work %>
       <% if can?(:edit, @presenter.id) %>

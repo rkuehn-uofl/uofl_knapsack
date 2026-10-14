@@ -20,6 +20,8 @@
     <div class="skip-to-content">
       <%= link_to "Skip to Content", "#skip-to-content" %>
     </div>
+    <%# Mirror Hyku 7.2: renders only for public demo tenants %>
+    <%= render 'shared/demo_banner' %>
     <div id="masthead" class="layouts-hyrax-html-erb">
     <%= render '/masthead', placement_class: nil %>
 </div>
