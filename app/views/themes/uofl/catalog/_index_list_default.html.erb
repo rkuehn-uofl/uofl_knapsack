@@ -12,19 +12,20 @@
 
   <div class="metadata">
     <dl>
-      <% doc_presenter = index_presenter(document) %>
+      <% doc_presenter = document_presenter(document) %>
       <% uofl_index_fields = %w[source_identifier_tesim description_tesim date_original_tesim] %>
       <% uofl_index_field_labels = { 'source_identifier_tesim' => 'Item Number:', 'date_original_tesim' => 'Date Original:' } %>
-      <% index_fields(document).each do |field_name, field| -%>
+      <%# fields_to_render already skips fields that shouldn't render or have no values %>
+      <% doc_presenter.fields_to_render.each do |field_name, _field_config, field_presenter| -%>
       <% next unless uofl_index_fields.include?(field_name) %>
-      <% field_value = doc_presenter.field_value(field) %>
+      <% field_value = field_presenter.render %>
         <%# field_value is HTML (Hyrax wraps it in a <span itemprop="..."> for microdata), so an empty
             value still yields a non-blank string like <span itemprop="date_original"></span>; strip
             tags before checking presence so fields with no visible text are skipped. %>
-        <% if should_render_index_field?(document, field) && strip_tags(field_value).present? %>
+        <% if strip_tags(field_value).present? %>
           <div class="row">
             <dt class="col-4" data-solr-field-name="<%= field_name %>">
-              <%= uofl_index_field_labels.fetch(field_name) { render_index_field_label document, field: field_name } %>
+              <%= uofl_index_field_labels.fetch(field_name) { t('blacklight.search.index.label', label: field_presenter.label) } %>
             </dt>
             <dd class="col-8"><%= markdown(field_value) %></dd>
           </div>
