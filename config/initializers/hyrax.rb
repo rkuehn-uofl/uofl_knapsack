@@ -24,4 +24,8 @@ Rails.application.config.after_initialize do
       ]
     end
   end
+
+  # Work classes snapshot Hyrax.config.curation_concerns into valid_child_concerns when
+  # they load, which under eager loading is before this block registers Text.
+  HykuKnapsack::ReseedValidChildConcerns.call
 end
