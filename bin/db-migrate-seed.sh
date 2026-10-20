@@ -15,6 +15,10 @@ def run_command(command)
   stdout
 end
 
+def truthy?(value)
+  !['', '0', 'f', 'false', 'off'].include?(value.to_s.downcase)
+end
+
 def migrations_list(query)
   result = run_command(query)
   result.split("\n").map(&:strip).reject(&:empty?)
@@ -24,7 +28,7 @@ end
 
 def bundled_migrations
   migration_list = Bundler.load.specs.inject([]) do |arr, spec|
-    if File.exist?("#{spec.full_gem_path}/lib/*/engine.rb")
+    if Dir.glob("#{spec.full_gem_path}/lib/*/engine.rb").any?
       migrations = Dir.glob("#{spec.full_gem_path}/db/migrate/*")
       migrations.each do |migration_path|
         arr.push(File.basename(migration_path).split('_').first)
@@ -32,7 +36,7 @@ def bundled_migrations
     end
     arr
   end
-  Dir.glob('db/migrate/*.rb').each do |migration_path|
+  (Dir.glob('db/migrate/*.rb') + Dir.glob('../db/migrate/*.rb')).each do |migration_path|
     migration_list.push(File.basename(migration_path).split('_').first)
   end
   migration_list
@@ -49,8 +53,11 @@ begin
   db_name = ENV['DB_NAME']
   db_password = ENV['DB_PASSWORD']
 
+  disable_wings = truthy?(ENV['HYRAX_SKIP_WINGS'])
+  fcrepo_reachable = !disable_wings && fcrepo_host && fcrepo_host != 'NO_FCREPO_HOST_DEFINED'
+
   service_wait("#{db_host}:#{db_port}")
-  service_wait("#{fcrepo_host}:#{fcrepo_port}") if fcrepo_host
+  service_wait("#{fcrepo_host}:#{fcrepo_port}") if fcrepo_reachable
   service_wait("#{solr_host}:#{solr_port}")
 
   migrations_run_query = "PGPASSWORD=#{db_password} psql -h #{db_host} -U #{db_user} #{db_name} -t -c \"SELECT version FROM schema_migrations ORDER BY schema_migrations\""

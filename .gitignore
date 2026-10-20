@@ -16,3 +16,4 @@ file_cache/
 /branding/
 /app/assets/images/themes/
 /solr/security.json
+Gemfile.lock

@@ -1,4 +1,5 @@
 ARG HYRAX_IMAGE_VERSION=hyrax-v5.2.0
+ARG SOLR_VERSION=8
 FROM ghcr.io/samvera/hyrax/hyrax-base:$HYRAX_IMAGE_VERSION AS hyku-web
 
 USER root
@@ -10,7 +11,7 @@ ENV LD_PRELOAD=/usr/lib/libjemalloc.so.2
 ENV MALLOC_CONF='dirty_decay_ms:1000,narenas:2,background_thread:true'
 
 ENV TESSDATA_PREFIX=/app/samvera/tessdata
-ADD https://github.com/tesseract-ocr/tessdata_best/blob/main/eng.traineddata?raw=true /app/samvera/tessdata/eng_best.traineddata
+ADD https://raw.githubusercontent.com/tesseract-ocr/tessdata_best/main/eng.traineddata /app/samvera/tessdata/eng_best.traineddata
 
 ############### KNAPSACK SPECIFIC CODE ###################
 # This means bundler inject looks at /app/samvera/.bundler.d for overrides
@@ -28,3 +29,16 @@ CMD ./bin/web
 
 FROM hyku-web AS hyku-worker
 CMD ./bin/worker
+
+FROM solr:${SOLR_VERSION} AS hyku-solr
+ENV SOLR_USER="solr" \
+    SOLR_GROUP="solr"
+USER root
+COPY --chown=solr:solr hyrax-webapp/solr/security.json /var/solr/data/security.json
+COPY --chown=solr:solr hyrax-webapp/solr/conf /opt/solr/server/solr/configsets/hyku/conf
+USER $SOLR_USER
+
+FROM ghcr.io/notch8/scripts/bitnamilegacy-nginx:1.21.6-debian-11-r21 AS hyku-nginx
+COPY --from=hyku-web /app/samvera/hyrax-webapp/public/assets /app/samvera/hyrax-webapp/public/assets
+COPY --from=hyku-web /app/samvera/hyrax-webapp/public/pdf.js /app/samvera/hyrax-webapp/public/pdf.js
+COPY --from=hyku-web /app/samvera/hyrax-webapp/public/uv /app/samvera/hyrax-webapp/public/uv
