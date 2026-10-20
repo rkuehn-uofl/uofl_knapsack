@@ -1,5 +1,6 @@
 {
   "options": {
+    "pagingEnabled": false,
     "searchWithinEnabled": false
   },
   "modules": {

@@ -1301,7 +1301,10 @@ body.public-facing .hyc-container {
     }
     input#collection_search { padding-left:1rem;}
 
-    .row.hyc-body img { border-radius:$border-radius;}
+    .row.hyc-body img { 
+      border-radius:$border-radius;
+      background-color:$black;
+    }
 
     .hyc-last-updated,
     #hyc-collection-metadata-total_items  { display:none;}
@@ -1804,7 +1807,10 @@ body.public-facing .hero-content h1 span {
 		color: $black;
 		cursor: pointer;
 	}
-	.type-filter a:hover { background: $greige-light; }
+	.type-filter a:hover { 
+    background-color: $blue;
+    color:white;
+  }
 }
 
 	/* body.public-facing prefix for the same specificity reason as .hero-content h1 above. */
