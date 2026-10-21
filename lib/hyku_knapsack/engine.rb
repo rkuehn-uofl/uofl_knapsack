@@ -10,6 +10,18 @@ module HykuKnapsack
       app.middleware.use ::ActionDispatch::Static, HykuKnapsack::Engine.root.join('public').to_s
     end
 
+    # UOFL OVERRIDE: Error pages come from the knapsack's public/<status>.html when
+    # one exists (e.g. the branded 404.html), else from the host app's public/.
+    initializer 'hyku_knapsack.exceptions_app' do |app|
+      knapsack_public = HykuKnapsack::Engine.root.join('public')
+      knapsack_exceptions = ::ActionDispatch::PublicExceptions.new(knapsack_public.to_s)
+      host_exceptions = ::ActionDispatch::PublicExceptions.new(app.paths['public'].first)
+      app.config.exceptions_app = lambda do |env|
+        status = env['PATH_INFO'].to_s.delete_prefix('/')
+        knapsack_public.join("#{status}.html").exist? ? knapsack_exceptions.call(env) : host_exceptions.call(env)
+      end
+    end
+
     # Flipflop loads the host app's config/features.rb only; register the
     # knapsack's so it can ship feature flags of its own.
     initializer 'hyku_knapsack.flipflop_features' do
