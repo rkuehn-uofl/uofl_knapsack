@@ -41,68 +41,1276 @@
 #         reference its path (relative to app/assets/images/) in `image`,
 #         with matching `image_alt` text describing that image.
 
-active_group: storefronts
+active_group: trains
 
 groups:
-  storefronts:
-    title: Storefronts & Deliveries
-    description: Ewing's Creamery storefront and delivery scenes along Breckinridge Street.
-    search_path: "/catalog?f%5Bstreet_sim%5D%5B%5D=Breckinridge+Street+%28Louisville%2C+Ky.%29&f%5Bsubject_sim%5D%5B%5D=Storefronts&locale=en&search_field=all_fields&sort=title_ssi+asc"
+  aerial:
+    title: Take It from the Top
+    description: Aerial photos of Louisville, Kentucky.
+    search_path: "/catalog?"
+    start_date: 2028-02-15
+    end_date: 2028-02-29
     pictures:
-      - work_id: b8a33076-78b7-462e-a75b-f8529fe9fde1
-        image: themes/uofl/homepage/featured_carousel/1981_008_002_pt.jpg
-        image_alt: Three men in the doorway of Ewing's Creamery, "Ice Cream" painted on the storefront window (item ULPA 1981_008_004)
+      - work_id: ULPA CS_187658
+        image: themes/uofl/homepage/featured_carousel/aerial_CS_187658_600x400_lossy100.webp
+        image_alt: Aerial view of the Louisville Hydro Electric Power Plant, 1935
+        notes: 
 
-      - work_id: bdb747d5-6ea8-47ac-b683-ed1b8eeb387a
-        image: themes/uofl/homepage/featured_carousel/1981_008_006_pt.jpg
-        image_alt: A horse-drawn Ewing's Creamery delivery wagon with workers loading milk (item ULPA 1981_008_006)
+      - work_id: ULPA P_00565
+        image: themes/uofl/homepage/featured_carousel/aerial_P_00565_600x400_lossy100.webp
+        image_alt: Aerial view of Louisville City Hospital, 1941
+        notes: 
 
-      - work_id: 7359a017-4c70-4369-b389-e1d5ad6abe7f
-        image: themes/uofl/homepage/featured_carousel/milk.jpg
-        image_alt: Interior of the Ewing's Creamery shop, milk cans lined along the floor beneath a "Sunday" sign (item ULPA 1981_008_002)
+      - work_id: ULPA CS_045939
+        image: themes/uofl/homepage/featured_carousel/aerial_CS_045939_600x400_lossy100.webp
+        image_alt: Aerial view of Louisville and Portland Canal, Louisville, Kentucky, 1922.
+        notes: 
 
-      - work_id: e636dab5-fa8e-4df2-9788-7000555c08e6
-        image: themes/uofl/homepage/featured_carousel/bake.jpg
-        image_alt: A dairy worker in white examines milk bottles beside tall wooden storage crates (item ULPA 1981_008_015)
+      - work_id: ULPA 1994_018_1053
+        image: themes/uofl/homepage/featured_carousel/aerial_ULPA_1994_018_1053_600x400_lossy100.webp
+        image_alt: Aerial view of Sacred Heart Academy, Lexington Road, Louisville, Kentucky, date unknown
+        notes: 
 
-  dairy_workers:
-    title: Dairy Workers
-    description: Workers at Ewing's Creamery handling milk, bottles, and deliveries.
-    search_path: "/catalog?f%5Bsubject_sim%5D%5B%5D=Dairy+workers&locale=en&q=&search_field=all_fields&sort=title_ssi+asc"
+      - work_id: ULUA 2009_028_052
+        image: themes/uofl/homepage/featured_carousel/aerial_ULUA_2009_028_052_screenshot_600x400_lossy100.webp
+        image_alt: Aerial view of the University of Louisville Health Sciences campus and other downtown buildings, 2009
+        notes: 
+
+  baseball:
+    title: Play Ball
+    description: Take me out to the ballpark… after checking out these baseball cards and photos.
+    search_path: "/catalog?search_field=all_fields&q=baseball"
+    start_date: 2028-07-01
+    end_date: 2028-07-15
     pictures:
-      - work_id: e94e2791-73b5-4551-9692-6eb0559c1b17
-        image: themes/uofl/homepage/featured_carousel/bake.jpg
-        image_alt: A dairy worker in white examines milk bottles beside tall wooden storage crates (item ULPA 1981_008_001)
+      - work_id: ULPA CS_040887
+        image: themes/uofl/homepage/featured_carousel/baseball_CS_040887_600x400_lossy100.webp
+        image_alt: Boys playing baseball, Louisville, Kentucky, 1922.
+        notes: 
 
-      - work_id: 2247a9e5-5a1d-45ee-98bb-7c63a3c2eec2
-        image: themes/uofl/homepage/featured_carousel/milk.jpg
-        image_alt: Interior of the Ewing's Creamery shop, milk cans lined along the floor beneath a "Sunday" sign (item ULPA 1981_008_016)
+      - work_id: ULPA CS_253193
+        image: themes/uofl/homepage/featured_carousel/baseball_CS_253193_600x400_lossy100.webp
+        image_alt: African American men's softball team, Louisville, Kentucky, 1950.
+        notes: 
 
-      - work_id: 2850996a-1b4d-4ca7-ab64-8f6043d43ab3
-        image: themes/uofl/homepage/featured_carousel/1981_008_002_pt.jpg
-        image_alt: Three men in the doorway of Ewing's Creamery, "Ice Cream" painted on the storefront window (item ULPA 1981_008_020)
+      - work_id: ULPA R_07222
+        image: themes/uofl/homepage/featured_carousel/baseball_R_07222_00_600x400_lossy100.webp
+        image_alt: Ted Williams posing with Louisville Slugger bat at Hillerich and Bradsby, 1942.
+        notes: 
 
-      - work_id: 1219591c-ca23-4497-b1df-2a98ebb62bba
-        image: themes/uofl/homepage/featured_carousel/1981_008_006_pt.jpg
-        image_alt: A horse-drawn Ewing's Creamery delivery wagon with workers loading milk (item ULPA 1981_008_025)
+      - work_id: ULAL Brecher_Clarke02
+        image: themes/uofl/homepage/featured_carousel/baseball_ULAL_Brecher_Clarke02_214x400_lossy100.webp
+        image_alt: Baseball card for Fred Clarke of the Pittsburg Nationals, 1911
+        notes: 
 
-  creamery_equipment:
-    title: Processing Equipment
-    description: Pasteurization and processing equipment inside the Ewing's Creamery facility.
-    search_path: "/catalog?f%5Bsubject_sim%5D%5B%5D=Food+processing+machinery&locale=en&q=&search_field=all_fields&sort=title_ssi+asc"
+  basketball:
+    title: Basketball in Louisville
+    description: From the early 20th century to today, trace the history of basketball in Louisville.
+    search_path: "/catalog?search_field=all_fields&q=basketball"
+    start_date: 2027-03-16
+    end_date: 2027-03-31
     pictures:
-      - work_id: 9b5ed9b4-57a6-4ef6-b0f7-7b2b3dabfa62
-        image: themes/uofl/homepage/featured_carousel/milk.jpg
-        image_alt: Interior of the Ewing's Creamery shop, milk cans lined along the floor beneath a "Sunday" sign (item ULPA 1981_008_003)
+      - work_id: ULUA Cardinal 20030311
+        image: themes/uofl/homepage/featured_carousel/bball_ULUA_Cardinal_20030311_00001_600x400_lossy100.webp
+        image_alt: Reece Gaines and coach Rick Pitino on cover of The Louisville Cardinal March 11 2003
+        notes: test URLs
 
-      - work_id: c694de0c-adac-4496-ac8e-22fd783f6ef1
-        image: themes/uofl/homepage/featured_carousel/bake.jpg
-        image_alt: A dairy worker in white examines milk bottles beside tall wooden storage crates (item ULPA 1981_008_017)
+      - work_id: ULUA maccallumbasketballjournal19131914_080
+        image: themes/uofl/homepage/featured_carousel/bball_ULUA_maccallum_basketball_journal_19131914_p080_screenshot_600x400_lossy100.webp
+        image_alt: Florence Daisy McCallum Basket Ball Journal, 1913-1916 
+        notes: 
 
-      - work_id: 1aced765-ce1c-4c3d-8f3f-80372f0791fa
-        image: themes/uofl/homepage/featured_carousel/1981_008_006_pt.jpg
-        image_alt: A horse-drawn Ewing's Creamery delivery wagon with workers loading milk (item ULPA 1981_008_018)
+      - work_id: ULUA Cardinal 20121113
+        image: themes/uofl/homepage/featured_carousel/bball_ULUA_Cardinal_20121113_00001_600x400_lossy100.webp
+        image_alt: Womens basketball action shot U of L versus Texas A and M on cover The Louisville Cardinal November 13 2012
+        notes: 
 
-      - work_id: c871008e-5d2e-4a3b-9196-93a2c2aacf8e
-        image: themes/uofl/homepage/featured_carousel/1981_008_002_pt.jpg
-        image_alt: Three men in the doorway of Ewing's Creamery, "Ice Cream" painted on the storefront window (item ULPA 1981_008_014)
+      - work_id: ULPA CS_070779
+        image: themes/uofl/homepage/featured_carousel/bball_ULPA_CS_070779_600x400_lossy100.webp
+        image_alt: Hope Presbyterian Mission basketball team, Louisville, Kentucky, 1925-26.
+        notes: 
+
+
+  baton:
+    title: Baton Rouge
+    description: Check out this series on Louisiana oil workers on the job and off.
+    search_path: "catalog?"
+    start_date: 2027-09-01
+    end_date: 2027-09-15
+    pictures:
+      - work_id: ULPA SONJ_00779
+        image: themes/uofl/homepage/featured_carousel/baton_SONJ_00779_600x400_lossy100.webp
+        image_alt: Workmen relaxing, Baton Rouge, Louisiana, 1943.
+        notes: 
+
+      - work_id: ULPA SONJ_00900
+        image: themes/uofl/homepage/featured_carousel/baton_SONJ_00900_378x400_lossy100.webp
+        image_alt: Preacher and child, Baton Rouge, Louisiana, 1943.
+        notes: 
+
+      - work_id: ULPA SONJ_48504
+        image: themes/uofl/homepage/featured_carousel/baton_SONJ_48504_388x400_lossy100.webp
+        image_alt: Welder going to work on bicycle, Baton Rouge, Louisiana, 1947.
+        notes: 
+
+      - work_id: ULPA SONJ_31439
+        image: themes/uofl/homepage/featured_carousel/baton_SONJ_31439_397x400_lossy100.webp
+        image_alt: Men rabbit hunting, Baton Rouge, Louisiana, 1946.
+        notes: 
+
+      - work_id: ULPA SONJ_48850
+        image: themes/uofl/homepage/featured_carousel/baton_SONJ_48850_386x400_lossy100.webp
+        image_alt: Tanker being loaded with gasoline at refinery, Baton Rouge, Louisiana, 1947.
+        notes: 
+
+  bikes:
+    title: Get on your bike and ride!
+    description: Photos of bicycles in Louisville and the whole wide world.
+    search_path: "catalog?"
+    start_date: 2027-08-01
+    end_date: 2027-08-15
+    pictures:
+      - work_id: ULPA 1989_026_3026
+        image: themes/uofl/homepage/featured_carousel/bikes_ULPA_1989_026_3026_600x400_lossy100.webp
+        image_alt: Children with bike, Louisville, Kentucky, 1965.
+        notes: 
+
+      - work_id: ULPA CS_037442
+        image: themes/uofl/homepage/featured_carousel/bikes_CS_037442_600x400_lossy100.webp
+        image_alt: Five boys with bicycles in front of Louisville Free Public Library main branch, 1921.
+        notes: 
+
+      - work_id: ULUA 2010_098_1540
+        image: themes/uofl/homepage/featured_carousel/bikes_ULUA_2010_098_1540_600x400_lossy100.webp
+        image_alt: Young woman rides small tricycle in University of Louisville Pegasus Pedalathon, 1969.
+        notes: 
+
+      - work_id: ULPA SONJ_25155
+        image: themes/uofl/homepage/featured_carousel/bikes_SONJ_25155_440x400_lossy100.webp
+        image_alt: Boy on bicycle in front of the City Cafe, Tomball, Texas, 1945.
+        notes: 
+
+      - work_id: ULPA SONJ_42806
+        image: themes/uofl/homepage/featured_carousel/bikes_SONJ_42806_382x400_lossy100.webp
+        image_alt: School children and their bikes, Northfield, Massachusetts, 1946.
+        notes: 
+
+
+  bridges:
+    title: Bridges
+    description: Explore pictures of bridges and the communities they connect.
+    search_path: "catalog?"
+    start_date: 2027-07-16
+    end_date: 2027-07-31
+    pictures:
+      - work_id: ULPA CS_110802
+        image: themes/uofl/homepage/featured_carousel/bridges_CS_110802_600x400_lossy100.webp
+        image_alt: Municipal Bridge, Louisville, Kentucky, 1930.
+        notes: 
+
+      - work_id: ULPA SONJ_50467
+        image: themes/uofl/homepage/featured_carousel/bridges_SONJ_50467_600x400_lossy100.webp
+        image_alt: Atchafalaya Bridge, Morgan City, Louisiana, 1947.
+        notes: 
+
+      - work_id: ULPA SONJ_39045
+        image: themes/uofl/homepage/featured_carousel/bridges_SONJ_39045_600x400_lossy100.webp
+        image_alt: Barge landing, Louisville, Kentucky, 1946.
+        notes: 
+
+      - work_id: ULPA SONJ_65789
+        image: themes/uofl/homepage/featured_carousel/bridges_SONJ_65789_600x400_lossy100.webp
+        image_alt: Seine River at night, Paris, France, 1949.
+        notes: 
+
+      - work_id: ULPA R_50560
+        image: themes/uofl/homepage/featured_carousel/bridges_R_50560_600x400_lossy100.webp
+        image_alt: George Rogers Clark Memorial Bridge, Louisville, Kentucky.
+        notes: 
+
+      - work_id: ULPA SONJ_47257
+        image: themes/uofl/homepage/featured_carousel/bridges_SONJ_47257_600x400_lossy100.webp
+        image_alt: Triborough Bridge, New York City, New York, 1947.
+        notes: 
+
+
+  bus:
+    title: Bus Story
+    description: Follow along as photojournalist Esther Bubley documents America in her 1947-48 Bus Story series.
+    search_path: "catalog?utf8=%E2%9C%93&op=AND&all_fields=&contributor=&creator=bubley&title=&description=&subject=&people_represented=&story=Bus+Story&sort=score+desc%2C+system_create_dtsi+desc&search_field=advanced&commit=Search"
+    start_date: 2027-03-01
+    end_date: 2027-03-15
+    pictures:
+      - work_id: ULPA SONJ_47298_m14
+        image: themes/uofl/homepage/featured_carousel/bus_ULPA_SONJ_47298_m14_600x400_lossy100.webp
+        image_alt: Two men in suits talking on bench in waiting room
+        notes: 
+
+      - work_id: ULPA SONJ_49535_m4
+        image: themes/uofl/homepage/featured_carousel/bus_ULPA_SONJ_49535_m4_600x400_lossy100.webp
+        image_alt: Man in uniform and woman sleeping sitting up 
+        notes: 
+
+      - work_id: ULPA SONJ_49540_m20
+        image: themes/uofl/homepage/featured_carousel/bus_ULPA_SONJ_49540_m20_600x400_lossy100.webp
+        image_alt: Two men seated back to back on bench reading newspapers
+        notes: 
+
+      - work_id: ULPA SONJ_49548_m19
+        image: themes/uofl/homepage/featured_carousel/bus_ULPA_SONJ_49548_m19_600x400_lossy100.webp
+        image_alt: Tired mother with two toddlers in bus waiting area
+        notes: 
+
+      - work_id: ULPA SONJ_49551_m19
+        image: themes/uofl/homepage/featured_carousel/bus_ULPA_SONJ_49551_m19_600x400_lossy100.webp
+        image_alt: Little boy reading with elderly woman in Greyhound bus terminal waiting room
+        notes: 
+
+  cars:
+    title: Cars of Louisville
+    description: Go cruising through over a hundred years of car photos.
+    search_path: "/catalog?q=automobiles"
+    start_date: 2026-12-16
+    end_date: 2026-12-31
+    pictures:
+      - work_id: ULPA CS_034334
+        image: themes/uofl/homepage/featured_carousel/cars_ULPA_CS_034334_600x400_lossy100.webp
+        image_alt: Winton Six at Hogans Fountain, Louisville, Kentucky, 1920.
+        notes: 
+
+      - work_id: ULPA CS_252865
+        image: themes/uofl/homepage/featured_carousel/cars_ULPA_CS_252865_600x400_lossy100.webp
+        image_alt: Intersection of Second and Main Streets, Louisville, Kentucky, 1950.
+        notes: 
+
+      - work_id: ULPA CS_108779
+        image: themes/uofl/homepage/featured_carousel/cars_ULPA_CS_108779_600x400_lossy100.webp
+        image_alt: Man with dog on running board of Ford, 1930.
+        notes: 
+
+      - work_id: ULPA R_16875_00
+        image: themes/uofl/homepage/featured_carousel/cars_ULPA_R_16875_00_600x400_lossy100.webp
+        image_alt: Chrysler Windsor
+        notes: 
+
+      - work_id: ULPA 1998_009_439
+        image: themes/uofl/homepage/featured_carousel/cars_ULPA_1998_009_439_600x400_lossy100.webp
+        image_alt: 3 cars on Eighth Street
+        notes: 
+
+
+  diners:
+    title: Louisville Diners
+    description: Eat up these images of mid-century diners in Louisville.
+    search_path: "/catalog?q=diners"
+    start_date: 2026-11-01
+    end_date: 2026-11-15
+    pictures:
+      - work_id: ULPA R_12136
+        image: themes/uofl/homepage/featured_carousel/diners_R_12136_600x400_lossy100.webp
+        image_alt: Woman serving malted milk at Taylor Drug Store, 1950
+        notes: 
+
+      - work_id: ULPA CS_223287
+        image: themes/uofl/homepage/featured_carousel/diners_CS_223287_600x400_lossy100.webp
+        image_alt: Hollywood Steak House, Louisville, Kentucky, 1947.
+        notes: 
+
+      - work_id: ULPA CS_267426
+        image: themes/uofl/homepage/featured_carousel/diners_CS_267426_600x400_lossy100.webp
+        image_alt: Hick's Drive-In Restaurant, Louisville, Kentucky, 1952.
+        notes: 
+
+      - work_id: ULPA R_05846
+        image: themes/uofl/homepage/featured_carousel/diners_R_05846_600x400_lossy100.webp
+        image_alt: Walgreen's drug store at the lunch counter, 1941
+        notes: 
+
+      - work_id: ULPA R_15509
+        image: themes/uofl/homepage/featured_carousel/diners_R_15509_600x400_lossy100.webp
+        image_alt: A woman serves soup and coffee to a man sitting at the lunch counter.
+        notes: 
+
+
+  disasters:
+    title: Disaster
+    description: Selected images of Louisville fires, floods, and tornadoes.
+    search_path: "/catalog?"
+    start_date: 2028-02-01
+    end_date: 2028-02-14
+    pictures:
+      - work_id: ULUA 2009_106_Brown_P1070225
+        image: themes/uofl/homepage/featured_carousel/disasters_ULUA_2009_106_Brown_P1070225_screenshot_600x400_lossy100.webp
+        image_alt: Third Street and Eastern Parkway intersection, Louisville, Kentucky, August 4, 2009 flood.
+        notes: 
+
+      - work_id: ULPA 1998_011_121
+        image: themes/uofl/homepage/featured_carousel/disasters_ULPA_1998_011_121_600x400_lossy100.webp
+        image_alt: A boy standing in a boat attempts to cross a flooded street using an oar during 1904 flood.
+        notes: 
+
+      - work_id: ULPA P_00859
+        image: themes/uofl/homepage/featured_carousel/disasters_P_00859_600x400_lossy100.webp
+        image_alt: Tornado damage at Eleventh Street and Market Street looking east, from March 27, 1890 storm, Louisville, Kentucky.
+        notes: 
+
+      - work_id: ULPA CS_138856
+        image: themes/uofl/homepage/featured_carousel/disasters_CS_138856_600x400_lossy100.webp
+        image_alt: Masonic Home for Widows and Orphans damaged by 1875 tornado, Louisville, Kentucky.
+        notes: 
+
+      - work_id: ULPA CS_088751
+        image: themes/uofl/homepage/featured_carousel/disasters_CS_088751_600x400_lossy100.webp
+        image_alt: Crowd watching fire fighters put out building fire, 1928.
+        notes: 
+
+      - work_id: ULPA CS_047205
+        image: themes/uofl/homepage/featured_carousel/disasters_CS_047205_600x400_lossy100.webp
+        image_alt: Fire at 13th and Main Streets, Louisville, Kentucky, 1923.
+        notes: 
+
+  dogs:
+    title: Dogs
+    description: From farm dogs to pampered pets, people have captured their favorite canines on film.
+    search_path: "/catalog?q=dog"
+    start_date: 2027-08-16
+    end_date: 2027-08-31
+    pictures:
+      - work_id: ULPA 1982_001_043
+        image: themes/uofl/homepage/featured_carousel/dogs_ULPA_1982_001_043_600x400_80.webp
+        image_alt: Two puppies on a fence post (item ULPA 1982_001_043)
+        notes: 
+
+      - work_id: ULPA SONJ_12135
+        image: themes/uofl/homepage/featured_carousel/dogs_ULPA_SONJ_12135_600x400_80_rounded.webp
+        image_alt: Young boy in cap with puppy (item ULPA SONJ_12135)
+        notes: 
+
+      - work_id: ULPA CS_157918
+        image: themes/uofl/homepage/featured_carousel/dogs_ULPA_CS_157918_600x400_80.webp
+        image_alt: Puppies eating bananas in front of Toledo scale (item ULPA CS_157918)
+        notes: 
+
+      - work_id: ULPA SONJ_12133
+        image: themes/uofl/homepage/featured_carousel/dogs_ULPA_SONJ_12133_600x400_80.webp
+        image_alt: Children playing with dogs (item ULPA SONJ_12133)
+        notes: 
+
+  fathers:
+    title: Fathers
+    description: Celebrating fathers and all they teach us. 
+    search_path: "/catalog?search_field=all_fields&q=father"
+    start_date: 2027-06-16
+    end_date: 2027-06-30
+    pictures:
+      - work_id: ULPA SONJ_65187
+        image: themes/uofl/homepage/featured_carousel/fathers_ULPA_SONJ_65187_600x400_lossy100.webp
+        image_alt: Charles and Morris Holland getting geology lesson from their father, Mackay, Idaho, 1949.
+        notes: 
+
+      - work_id: ULPA 1979_033_0035
+        image: themes/uofl/homepage/featured_carousel/fathers_ULPA_1979_033_0035_600x400_lossy100.webp
+        image_alt: Bud McCoy visits Grover Hatfield and his children, Cannonsburg, Kentucky, 1942.
+        notes: 
+
+      - work_id: ULPA SONJ_49598
+        image: themes/uofl/homepage/featured_carousel/fathers_ULPA_SONJ_49598_363x400_lossy100.webp
+        image_alt: Father and daughter sitting on shop steps, Houma, Louisiana, 1947.
+        notes: 
+
+      - work_id: ULPA SONJ_16227
+        image: themes/uofl/homepage/featured_carousel/fathers_ULPA_SONJ_16227_379x400_lossy100.webp
+        image_alt: Father and child sitting on steps, Baton Rouge, Louisiana, 1944.
+        notes: 
+
+      - work_id: ULPA SONJ_24725
+        image: themes/uofl/homepage/featured_carousel/fathers_ULPA_SONJ_24725_600x400_lossy100.webp
+        image_alt: Father and son playing checkers, Tomball, Texas, 1945.
+        notes: 
+
+      - work_id: ULPA 1994_018_2107
+        image: themes/uofl/homepage/featured_carousel/fathers_ULPA_1994_018_2107_600x400_lossy100.webp
+        image_alt: William B. Harrison of Louisville, Kentucky, with wife and five children, 1927.
+        notes: 
+
+
+  fire:
+    title: Louisville Fire Department
+    description: Fire fighters, trucks and stations in Louisville, Kentucky.
+    search_path: "/catalog"
+    start_date: 2028-04-01
+    end_date: 2028-04-15
+    pictures:
+      - work_id: ULPA CS_099821
+        image: themes/uofl/homepage/featured_carousel/fire_CS_099821_515x400_lossy100.webp
+        image_alt: Engine Company 22, Louisville, Kentucky, 1929.
+        notes: 
+
+      - work_id: ULPA CS_063077
+        image: themes/uofl/homepage/featured_carousel/fire_CS_063077_506x400_lossy100.webp
+        image_alt: Firemen and truck at Engine No. 9 station, 1925.
+        notes: 
+
+      - work_id: ULPA CS_052677
+        image: themes/uofl/homepage/featured_carousel/fire_CS_052677_515x400_lossy100.webp
+        image_alt: Fire chiefs car at Fire Department headquarters, Louisville, Kentucky, 1923.
+        notes: 
+
+      - work_id: ULPA CS_030146
+        image: themes/uofl/homepage/featured_carousel/fire_CS_030146_600x400_lossy100.webp
+        image_alt: Fire fighter drinking water at Johnson and Main Street fire, Louisville, Kentucky, 1920.
+        notes: 
+
+      - work_id: ULPA P_00506
+        image: themes/uofl/homepage/featured_carousel/fire_P_00506_600x400_lossy80.webp
+        image_alt: Firefighters from Engine Company No. 6 and their steam engine, 2427 Portland Avenue, 1874.
+        notes: 
+
+  flood:
+    title: The 1937 Flood
+    description: In January 1937 it rained so much, the Ohio River crested at nearly 30 feet above flood level. About 65% of Louisville had to be evacuated.
+    search_path: "/catalog?search_field=all_fields&q=1937+flood"
+    start_date: 2027-01-16
+    end_date: 2027-01-31
+    pictures:
+      - work_id: ULPA MSD_M_531
+        image: themes/uofl/homepage/featured_carousel/flood_ULPA_MSD_M_531_600x400_80.webp
+        image_alt: Residential flooding January 28 1937 (item ULPA MSD_M_531)
+        notes: 
+
+      - work_id: ULPA P_00514
+        image: themes/uofl/homepage/featured_carousel/flood_ULPA_P_00514_600x400_80.webp
+        image_alt: Men in boat pulled up to edge of store  (item ULPA P_00514)
+        notes: 
+
+      - work_id: ULPA R_50304_01
+        image: themes/uofl/homepage/featured_carousel/flood_ULPA_R_50304_01_600x400_80.webp
+        image_alt: Gateway of the South sign over flooded riverfront (item ULPA R_50304_01)
+        notes: 
+
+      - work_id: ULUA 001_0228
+        image: themes/uofl/homepage/featured_carousel/flood_ULUA_001_0228_600x400_80.webp
+        image_alt: Flood scene at Eastern Parkway (item ULUA 001_0228)
+        notes: 
+
+      - work_id: ULRB Louisville_Flood_Map_r
+        image: themes/uofl/homepage/featured_carousel/flood_ULRB_Louisville_Flood_Map_r_600x400_80.webp
+        image_alt: Louisville Flood Map January 1937 (item ULRB Louisville_Flood_Map_r)
+        notes: 
+
+  fontaine:
+    title: Fontaine Ferry Park
+    description: Fun in the sun from 1905 to 1969.
+    search_path: "/catalog?"
+    start_date: 2027-07-01
+    end_date: 2027-07-15
+    pictures:
+      - work_id: ULPA CS_114546
+        image: themes/uofl/homepage/featured_carousel/fontaine_CS_114546_600x400_lossy100.webp
+        image_alt: Fontaine Ferry Park Racing Derby roller coaster, Louisville, Kentucky, 1930.
+        notes: 
+
+      - work_id: ULPA CS_244891
+        image: themes/uofl/homepage/featured_carousel/fontaine_CS_244891_600x400_lossy100.webp
+        image_alt: Fontaine Ferry Park entrance gate, Louisville, Kentucky, 1949.
+        notes: 
+
+      - work_id: ULPA CS_133150
+        image: themes/uofl/homepage/featured_carousel/fontaine_CS_133150_600x400_lossy100.webp
+        image_alt: Idlewild at Fontaine Ferry Park, Louisville, Kentucky, 1934.
+        notes: 
+
+      - work_id: ULPA CS_082574
+        image: themes/uofl/homepage/featured_carousel/fontaine_CS_082574_600x400_lossy100.webp
+        image_alt: Drawing of Fontaine Ferry Park map, Louisville, Kentucky, 1927.
+        notes: 
+
+
+  hats:
+    title: A Tip of the Hat
+    description: Hats for all seasons
+    search_path: "/catalog?"
+    start_date: 
+    end_date: 
+    pictures:
+      - work_id: ULPA R_06035_04
+        image: themes/uofl/homepage/featured_carousel/hats_R_06035_04_600x400_lossy100.webp
+        image_alt: A woman in a white dress and hat with a feather stands at a WINN microphone, 1941
+        notes: 
+
+      - work_id: ULPA CS_069340
+        image: themes/uofl/homepage/featured_carousel/hats_CS_069340_600x400_lossy100.webp
+        image_alt: Man by automobile wearing suit, top hat, and overcoat, 1925.
+        notes: 
+
+      - work_id: ULPA CS_036625
+        image: themes/uofl/homepage/featured_carousel/hats_CS_036625_600x400_lossy100.webp
+        image_alt: Dr. Rose Letter wears a hat, pince-nez eyeglasses, and a coat, 1921
+        notes: 
+
+      - work_id: ULPA CS_034062
+        image: themes/uofl/homepage/featured_carousel/hats_CS_034062_600x400_lossy100.webp
+        image_alt: Young men gather around with cups and small buckets as a beer keg is emptied in the street. They wear caps and hats of varying styles, 1920
+        notes: 
+
+      - work_id: ULPA 1998_011_415
+        image: themes/uofl/homepage/featured_carousel/hats_ULPA_1998_011_415_600x400_lossy100.webp
+        image_alt:  Eunice Furnas (Cook) poses for a seated portrait wearing a large feathered hat and an ornate dress
+        notes: 
+
+
+  homecoming:
+    title: Go Cards!
+    description: Enjoy these historical photos of University of Louisville homecoming, football, cheerleading and more.
+    search_path: "/catalog?utf8=%E2%9C%93&op=AND&all_fields=&contributor=&creator=&title=&description=%22University+of+Louisville%22&subject=%28football+OR+cheerleader+OR+homecoming%29&people_represented=&story=&sort=score+desc%2C+system_create_dtsi+desc&search_field=advanced&commit=Search&f_inclusive%5Bmember_of_collections_ssim%5D%5B%5D=Norris+Mode+photographs&f_inclusive%5Bmember_of_collections_ssim%5D%5B%5D=Stephen+L.+Gruebbel+photographs&f_inclusive%5Bmember_of_collections_ssim%5D%5B%5D=University+of+Louisville+Images"
+    start_date: 2026-10-01
+    end_date: 2026-10-15
+    pictures:
+      - work_id: ULUA 2008_123_0388
+        image: themes/uofl/homepage/featured_carousel/homecoming_ULUA_2008_123_0388_600x400_lossy100.webp
+        image_alt: Homecoming queen Margie Hunter waves from the back of a convertible during the University of Louisville homecoming parade
+        notes: test URLs
+
+      - work_id: ULUA 001_0349
+        image: themes/uofl/homepage/featured_carousel/homecoming_ULUA_001_0349_600x400_lossy100.webp
+        image_alt: Football players, University of Louisville, action shot, circa 1960s.
+        notes: 
+
+      - work_id: ULUA 001_0146
+        image: themes/uofl/homepage/featured_carousel/homecoming_ULUA_001_0146_600x400_lossy100.webp
+        image_alt: Marching Cardinals perform during the homecoming parade, Louisville, Kentucky, 1948.
+        notes: 
+
+      - work_id: ULUA 001_0331
+        image: themes/uofl/homepage/featured_carousel/homecoming_ULUA_001_0331_600x400_lossy100.webp
+        image_alt: Cheerleading squad, University of Louisville, 1986?
+        notes: 
+
+      - work_id: ULUA 001_0345
+        image: themes/uofl/homepage/featured_carousel/homecoming_ULUA_001_0345_600x400_lossy100.webp
+        image_alt: Football team action shot homecoming game 1965
+        notes: 
+
+      - work_id: ULUA 001_0847
+        image: themes/uofl/homepage/featured_carousel/homecoming_ULUA_001_0847_600x400_lossy100.webp
+        image_alt: Carolyn Lewis reacts to the announcement that she is the homecoming queen.
+        notes: 
+
+  horses:
+    title: Horses
+    description: Getting excited about Derby? Check out some of our favorite horse pictures.
+    search_path: "/catalog?"
+    start_date: 2027-04-16
+    end_date: 2027-04-30
+    pictures:
+      - work_id: ULPA SONJ_64308
+        image: themes/uofl/homepage/featured_carousel/horses_ULPA_SONJ_64308_600x400_lossy100.webp
+        image_alt: Farmer with horse Essone France 1949
+        notes: test URLs
+
+      - work_id: ULPA 1994_018_0698
+        image: themes/uofl/homepage/featured_carousel/horses_ULPA_1994_018_0698_600x400_lossy100.webp
+        image_alt: Man O War with man holding reins Lexington Kentucky 1929
+        notes: 
+
+      - work_id: ULPA 1982_001_158
+        image: themes/uofl/homepage/featured_carousel/horses_ULPA_1982_001_158_600x400_lossy100.webp
+        image_alt: Drs. Porter and Powell with third man on horseback early 1900s
+        notes: 
+
+      - work_id: ULPA SONJ_26622
+        image: themes/uofl/homepage/featured_carousel/horses_ULPA_SONJ_26622_600x400_lossy100.webp
+        image_alt: Amateur rodeo Tomball Texas 1945
+        notes: 
+
+      - work_id: ULPA SONJ_12090
+        image: themes/uofl/homepage/featured_carousel/horses_ULPA_SONJ_12090_384x400_lossy100.webp
+        image_alt: Adult horse and foal tied in front of saddle store, Cody, Wyoming, 1944.
+        notes: 
+
+      - work_id: ULPA SONJ_38549
+        image: themes/uofl/homepage/featured_carousel/horses_ULPA_SONJ_38549_600x400_lossy100.webp
+        image_alt: Cattle rancher looking after stock Meta Colombia 1945
+        notes: 
+
+  maps:
+    title: Survey our Maps
+    description: Navigate your way through our historic maps
+    search_path: "/catalog?"
+    start_date: 2027-06-01
+    end_date: 2027-06-15
+    pictures:
+      - work_id: ULRB Allen_Map_31
+        image: themes/uofl/homepage/featured_carousel/maps_Allen_Map_31_441x400_lossy80.webp
+        image_alt: Map of the Great Lakes area extends south to Tennessee, 1811
+        notes: 
+
+      - work_id: ULRB Allen_Map_60
+        image: themes/uofl/homepage/featured_carousel/maps_Allen_Map_60_600x400_lossy80.webp
+        image_alt: Maps of four city areas circa 1838 including Louisville
+        notes: 
+
+      - work_id: ULRB Allen_Map_71
+        image: themes/uofl/homepage/featured_carousel/maps_Allen_Map_71_480x400_lossy80.webp
+        image_alt: County map of Kentucky, and Tennessee, 1860.
+        notes: 
+
+      - work_id: ULUA LouAtlas1884_Plate_01
+        image: themes/uofl/homepage/featured_carousel/maps_LouAtlas1884_Plate_01_600x400_lossy80.webp
+        image_alt: Section of Plate 1 from the Atlas of the City of Louisville, Ky. and Environs, 1884 showing public library, post office, and McCauleys Theatre.
+        notes: 
+
+      - work_id: ULRB Allen_Map_76
+        image: themes/uofl/homepage/featured_carousel/maps_Allen_Map_76_517x400_lossy80.webp
+        image_alt: Flood map of Louisville, Kentucky, 1937.
+        notes: 
+
+
+  mature:
+    title: Victor Mature
+    description: Born January 29, 1913, in Louisville, Victor Mature was a leading man in Hollywood during the 1940s.
+    search_path: "/catalog?"
+    start_date: 
+    end_date: 
+    pictures:
+      - work_id: ULPA R_05197
+        image: themes/uofl/homepage/featured_carousel/mature_R_05197_600x400_lossy100.webp
+        image_alt: Actor Victor Mature standing with another man in front of poster of himself, 1940
+        notes: 
+
+      - work_id: ULPA R_05196_07
+        image: themes/uofl/homepage/featured_carousel/mature_R_05196_07_600x400_lossy100.webp
+        image_alt: Front of Loews theatre advertising movie One Million B C starring Victor Mature
+        notes: 
+
+      - work_id: ULPA R_05196_04
+        image: themes/uofl/homepage/featured_carousel/mature_R_05196_04_600x400_lossy100.webp
+        image_alt: Mature sitting on fire truck shaking hands with man in uniform, 1940
+        notes: 
+
+      - work_id: ULPA R_05196_03
+        image: themes/uofl/homepage/featured_carousel/mature_R_05196_03_600x400_lossy100.webp
+        image_alt: Victor Mature wearing police hat and badge
+        notes: 
+
+      - work_id: ULPA R_12070
+        image: themes/uofl/homepage/featured_carousel/mature_R_12070_01_600x400_lossy100.webp
+        image_alt: Victor Mature poses with Ann Hubert at a desk with a WAVE microphone
+        notes: 
+
+
+  mothers:
+    title: Mothers
+    description: From happy posed family portraits to the gritty reality of everyday life, we honor all moms.
+    search_path: "/catalog?"
+    start_date: 2027-05-01
+    end_date: 2027-05-15
+    pictures:
+      - work_id: ULPA SONJ_49548_m19
+        image: themes/uofl/homepage/featured_carousel/mothers_ULPA_SONJ_49548_m19_600x400_lossy100.webp
+        image_alt: mother holding baby in bus station waiting room 1947
+        notes: test URLs
+
+      - work_id: ULPA 2019_045_02
+        image: themes/uofl/homepage/featured_carousel/mothers_ULPA_2019_045_02_600x400_lossy100.webp
+        image_alt: Janet Beveridge Bean of band Freakwater with son Matt, 1993
+        notes: 
+
+      - work_id: ULPA SONJ_32933
+        image: themes/uofl/homepage/featured_carousel/mothers_ULPA_SONJ_32933_600x400_lossy100.webp
+        image_alt: Juana Tyquirda and infant in maternity ward Talara Peru 1945
+        notes: 
+
+      - work_id: ULPA SONJ_16273
+        image: themes/uofl/homepage/featured_carousel/mothers_ULPA_SONJ_16273_382x400_lossy100.webp
+        image_alt: Mrs. Hooks drinking coffee and talking to son eating in his high chair 1944
+        notes: 
+
+      - work_id: ULPA 2007_014_056
+        image: themes/uofl/homepage/featured_carousel/mothers_ULPA_2007_014_056_400x267_lossy100.webp
+        image_alt: Lillian Fletcher holding child in rocking chair
+        notes: 
+
+      - work_id: ULPA 1986_090_2039A
+        image: themes/uofl/homepage/featured_carousel/mothers_ULPA_1986_090_2039a_600x400_lossy100.webp
+        image_alt: Rita Howard and her baby feeding chickens 1911?
+        notes: 
+
+  motorcyles:
+    title: Get your motor runnin'!
+    description: Early pictures of motorcycles in Louisville, Ky.
+    search_path: "/catalog?"
+    start_date: 2026-11-16
+    end_date: 2026-11-30
+    pictures:
+      - work_id: ULPA R_05360_01
+        image: themes/uofl/homepage/featured_carousel/motorcycles_R_05360_01_600x400_lossy100.webp
+        image_alt: Motorcycle with sidecar for Frankfort Distilleries, 1940s
+        notes: 
+
+      - work_id: ULPA CS_098222
+        image: themes/uofl/homepage/featured_carousel/motorcycles_CS_098222_600x400_lossy100.webp
+        image_alt: A man wearing a cap sits atop a Harley-Davidson motorcycle with a covered sidecar, 1928
+        notes: 
+
+      - work_id: ULPA CS_122146
+        image: themes/uofl/homepage/featured_carousel/motorcycles_CS_122146_600x400_lossy100.webp
+        image_alt: Harley-Davidson motorcycle at Park Board Garage, 1932.
+        notes: 
+
+      - work_id: ULPA P_03131
+        image: themes/uofl/homepage/featured_carousel/motorcycles_P_03131_600x400_lossy100.webp
+        image_alt: Officer standing in doorway of toll booth, man in car and another officer on motorcycle on Louisville Municipal Bridge, 1930
+        notes: 
+
+      - work_id: ULPA CS_158617
+        image: themes/uofl/homepage/featured_carousel/motorcycles_CS_158617_600x400_lossy100.webp
+        image_alt: Six men in uniforms sit on parked motorcycles in front of garage, 1938
+        notes: 
+
+
+  mss:
+    title: Illuminated Manuscripts
+    description: Explore some of the oldest objects in our collections - these illuminated manuscripts.
+    search_path: "/catalog?"
+    start_date: 2027-10-01
+    end_date: 2027-10-15
+    pictures:
+      - work_id: ULRB 2006_mss_10
+        image: themes/uofl/homepage/featured_carousel/mss_2006_mss_10r_600x400_lossy80.webp
+        image_alt: Antiphonary, France, 15th century, fragment. (ULRB 2006_mss_10)
+        notes: 
+
+      - work_id: ULRB 2011_mss_38
+        image: themes/uofl/homepage/featured_carousel/mss_2011_mss_38_Page_1_600x400_lossy80.webp
+        image_alt: Book of Hours, France, early 16th century, fragment. (ULRB 2011_mss_38)
+        notes: 
+
+      - work_id: ULRB 2006_mss_18
+        image: themes/uofl/homepage/featured_carousel/mss_2006_mss_18r_600x400_lossy80.webp
+        image_alt: Khamsah of Nizami, fragment. (ULRB 2006_mss_18)
+        notes: 
+
+      - work_id: ULRB 2011_mss_29
+        image: themes/uofl/homepage/featured_carousel/mss_2011_mss_29_001b_600x400_lossy80.webp
+        image_alt: Persian handbook on astronomy (ULRB 2011_mss_29)
+        notes: 
+
+      - work_id: ULRB 2006_mss_08
+        image: themes/uofl/homepage/featured_carousel/mss_2006_mss_08r_600x400_lossy80.webp
+        image_alt: Book of Hours, France, mid 15th century, fragment. (ULRB 2006_mss_08)
+        notes: 
+
+      - work_id: ULRB 2011_mss_35
+        image: themes/uofl/homepage/featured_carousel/mss_2011_mss_35_PP1_4merged_600x400_lossy80.webp
+        image_alt: Ethiopian magic roll, 19th century. (ULRB 2011_mss_35)
+        notes: test URLs
+
+
+  mt:
+    title: Cut Bank, Montana
+    description: Travel back to 1944 Cut Bank, Montana, with these photos by Louise and Edwin Rosskam.
+    search_path: "/catalog?"
+    start_date: 2028-05-01
+    end_date: 2028-05-15
+    pictures:
+      - work_id: ULPA SONJ_13165
+        image: themes/uofl/homepage/featured_carousel/mt_SONJ_13165_600x400_lossy100.webp
+        image_alt: People boarding bus, Cut Bank, Montana, 1944.
+        notes: 
+
+      - work_id: ULPA SONJ_13306
+        image: themes/uofl/homepage/featured_carousel/mt_SONJ_13306_546x400_lossy100.webp
+        image_alt: Children riding horses in front of Safety first sign.
+        notes: 
+
+      - work_id: ULPA SONJ_13054
+        image: themes/uofl/homepage/featured_carousel/mt_SONJ_13054_386x400_lossy100.webp
+        image_alt: 
+        notes: 
+
+      - work_id: ULPA SONJ_13032
+        image: themes/uofl/homepage/featured_carousel/mt_SONJ_13032_386x400_lossy100.webp
+        image_alt: Ely H. Brown, Cut Bank, Montana, 1944.
+        notes: 
+
+      - work_id: ULPA SONJ_13274
+        image: themes/uofl/homepage/featured_carousel/mt_SONJ_13274_382x400_lossy100.webp
+        image_alt: Sailor in uniform and older man waiting in front of building.
+        notes: 
+
+      - work_id: ULPA SONJ_13960
+        image: themes/uofl/homepage/featured_carousel/mt_SONJ_13960_381x400_lossy100.webp
+        image_alt: Doris Olson examining grain, Cut Bank, Montana, 1944.
+        notes: 
+
+
+  paris:
+    title: April in Paris
+    description: Take a ride along the boulevard in these mid-century photos of Paris.
+    search_path: "/catalog?"
+    start_date: 2027-04-01
+    end_date: 2027-04-15
+    pictures:
+      - work_id: ULPA SONJ_83535_m11
+        image: themes/uofl/homepage/featured_carousel/paris_SONJ_83535_m11_600x400_lossy100.webp
+        image_alt: Young woman riding bicycle, Paris, France, 1955.
+        notes: 
+
+      - work_id: ULPA SONJ_83528_m34
+        image: themes/uofl/homepage/featured_carousel/paris_SONJ_83528_600x400_lossy100.webp
+        image_alt: Artist painting, Paris, France, 1955.
+        notes: 
+
+      - work_id: ULPA SONJ_65087_m1
+        image: themes/uofl/homepage/featured_carousel/paris_SONJ_65087_m1_600x400_lossy100.webp
+        image_alt: Horse pulling ice wagon, Paris, France, 1949.
+        notes: 
+
+      - work_id: ULPA SONJ_83534_m38
+        image: themes/uofl/homepage/featured_carousel/paris_SONJ_83534_m38_600x400_lossy100.webp
+        image_alt: Traffic by Arc de Triomphe, Paris, France, 1955.
+        notes: 
+
+      - work_id: ULPA SONJ_65759
+        image: themes/uofl/homepage/featured_carousel/paris_SONJ_65759_378x400_lossy100.webp
+        image_alt: Broken doll in street, Paris, France, 1949.
+        notes: 
+
+
+  planes:
+    title: Ready for Take Off
+    description: Time travel with us to see early aircraft.
+    search_path: "/catalog?"
+    start_date: 2026-10-16
+    end_date: 2026-10-31
+    pictures:
+      - work_id: ULPA P_02619_1
+        image: themes/uofl/homepage/featured_carousel/planes_ULPA_P_02619_1_600x400_lossy100.webp
+        image_alt: Flagship Kentucky airline at Bowman Field Louisville Kentucky
+        notes: 
+
+      - work_id: ULPA 1994_018_0003
+        image: themes/uofl/homepage/featured_carousel/planes_ULPA_1994_018_0003_600x400_lossy100.webp
+        image_alt: Tow plane, Bowman Field, Louisville, Kentucky, 1935.
+        notes: 
+
+      - work_id: ULPA SONJ_69375_m7
+        image: themes/uofl/homepage/featured_carousel/planes_ULPA_SONJ_69375_m7_600x400_lossy100.webp
+        image_alt: Worker in control tower, Luxembourg, 1951.
+        notes: 
+
+      - work_id: ULPA R_15831_05
+        image: themes/uofl/homepage/featured_carousel/planes_ULPA_R_15831_05_503x400_lossy100.webp
+        image_alt: Christening ceremony for Slick Airways at Standiford Field, 1956
+        notes: 
+
+      - work_id: ULPA CS_030478
+        image: themes/uofl/homepage/featured_carousel/planes_ULPA_CS_030478_600x400_lossy100.webp
+        image_alt: Kasco Trois airplane drawing, 1920.
+        notes: 
+
+  portland:
+    title: Portland Neighborhood 
+    description: One of the earliest neighborhoods to develop in Louisville, Portland was a nexus of river traffic and the railroads.
+    search_path: "/catalog?"
+    start_date: 2027-11-01
+    end_date: 2027-11-15
+    pictures:
+      - work_id: ULPA CS_090020
+        image: themes/uofl/homepage/featured_carousel/portland_ULPA_CS_090020_600x400_lossy100.webp
+        image_alt: Youngstown Railroad Yard, Louisville, Kentucky, 1928.
+        notes: 
+
+      - work_id: ULPA 1994_018_0058
+        image: themes/uofl/homepage/featured_carousel/portland_ULPA_1994_018_0058_600x400_lossy100.webp
+        image_alt: Men sit or stand aboard a barge parked at Portland Canal, 1923
+        notes: 
+
+      - work_id: ULPA P_04439
+        image: themes/uofl/homepage/featured_carousel/portland_ULPA_P_04439_600x400_lossy100.webp
+        image_alt: Engraving of Speed Market at 12th and Market Streets, Louisville, Kentucky
+        notes: 
+
+      - work_id: ULPA P_00596
+        image: themes/uofl/homepage/featured_carousel/portland_ULPA_P_00596_600x400_lossy100.webp
+        image_alt: Mule-drawn streetcar, Louisville, Kentucky, circa 1900.
+        notes: 
+
+      - work_id: ULPA CS_138865
+        image: themes/uofl/homepage/featured_carousel/portland_ULPA_CS_138865_600x400_lossy100.webp
+        image_alt: Kentucky and Indiana Railroad Office, front, Louisville, Kentucky, 1935.
+        notes: 
+
+      - work_id: ULPA CS_206785
+        image: themes/uofl/homepage/featured_carousel/portland_ULPA_CS_206785_600x400_lossy100.webp
+        image_alt: Two men and a dog in a rowboat during flooding, Louisville, Kentucky, 1945.
+        notes: 
+
+  read:
+    title: Reading Day
+    description: Time to hit the books with some of our favorite reading pictures.
+    search_path: "/catalog?"
+    start_date: 2026-12-01
+    end_date: 2026-12-15
+    pictures:
+      - work_id: ULPA SONJ_51793
+        image: themes/uofl/homepage/featured_carousel/read_ULPA_SONJ_51793_378x400_lossy100.webp
+        image_alt: Young boy reading as he walks away from vehicle labeled Vermont Book Wagon, 1947.
+        notes: 
+
+      - work_id: ULPA 1989_026_3016
+        image: themes/uofl/homepage/featured_carousel/read_ULPA_1989_026_3016_400x400_lossy100.webp
+        image_alt: Girl reading on house steps, Louisville, Kentucky, 1965.
+        notes: 
+
+      - work_id: ULPA 1998_011_095
+        image: themes/uofl/homepage/featured_carousel/read_ULPA_1998_011_095_600x400_lossy100.webp
+        image_alt: Three women reading the Sunday Record Herald on the lawn, early 1900s
+        notes: 
+
+      - work_id: ULPA SONJ_22139
+        image: themes/uofl/homepage/featured_carousel/read_ULPA_SONJ_22139_405x400_lossy100.webp
+        image_alt: Man reading Oil and Gas Journal with his feet propped up on table, 1945.
+        notes: 
+
+      - work_id: ULUA 2010_098_1245
+        image: themes/uofl/homepage/featured_carousel/read_ULUA_2010_098_1245_600x400_lossy100.webp
+        image_alt: A student sits on her bed studying in her room on the girls' side of Threlkeld Hall , 1969
+        notes: 
+
+
+  shave:
+    title: No Shave November
+    description: Enjoy these pretty impressive facial hair displays.
+    search_path: "/catalog?"
+    start_date: 2027-11-15
+    end_date: 2027-11-30
+    pictures:
+      - work_id: ULPA 1986_087_80
+        image: themes/uofl/homepage/featured_carousel/shave_ULPA_1986_087_80_600x400_lossy100.webp
+        image_alt: Thomas Nast, 1885
+        notes: 
+
+      - work_id: ULPA 1994_018_4169
+        image: themes/uofl/homepage/featured_carousel/shave_ULPA_1994_018_4169_600x400_lossy100.webp
+        image_alt: A.B. Sawyer, Sr. of Louisville, Kentucky .
+        notes: 
+
+      - work_id: ULPA 1980_020_0444
+        image: themes/uofl/homepage/featured_carousel/shave_ULPA_1980_020_0444_600x400_lossy100.webp
+        image_alt: Man with mustache, circa 1890.
+        notes: 
+
+      - work_id: ULPA 1986_087_83
+        image: themes/uofl/homepage/featured_carousel/shave_ULPA_1986_087_83_600x400_lossy100.webp
+        image_alt: Members of the West Point Class of 1856
+        notes: 
+
+      - work_id: ULPA 1979_033_0446
+        image: themes/uofl/homepage/featured_carousel/shave_ULPA_1979_033_0446_600x400_lossy100.webp
+        image_alt: Whisker Bill Scott riding a mule.
+        notes: 
+
+
+  streets:
+    title: Louisville Streets
+    description: Explore the streets of Louisville through the decades.
+    search_path: "/catalog?f%5Bcity_sim%5D%5B%5D=Louisville+%28Ky.%29&f%5Bsubject_sim%5D%5B%5D=Streets"
+    start_date: 2027-02-15
+    end_date: 2027-02-28
+    pictures:
+      - work_id: ULPA CS_252865
+        image: themes/uofl/homepage/featured_carousel/streets_ULPA_CS_252865_600x400_80.webp
+        image_alt: Cars approaching the Second Street bridge  (item ULPA CS_252865)
+        notes: need item URL, fix catalog search URL
+
+      - work_id: ULPA P_01685
+        image: themes/uofl/homepage/featured_carousel/streets_ULPA_P_01685_600x400_80.webp
+        image_alt: Market Street, 1930 (item ULPA P_01685)
+        notes: 
+
+      - work_id: ULPA R_50207
+        image: themes/uofl/homepage/featured_carousel/streets_ULPA_R_50207_600x400_80.webp
+        image_alt: Third Street looking north at Broadway (item ULPA R_50207)
+        notes: 
+
+      - work_id: ULUA 2006_003_008_011_600x400
+        image: themes/uofl/homepage/featured_carousel/streets_ULUA_2006_003_008_011_600x400_80.webp
+        image_alt: color postcard of Market Street (item ULUA 2006_003_008_011)
+        notes: 
+
+  tableaux:
+    title: Tableaux Vivants
+    description: Explore the rare, turn-of-the-century, hand-tinted tableaux vivants of Kate Matthews. 
+    search_path: "/catalog?resource_query_sim=Tableaux"
+    start_date: 2028-03-16
+    end_date: 2028-03-30
+    pictures:
+      - work_id: ULPA 2007_014_045
+        image: themes/uofl/homepage/featured_carousel/tableaux_ULPA_2007_014_045_250x400_rounded.webp
+        image_alt: young woman with irises
+        notes: test URLs
+
+      - work_id: ULPA 2007_014_043
+        image: themes/uofl/homepage/featured_carousel/tableaux_ULPA_2007_014_043_250x400_rounded.webp
+        image_alt: Lillian and Elizabeth Fletcher with one playing harp 
+        notes: 
+
+      - work_id: ULPA 2007_014_028
+        image: themes/uofl/homepage/featured_carousel/tableaux_ULPA_2007_014_028_250x400_rounded.webp
+        image_alt: Two young women dressed in costumes are on a walkway in a garden
+        notes: 
+
+      - work_id: ULPA 2007_014_082
+        image: themes/uofl/homepage/featured_carousel/tableaux_ULPA_2007_014_082_250x400_rounded.webp
+        image_alt: Boy of Galilee
+        notes: 
+
+      - work_id: ULPA 2007_014_078
+        image: themes/uofl/homepage/featured_carousel/tableaux_ULPA_2007_014_078_250x400_rounded.webp
+        image_alt: Mary Johnston as Joyce Ware
+        notes: 
+
+  theaters:
+    title: Louisville Theaters
+    description: Take a seat and explore Louisville theaters. 
+    search_path: "/catalog?"
+    start_date: 2027-12-16
+    end_date: 2027-12-31
+    pictures:
+      - work_id: ULPA 1984_001_001
+        image: themes/uofl/homepage/featured_carousel/theaters_1984_001_001_600x400_lossy100.webp
+        image_alt: B. F. Keith Theatre, exterior.
+        notes: 
+
+      - work_id: ULPA R_05196_07
+        image: themes/uofl/homepage/featured_carousel/theaters_R_05196_07_600x400_lossy100.webp
+        image_alt: One Million B.C. premiere at Loews Theatre, Louisville, Kentucky, 1940.
+        notes: 
+
+      - work_id: ULPA 1984_001_025
+        image: themes/uofl/homepage/featured_carousel/theaters_1984_001_025_600x400_lossy100.webp
+        image_alt: Projectors in Rialto Theatre.
+        notes: 
+
+      - work_id: ULPA 1984_001_016
+        image: themes/uofl/homepage/featured_carousel/theaters_1984_001_016_600x400_lossy100.webp
+        image_alt: Ornate boxes and stage at East Broadway Theatre
+        notes: 
+
+      - work_id: ULPA CS_142809
+        image: themes/uofl/homepage/featured_carousel/theaters_CS_142809_600x400_lossy100.webp
+        image_alt: Oertels Radio Theatre at night, Louisville, Kentucky, 1936.
+        notes: 
+
+      - work_id: ULPA P_03066_1
+        image: themes/uofl/homepage/featured_carousel/theaters_P_03066_1_600x400_lossy100.webp
+        image_alt: Drive In Theatre, Louisville, Kentucky, 1941.
+        notes: 
+
+  tomball:
+    title: Tomball, TX
+    description: Catch the flavor of 1945 Texas with this series by photojournalist Esther Bubley. 
+    search_path: "/catalog?"
+    start_date: 2028-03-01
+    end_date: 2028-03-15
+    pictures:
+      - work_id: ULPA SONJ_26622
+        image: themes/uofl/homepage/featured_carousel/tomball_SONJ_26622_400x400_lossy100.webp
+        image_alt: Amateur rodeo, Tomball, Texas, 1945.
+        notes: 
+
+      - work_id: ULPA SONJ_25110
+        image: themes/uofl/homepage/featured_carousel/tomball_SONJ_25110_439x400_lossy100.webp
+        image_alt: Men and women have a conversation outside of a grocery store, Tomball, Texas, 1945.
+        notes: 
+
+      - work_id: ULPA SONJ_25780
+        image: themes/uofl/homepage/featured_carousel/tomball_SONJ_25780_400x400_lossy100.webp
+        image_alt: Playing with dog in backyard, Tomball, Texas, 1945.
+        notes: 
+
+      - work_id: ULPA SONJ_24706
+        image: themes/uofl/homepage/featured_carousel/tomball_SONJ_24706_400x400_lossy100.webp
+        image_alt: Individuals standing in front of bakery, Tomball, Texas, 1945.
+        notes: 
+
+      - work_id: ULPA SONJ_26186
+        image: themes/uofl/homepage/featured_carousel/tomball_SONJ_26186_400x400_lossy100.webp
+        image_alt: Children playing with rabbit, Tomball, Texas, 1945.
+        notes: 
+
+      - work_id: ULPA SONJ_26608
+        image: themes/uofl/homepage/featured_carousel/tomball_SONJ_26608_400x400_lossy100.webp
+        image_alt: Men and children outside of store, Tomball, Texas, 1945.
+        notes: 
+
+
+
+  trains:
+    title: All Aboard
+    description: Enjoy trains? Check out images and documents from the Louisville and Nashville Railroad and more! 
+    search_path: "/catalog?locale=en&q=Railroad+trains&search_field=subject_tesim"
+    start_date: 2027-12-01
+    end_date: 2027-12-15
+    pictures:
+      - work_id: ULUA 1993_092_195306
+        image: themes/uofl/homepage/featured_carousel/trains_ULUA_1993_092_195306_0001_600x400_lossy80.webp
+        image_alt: June 1953 issue of the Louisville and Nashville Employees Magazine
+        notes: test URLs
+
+      - work_id: ULPA CS_037900
+        image: themes/uofl/homepage/featured_carousel/trains_ULPA_CS_037900_600x400_lossy80.webp
+        image_alt: Troop A on train, Louisville, Kentucky, 1921.
+        notes: 
+
+      - work_id: ULPA SONJ_60228_m29
+        image: themes/uofl/homepage/featured_carousel/trains_ULPA_SONJ_60228_m29_600x400_lossy80.webp
+        image_alt: Ferry passing by railroad yards, Staten Island, New York City, New York, 1948.
+        notes: 
+
+      - work_id: ULPA 1987_070_88
+        image: themes/uofl/homepage/featured_carousel/trains_ULPA_1987_070_88_600x400_lossy80.webp
+        image_alt: Postcard of Panhandle Bridge in Louisville 
+        notes: 
+
+      - work_id: ULPA SONJ_40957
+        image: themes/uofl/homepage/featured_carousel/trains_ULPA_SONJ_40957_600x400_lossy80.webp
+        image_alt: Company train which carries freight and passengers, Barrancabermeja, Colombia, 1946.
+        notes: 
+
+
+  v12:
+    title: In the Navy
+    description: Explore images of the US Navy V-12 training program at the University of Louisville during WWII.
+    search_path: "/catalog?"
+    start_date: 2027-05-16
+    end_date: 2027-05-31
+    pictures:
+      - work_id: ULUA 001_0888
+        image: themes/uofl/homepage/featured_carousel/v12_ULUA_001_0888_600x400_lossy80.webp
+        image_alt: Mail call for University of Louisville V-12 trainees, circa 1943.
+        notes: 
+
+      - work_id: ULUA 001_0896
+        image: themes/uofl/homepage/featured_carousel/v12_ULUA_001_0896_600x400_lossy80.webp
+        image_alt: V-12 participants working with equipment
+        notes: 
+
+      - work_id: ULUA 001_0890
+        image: themes/uofl/homepage/featured_carousel/v12_ULUA_001_0890_600x400_lossy80.webp
+        image_alt: V-12 participants in chemistry laboratory
+        notes: 
+
+      - work_id: ULUA 001_0898
+        image: themes/uofl/homepage/featured_carousel/v12_ULUA_001_0898_600x400_lossy80.webp
+        image_alt: V-12 participants studying at table
+        notes: 
+
+      - work_id: ULUA 001_0884
+        image: themes/uofl/homepage/featured_carousel/v12_ULUA_001_0884_600x400_lossy80.webp
+        image_alt: Young men in navy uniforms and young women sit in and stand around booths in a restaurant. 
+        notes: 
+
+  valentines:
+    title: Be Our Valentine
+    description: Valentines from the early Twentieth Centure brought to you by the Newton Owen Postcard Collection.
+    search_path: "/catalog?"
+    start_date: 2027-02-01
+    end_date: 2027-02-14
+    pictures:
+      - work_id: ULUA 2006_003_008_692
+        image: themes/uofl/homepage/featured_carousel/valentines_ULUA_2006_003_008_692_257x400_lossy100.webp
+        image_alt: valentine postcard of woman with long black hair standing in profile, near roses. 
+        notes: FIX URLs
+
+      - work_id: ULUA 2006_003_008_685 
+        image: themes/uofl/homepage/featured_carousel/valentines_ULUA_2006_003_008_685_257x400_lossy100.webp
+        image_alt: valentine postcard of man kneeling, looking up at standing woman
+        notes: 
+
+      - work_id: ULUA 2006_003_008_679
+        image: themes/uofl/homepage/featured_carousel/valentines_ULUA_2006_003_008_679_257x400_lossy100.webp
+        image_alt: valentine postcard of girl and cat
+        notes: 
+
+      - work_id: ULUA 2006_003_008_678
+        image: themes/uofl/homepage/featured_carousel/valentines_ULUA_2006_003_008_678_257x400_lossy100.webp
+        image_alt: valentine postcard with poppies and heart
+        notes: 
+
+      - work_id: ULUA 2006_003_008_656
+        image: themes/uofl/homepage/featured_carousel/valentines_ULUA_2006_003_008_656_257x400_lossy100.webp
+        image_alt: valentine postcard with young woman holding valentine heart
+        notes: 
+
+  vermont:
+    title: Winter in Vermont
+    description: Enjoy these picturesque scenes of Vermont dressed in snow courtesy of the Standard Oil (New Jersey) Collection.
+    search_path: "/catalog?"
+    start_date: 2027-01-01
+    end_date: 2027-01-15
+    pictures:
+      - work_id: ULPA SONJ_22251
+        image: themes/uofl/homepage/featured_carousel/vermont_SONJ_22251_600x400_lossy100.webp
+        image_alt: Farm covered in snow, Lyndonville, Vermont, 1945. 
+        notes: 
+
+      - work_id: ULPA SONJ_22211 
+        image: themes/uofl/homepage/featured_carousel/vermont_SONJ_22211_600x400_lossy100.webp
+        image_alt: Children on skating rink, Lyndonville, Vermont, 1945.
+        notes: 
+
+      - work_id: ULPA SONJ_47509
+        image: themes/uofl/homepage/featured_carousel/vermont_SONJ_47509_381x400_lossy100.webp
+        image_alt: Dogs pulling sled, Stowe, Vermont, 1947.
+        notes: 
+
+      - work_id: ULPA SONJ_47608
+        image: themes/uofl/homepage/featured_carousel/vermont_SONJ_47608_380x400_lossy100.webp
+        image_alt: Snow shoes, Stowe, Vermont, 1947.
+        notes: 
+
+      - work_id: ULPA SONJ_22203
+        image: themes/uofl/homepage/featured_carousel/vermont_SONJ_22203_600x400_lossy100.webp
+        image_alt: Farmer in sleigh, West Burke, Vermont, 1945.
+        notes: 
+
+      - work_id: ULPA SONJ_76123
+        image: themes/uofl/homepage/featured_carousel/vermont_SONJ_76123_600x400_lossy100.webp
+        image_alt: School children running to school, Orange County, Vermont, 1953.
+        notes: 
+
+
+  waverly:
+    title: Happy Halloween
+    description: Delve into the haunted history of Waverly Hills Sanatorium.
+    search_path: "/catalog?"
+    start_date: 2027-10-16
+    end_date: 2027-10-31
+    pictures:
+      - work_id: ULPA 1984_001_041
+        image: themes/uofl/homepage/featured_carousel/waverly_ULPA_1984_001_041_600x400_lossy100.webp
+        image_alt: Waverly Hills Sanatorium, 1911
+        notes: 
+
+      - work_id: ULPA R_08834_00
+        image: themes/uofl/homepage/featured_carousel/waverly_R_08834_00_600x400_lossy100.webp
+        image_alt: Waverly Hills hallway with two almost transparent men, 1945
+        notes: 
+
+      - work_id: ULPA R_08834_01
+        image: themes/uofl/homepage/featured_carousel/waverly_R_08834_01_600x400_lossy100.webp
+        image_alt: Waverly Hills operating or examining room, 1945
+        notes: 
+
+      - work_id: ULUA Cardinal 20041026
+        image: themes/uofl/homepage/featured_carousel/waverly_ULUA_20041026_00006_600x400_lossy100.webp
+        image_alt: Louisville Cardinal October 26 2004 article on Waverly Hills Sanatorium page 6
+        notes: 
+
+      - work_id: ULPA CS_076031
+        image: themes/uofl/homepage/featured_carousel/waverly_CS_076031_600x400_lossy100.webp
+        image_alt: Patients in beds on Waverly Hills porch, 1926
+        notes: 
