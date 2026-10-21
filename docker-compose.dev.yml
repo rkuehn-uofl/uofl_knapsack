@@ -1,0 +1,179 @@
+# Development compose file (Mac). Standalone copy of docker-compose.yml with
+# the UofL dev settings; use it on its own:
+#
+#   docker compose -f docker-compose.dev.yml --env-file .env --env-file .env.development up -d
+#
+# Kept separate because docker-compose.yml is upstream's file and gets
+# replaced on knapsack upgrades. Production uses docker-compose.prod.yml.
+#
+# Dev settings live in .env.development (git-ignored), which is loaded after
+# .env so its values win.
+
+x-app: &app
+  build:
+    context: .
+    target: hyku-web
+    cache_from:
+      - ghcr.io/samvera-labs/hyku_knapsack:latest
+    args:
+      BUILDKIT_INLINE_CACHE: 1
+      APP_PATH: ./hyrax-webapp
+  image: ghcr.io/samvera-labs/hyku_knapsack:${TAG:-latest}
+  env_file:
+    - .env
+    - .env.development
+  environment:
+    # This line is what makes the knapsack include use the local code instead of the remote gem
+    - BUNDLE_LOCAL__HYKU_KNAPSACK=/app/samvera
+    - BUNDLE_DISABLE_LOCAL_BRANCH_CHECK=true
+    # Disable Wings/Fedora fallback since this app is Valkyrie/Postgres-native
+    - HYRAX_SKIP_WINGS=true
+  volumes:
+    - HykuImports:/media/HykuImports
+    - node_modules:/app/samvera/hyrax-webapp/node_modules:cached
+    - uploads:/app/samvera/hyrax-webapp/public/uploads:cached
+    - assets:/app/samvera/hyrax-webapp/public/assets:cached
+    - cache:/app/samvera/hyrax-webapp/tmp/cache:cached
+    - .:/app/samvera
+
+volumes:
+  assets:
+  cache:
+  db:
+  fcrepo:
+  node_modules:
+  redis:
+  solr:
+  uploads:
+  zk:
+  zoo:
+  HykuImports:
+   driver: local
+   driver_opts:
+    type: "cifs"
+    device: "${IMPORT_SHARE:?set IMPORT_SHARE in the env file}"
+    o: "ro,vers=3.0,username=${IMPORT_USER},password=${IMPORT_PASSWORD},file_mode=0777,dir_mode=0777,uid=1001,gid=1001"
+
+networks:
+  default:
+    name: stackcar
+
+services:
+  adminer:
+    extends:
+      file: hyrax-webapp/docker-compose.yml
+      service: adminer
+
+  zoo:
+    image: zookeeper:3.8.4
+    extends:
+      file: hyrax-webapp/docker-compose.yml
+      service: zoo
+    restart: unless-stopped
+
+  solr:
+    image: ghcr.io/samvera-labs/hyku_knapsack/solr:${TAG:-latest}
+    extends:
+      file: hyrax-webapp/docker-compose.yml
+      service: solr
+    environment:
+      # Solr 8.11 rejects join queries (used by the dashboard's admin set file
+      # counts) unless the filterCache is the async CaffeineCache; Hyku's
+      # solrconfig.xml defaults to FastLRUCache and reads these overrides.
+      - SOLR_OPTS=-Dsolr.filterCache.class=solr.CaffeineCache -Dsolr.queryResultCache.class=solr.CaffeineCache -Dsolr.documentCache.class=solr.CaffeineCache
+    restart: unless-stopped
+
+  fcrepo:
+    extends:
+      file: hyrax-webapp/docker-compose.yml
+      service: fcrepo
+    restart: unless-stopped
+
+  fits:
+    extends:
+      file: hyrax-webapp/docker-compose.yml
+      service: fits
+    restart: unless-stopped
+
+  db:
+    extends:
+      file: hyrax-webapp/docker-compose.yml
+      service: db
+    restart: unless-stopped
+
+  web:
+    <<: *app
+    extends:
+      file: hyrax-webapp/docker-compose.yml
+      service: web
+    # Uncomment command to access container with out starting bin/web. Useful for debugging or updating Gemfile.lock
+    # command: sleep infinity
+    # Clear the baked-in precompiled asset manifest on every container start so
+    # Sprockets live-compiles fresh SCSS/JS instead of serving a stale digest
+    # memoized from the persistent `assets` volume.
+    command: sh -c "find /app/samvera/hyrax-webapp/public/assets -mindepth 1 -delete 2>/dev/null; exec ./bin/web"
+    ports:
+      - 3000:3000
+    expose:
+      - 3000
+    restart: unless-stopped
+
+  worker:
+    <<: *app
+    extends:
+      file: hyrax-webapp/docker-compose.yml
+      service: worker
+    build:
+      context: .
+      target: hyku-worker
+      cache_from:
+        - ghcr.io/samvera-labs/hyku_knapsack/worker:latest
+      args:
+        BUILDKIT_INLINE_CACHE: 1
+        APP_PATH: ./hyrax-webapp
+    image: ghcr.io/samvera-labs/hyku_knapsack/worker:${TAG:-latest}
+    # Uncomment command to access container with out starting bin/worker. Useful for debugging or updating Gemfile.lock
+    # command: sleep infinity
+    environment:
+      - BUNDLE_LOCAL__HYKU_KNAPSACK=/app/samvera
+      - BUNDLE_DISABLE_LOCAL_BRANCH_CHECK=true
+      - HYRAX_SKIP_WINGS=true
+      - GOOD_JOB_MAX_THREADS=10
+    volumes:
+      - HykuImports:/media/HykuImports
+      - node_modules:/app/samvera/hyrax-webapp/node_modules:cached
+      - uploads:/app/samvera/hyrax-webapp/public/uploads:cached
+      - ./hyrax-webapp/public/assets:/app/samvera/hyrax-webapp/public/assets:cached
+      - cache:/app/samvera/hyrax-webapp/tmp/cache:cached
+      - .:/app/samvera
+    restart: unless-stopped
+
+  check_volumes:
+    <<: *app
+    extends:
+      file: hyrax-webapp/docker-compose.yml
+      service: check_volumes
+
+  initialize_app:
+    <<: *app
+    extends:
+      file: hyrax-webapp/docker-compose.yml
+      service: initialize_app
+    command:
+      - >
+        /app/samvera/bin/solrcloud-upload-configset.sh /app/samvera/hyrax-webapp/solr/conf &&
+        /app/samvera/bin/solrcloud-assign-configset.sh &&
+        SOLR_COLLECTION_NAME=hydra-test /app/samvera/bin/solrcloud-assign-configset.sh &&
+        bundle &&
+        /app/samvera/bin/db-migrate-seed.sh
+
+  redis:
+    extends:
+      file: hyrax-webapp/docker-compose.yml
+      service: redis
+    restart: unless-stopped
+
+  chrome:
+    extends:
+      file: hyrax-webapp/docker-compose.yml
+      service: chrome
