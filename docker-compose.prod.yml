@@ -1,0 +1,207 @@
+# Production compose file. Standalone copy of docker-compose.yml with
+# production changes; use it on its own:
+#
+#   docker compose -f docker-compose.prod.yml --env-file .env --env-file .env.production up -d --build
+#
+# Or set COMPOSE_FILE=docker-compose.prod.yml and COMPOSE_ENV_FILES=.env,.env.production
+# in the shell so a plain `docker compose ...` uses them.
+#
+# Secrets and hostnames live in .env.production (git-ignored), which is loaded
+# after .env so its values win. The --env-file flags matter: Hyku's compose
+# file sets the HYKU_*_HOST values (and HYRAX_FLEXIBLE) in `environment:`, which
+# overrides env_file, so they must come from compose interpolation instead.
+
+x-app: &app
+  build:
+    context: .
+    target: hyku-web
+    cache_from:
+      - ghcr.io/samvera-labs/hyku_knapsack:latest
+    args:
+      BUILDKIT_INLINE_CACHE: 1
+      APP_PATH: ./hyrax-webapp
+  image: ghcr.io/samvera-labs/hyku_knapsack:${TAG:-latest}
+  env_file:
+    - .env
+    - .env.production
+  environment:
+    # This line is what makes the knapsack include use the local code instead of the remote gem
+    - BUNDLE_LOCAL__HYKU_KNAPSACK=/app/samvera
+    - BUNDLE_DISABLE_LOCAL_BRANCH_CHECK=true
+    # Disable Wings/Fedora fallback since this app is Valkyrie/Postgres-native
+    - HYRAX_SKIP_WINGS=true
+    # Pass the .env.production hosts through; Hyku would otherwise build them from APP_NAME.
+    - HYKU_ADMIN_HOST=${HYKU_ADMIN_HOST}
+    - HYKU_DEFAULT_HOST=${HYKU_DEFAULT_HOST}
+    - HYKU_ROOT_HOST=${HYKU_ROOT_HOST}
+  volumes:
+    - HykuImports:/media/HykuImports
+    - node_modules:/app/samvera/hyrax-webapp/node_modules:cached
+    - uploads:/app/samvera/hyrax-webapp/public/uploads:cached
+    - assets:/app/samvera/hyrax-webapp/public/assets:cached
+    - cache:/app/samvera/hyrax-webapp/tmp/cache:cached
+    - .:/app/samvera
+
+volumes:
+  assets:
+  cache:
+  db:
+  fcrepo:
+  node_modules:
+  redis:
+  solr:
+  uploads:
+  zk:
+  zoo:
+  HykuImports:
+   driver: local
+   driver_opts:
+    type: "cifs"
+    device: "${IMPORT_SHARE:?set IMPORT_SHARE in the env file}"
+    o: "ro,vers=3.0,username=${IMPORT_USER},password=${IMPORT_PASSWORD},file_mode=0777,dir_mode=0777,uid=1001,gid=1001"
+
+networks:
+  default:
+    name: stackcar
+
+services:
+  # web depends_on adminer in the upstream compose file, so it can't be removed;
+  # just keep the database UI off the proxy.
+  adminer:
+    extends:
+      file: hyrax-webapp/docker-compose.yml
+      service: adminer
+    labels:
+      - "traefik.enable=false"
+
+  zoo:
+    image: zookeeper:3.8.4
+    extends:
+      file: hyrax-webapp/docker-compose.yml
+      service: zoo
+    restart: unless-stopped
+
+  solr:
+    image: ghcr.io/samvera-labs/hyku_knapsack/solr:${TAG:-latest}
+    extends:
+      file: hyrax-webapp/docker-compose.yml
+      service: solr
+    environment:
+      - SOLR_ADMIN_PASSWORD=${SOLR_ADMIN_PASSWORD}
+      - SOLR_OPTS=-Dsolr.filterCache.class=solr.CaffeineCache -Dsolr.queryResultCache.class=solr.CaffeineCache -Dsolr.documentCache.class=solr.CaffeineCache
+    volumes:
+      - ./solr/security.json:/var/solr/data/security.json
+    labels:
+      - "traefik.enable=false"
+    restart: unless-stopped
+
+  # Backing services: don't publish ports on the host or route them through
+  # Traefik. They stay reachable from the app over the internal docker network.
+  fcrepo:
+    extends:
+      file: hyrax-webapp/docker-compose.yml
+      service: fcrepo
+    ports: !reset []
+    labels:
+      - "traefik.enable=false"
+    restart: unless-stopped
+
+  fits:
+    extends:
+      file: hyrax-webapp/docker-compose.yml
+      service: fits
+    ports: !reset []
+    labels:
+      - "traefik.enable=false"
+    restart: unless-stopped
+
+  db:
+    extends:
+      file: hyrax-webapp/docker-compose.yml
+      service: db
+    ports: !reset []
+    restart: unless-stopped
+
+  web:
+    <<: *app
+    extends:
+      file: hyrax-webapp/docker-compose.yml
+      service: web
+    # Uncomment command to access container with out starting bin/web. Useful for debugging or updating Gemfile.lock
+    # command: sleep infinity
+    # Production has config.assets.compile = false, so assets must be
+    # precompiled before puma starts. Output lands in the persistent `assets` volume.
+    command: sh -c "bundle exec rake assets:precompile && exec ./bin/web"
+    # Localhost only: nginx on the host proxies to it; nothing else should reach puma directly.
+    ports:
+      - 127.0.0.1:3000:3000
+    expose:
+      - 3000
+    restart: unless-stopped
+
+  worker:
+    <<: *app
+    extends:
+      file: hyrax-webapp/docker-compose.yml
+      service: worker
+    build:
+      context: .
+      target: hyku-worker
+      cache_from:
+        - ghcr.io/samvera-labs/hyku_knapsack/worker:latest
+      args:
+        BUILDKIT_INLINE_CACHE: 1
+        APP_PATH: ./hyrax-webapp
+    image: ghcr.io/samvera-labs/hyku_knapsack/worker:${TAG:-latest}
+    # Uncomment command to access container with out starting bin/worker. Useful for debugging or updating Gemfile.lock
+    # command: sleep infinity
+    environment:
+      - BUNDLE_LOCAL__HYKU_KNAPSACK=/app/samvera
+      - BUNDLE_DISABLE_LOCAL_BRANCH_CHECK=true
+      - HYRAX_SKIP_WINGS=true
+      - GOOD_JOB_MAX_THREADS=10
+      - HYKU_ADMIN_HOST=${HYKU_ADMIN_HOST}
+      - HYKU_DEFAULT_HOST=${HYKU_DEFAULT_HOST}
+      - HYKU_ROOT_HOST=${HYKU_ROOT_HOST}
+    # Shares the `assets` volume with web so both see the same precompiled assets.
+    volumes:
+      - HykuImports:/media/HykuImports
+      - node_modules:/app/samvera/hyrax-webapp/node_modules:cached
+      - uploads:/app/samvera/hyrax-webapp/public/uploads:cached
+      - assets:/app/samvera/hyrax-webapp/public/assets:cached
+      - cache:/app/samvera/hyrax-webapp/tmp/cache:cached
+      - .:/app/samvera
+    restart: unless-stopped
+
+  check_volumes:
+    <<: *app
+    extends:
+      file: hyrax-webapp/docker-compose.yml
+      service: check_volumes
+
+  initialize_app:
+    <<: *app
+    extends:
+      file: hyrax-webapp/docker-compose.yml
+      service: initialize_app
+    command:
+      - >
+        /app/samvera/bin/solrcloud-upload-configset.sh /app/samvera/hyrax-webapp/solr/conf &&
+        /app/samvera/bin/solrcloud-assign-configset.sh &&
+        SOLR_COLLECTION_NAME=hydra-test /app/samvera/bin/solrcloud-assign-configset.sh &&
+        bundle &&
+        /app/samvera/bin/db-migrate-seed.sh
+
+  redis:
+    extends:
+      file: hyrax-webapp/docker-compose.yml
+      service: redis
+    restart: unless-stopped
+
+  # Test-only browser; web depends_on it upstream, so keep it but off the proxy.
+  chrome:
+    extends:
+      file: hyrax-webapp/docker-compose.yml
+      service: chrome
+    labels:
+      - "traefik.enable=false"

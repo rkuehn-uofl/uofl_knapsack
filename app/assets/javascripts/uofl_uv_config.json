@@ -6,7 +6,7 @@
   "modules": {
     "downloadDialogue": {
       "options": {
-        "confinedImageSize": 600,
+        "confinedImageSize": 599,
         "downloadCurrentViewEnabled": false,
         "downloadWholeImageHighResEnabled": false,
         "downloadWholeImageLowResEnabled": true
