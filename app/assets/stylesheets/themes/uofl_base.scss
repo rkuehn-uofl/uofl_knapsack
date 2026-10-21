@@ -360,12 +360,11 @@ body.public-facing {
 		display: none;
 	}
 
-/* Pages without a full-bleed hero need #content-wrapper pushed down below
-   the absolutely-positioned header so it doesn't cover the page title/
-   breadcrumbs; hero pages (body.has-hero) handle their own spacing via
-   .hero-content's own padding-top, so they get none of this. */
-	#content-wrapper { padding-top: 200px; }
-	&.has-hero #content-wrapper { padding-top: 0; }
+/* Only the homepage hero (body.has-hero) needs the header floating over it;
+   everywhere else keep the header in normal flow so the page content starts
+   below it at whatever height it wraps to, with no measured padding or jump
+   on load. Hero pages handle their own spacing via .hero-content's padding-top. */
+	&:not(.has-hero) .site-header { position: relative; }
 
 
 } // end body.public-facing (HEADER 2026)

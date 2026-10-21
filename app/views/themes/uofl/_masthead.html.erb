@@ -181,28 +181,5 @@ f_inclusive%5Bmember_of_collections_ssim%5D%5B%5D=Illuminated+Manuscript+Collect
         mobileToggle.setAttribute('aria-expanded', String(isOpen));
       });
     }
-
-    // The header is position:absolute (so it can float over the homepage/
-    // all_collections hero), which takes it out of normal flow - on every
-    // other page #content-wrapper needs real padding-top to compensate, or
-    // the header covers the page title/breadcrumbs. A fixed CSS value can't
-    // work here because the header's actual height varies (it wraps to a
-    // second row once the search box + Browse/Filter + Advanced buttons
-    // don't fit on one line), so measure it for real instead.
-    //
-    // #content-wrapper is rendered later in layouts/hyrax.html.erb than this
-    // partial (masthead comes first in the body), so it doesn't exist in the
-    // DOM yet while this script is parsed - it has to be looked up fresh
-    // inside the function (not hoisted to a const above) so the later
-    // resize/load calls can actually find it.
-    function syncContentPadding() {
-      const contentWrapper = document.getElementById('content-wrapper');
-      if (!header || !contentWrapper || document.body.classList.contains('has-hero')) return;
-      contentWrapper.style.paddingTop = `${header.offsetHeight}px`;
-    }
-
-    syncContentPadding();
-    window.addEventListener('resize', syncContentPadding);
-    window.addEventListener('load', syncContentPadding);
   })();
 </script>
