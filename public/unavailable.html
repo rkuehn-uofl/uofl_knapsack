@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Temporarily Unavailable // Digital Collections</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex">
+  <meta http-equiv="refresh" content="60">
+  <!-- UOFL OVERRIDE NEW FILE: UofL-branded "site unavailable" page. Served by the
+       host nginx (error_page 502 503 504 in rev_proxy) when the Rails container
+       is down, restarting or timing out, so the app never renders it. Keep it
+       fully static with styles inline. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background: #ffffff;
+      color: #111111;
+      font-family: "Poppins", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    }
+    header {
+      background: #111111;
+      padding: 16px 24px;
+    }
+    header a {
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 15px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    main {
+      flex: 1;
+      width: 100%;
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 64px 24px;
+    }
+    h1 {
+      margin: 0 0 16px;
+      font-family: "Libre Baskerville", Georgia, serif;
+      font-size: 34px;
+      line-height: 1.25;
+    }
+    p { line-height: 1.6; margin: 0 0 24px; }
+    .retry {
+      display: inline-block;
+      padding: 12px 24px;
+      border-radius: 24px;
+      background: #111111;
+      color: #ffffff;
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .retry:hover, .retry:focus { background: #494545; }
+    .note { font-size: 14px; color: #494545; margin-top: 32px; }
+    footer {
+      background: #E7E1E1;
+      padding: 16px 24px;
+      font-size: 14px;
+      text-align: center;
+    }
+    footer a { color: #111111; }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="/">Digital Collections</a>
+  </header>
+  <main>
+    <h1>Digital Collections is temporarily unavailable.</h1>
+    <p>The site may be restarting or undergoing maintenance. This usually resolves within a few minutes, so please try again shortly.</p>
+    <a class="retry" href="" onclick="location.reload(); return false;">Try again</a>
+    <p class="note">This page will refresh automatically every minute.</p>
+  </main>
+  <footer>
+    <a href="https://library.louisville.edu/">University of Louisville Libraries</a>
+  </footer>
+</body>
+</html>
