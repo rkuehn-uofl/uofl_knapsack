@@ -1,11 +1,11 @@
 ---
 m3_version: 1.0.beta2
 profile:
-  date_modified: '2026-10-19'
+  date_modified: '2026-10-21'
   responsibility: https://samvera.org
   responsibility_statement: Hyku Initial Profile
   type: Hyku Initial Profile
-  version: 28
+  version: 3
 classes:
   GenericWorkResource:
     display_label: Generic Work
@@ -1226,6 +1226,7 @@ properties:
     available_on:
       class:
       - ImageResource
+      - Text
     cardinality:
       minimum: 0
     data_type: array
@@ -1476,7 +1477,6 @@ properties:
     - https://archivescatalog.library.louisville.edu/resources/louisville-nashville-railroad
     - https://archivescatalog.library.louisville.edu/resources/louisville-cardinal-newspaper
     view:
-      render_as: linked
       search_field: collection_information_sim
       html_dl: true
   publisher:
